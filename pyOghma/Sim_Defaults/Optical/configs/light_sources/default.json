@@ -1,0 +1,67 @@
+{
+  "enabled": "True",
+  "x0": 0.5214722110380947,
+  "y0": 0.027145112233667,
+  "z0": 0.22449646242908913,
+  "x0_u": "m",
+  "y0_u": "m",
+  "z0_u": "m",
+  "dx": 1e-09,
+  "dy": 1e-09,
+  "dz": 1e-09,
+  "dx_u": "m",
+  "dy_u": "m",
+  "dz_u": "m",
+  "dx_padding": 0.0,
+  "dy_padding": 0.0,
+  "dz_padding": 0.0,
+  "dx_padding_u": "m",
+  "dy_padding_u": "m",
+  "dz_padding_u": "m",
+  "shape_nx": 1,
+  "shape_ny": 1,
+  "shape_nz": 1,
+  "rotate_y": 0.0,
+  "rotate_x": 0.0,
+  "color_r": 0.8,
+  "color_g": 0.8,
+  "color_b": 0.8,
+  "color_alpha": 0.8,
+  "name": "Top",
+  "html_link": "",
+  "label": "",
+  "image_path": "",
+  "shape_type": "box",
+  "g_x0": 1.0,
+  "g_y0": 0.0,
+  "g_x1": 1.0,
+  "g_y1": 0.0,
+  "id": "idf7d55656ea9e9efd",
+  "name": "Top",
+  "icon": "lighthouse",
+  "light_illuminate_from": "y0",
+  "virtual_spectra": {
+    "light_spectra": {
+      "segments": 1,
+      "segment0": {
+        "light_spectrum": "AM1.5G",
+        "light_multiplyer": 1.0
+      }
+    },
+    "light_filters": {
+      "segments": 0
+    },
+    "external_interface": {
+      "enabled": "False",
+      "light_external_n": 1.0
+    },
+    "id": "id4f56ef2b5aecb7f7"
+  },
+  "ray_theta_steps": 100,
+  "ray_theta_start": 0,
+  "ray_theta_stop": 360,
+  "ray_phi_steps": 50,
+  "ray_phi_start": 0,
+  "ray_phi_stop": 360,
+  "filter_local_ground_view_factor": 180.0
+}

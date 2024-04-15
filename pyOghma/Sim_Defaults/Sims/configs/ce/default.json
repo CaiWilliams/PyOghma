@@ -1,0 +1,12 @@
+{
+  "config": {
+    "ce_start_sun": 0.01,
+    "ce_stop_sun": 10.0,
+    "ce_number_of_simulations": 10.0,
+    "ce_on_time": 1e-06,
+    "ce_off_time": 1.0,
+    "dump_verbosity": 1,
+    "load_type": "open_circuit",
+    "dump_screen_verbosity": "dump_verbosity_key_results"
+  }
+}

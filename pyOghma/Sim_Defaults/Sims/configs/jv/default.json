@@ -1,0 +1,19 @@
+{
+  "config": {
+    "Vstart": 0.0,
+    "Vstop": 1.1,
+    "Vstep": 0.02,
+    "jv_step_mul": 1.0,
+    "jv_use_external_voltage_as_stop": "True",
+    "jv_light_efficiency": 1.0,
+    "jv_max_j": 1000000.0,
+    "jv_Rcontact": -1.0,
+    "jv_Rshunt": -1.0,
+    "jv_single_point": "False",
+    "dump_verbosity": 5,
+    "dump_energy_space": "false",
+    "dump_x": 0,
+    "dump_y": 0,
+    "dump_z": 0
+  }
+}

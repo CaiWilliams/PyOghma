@@ -1,0 +1,9 @@
+{
+  "eqe_voltage": -20.0,
+  "eqe_light_power2": 1.0,
+  "eqe_single_light_point": "True",
+  "eqe_suns_start": 0.001,
+  "eqe_suns_stop": 1.0,
+  "eqe_wavelength": 5.32e-07,
+  "eqe_use_electrical_dos": "False"
+}

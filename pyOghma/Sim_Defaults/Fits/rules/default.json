@@ -1,0 +1,8 @@
+{
+    "fit_rule_enabled": "False",
+    "human_x": "epitaxy\/PM6:Y6\/Drift diffusion\/Electron tail slope",
+    "human_y": "epitaxy\/PM6:Y6\/Drift diffusion\/Hole tail slope",
+    "function": "(x>y)*100.0",
+    "json_x": "epitaxy\/layer2\/shape_dos\/Etrape",
+    "json_y": "epitaxy\/layer2\/shape_dos\/Etraph"
+}

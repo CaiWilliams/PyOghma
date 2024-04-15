@@ -1,0 +1,8 @@
+{
+  "config": {
+    "sunstart": 0.01,
+    "sunstop": 10.0,
+    "sundp": 0.01,
+    "sundpmul": 1.05
+  }
+}

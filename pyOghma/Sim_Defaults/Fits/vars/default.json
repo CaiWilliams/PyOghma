@@ -1,0 +1,9 @@
+{
+    "fit_var_enabled": "True",
+    "human_var": "epitaxy\/PM6:Y6\/Drift diffusion\/Electron mobility y",
+    "json_var": "epitaxy\/layer2\/shape_dos\/mue_y",
+    "min": 1e-10,
+    "max": 1e30,
+    "log_fit": "False",
+    "error": 100.0
+}

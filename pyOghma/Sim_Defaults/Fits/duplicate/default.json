@@ -1,0 +1,8 @@
+{
+    "duplicate_var_enabled": "True",
+    "human_src": "epitaxy\/PM6:Y6\/Drift diffusion\/Electron mobility y",
+    "human_dest": "epitaxy\/PM6:Y6\/Drift diffusion\/Hole mobility y",
+    "multiplier": "x",
+    "json_src": "epitaxy\/layer2\/shape_dos\/mue_y",
+    "json_dest": "epitaxy\/layer2\/shape_dos\/muh_y"
+}

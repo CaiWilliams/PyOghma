@@ -1,0 +1,9 @@
+{
+  "config": {
+    "sun_voc_single_point": "False",
+    "sun_voc_Psun_start": 0.11,
+    "sun_voc_Psun_stop": 1.1,
+    "sun_voc_Psun_mul": 1.2,
+    "dump_verbosity": 1
+  }
+}

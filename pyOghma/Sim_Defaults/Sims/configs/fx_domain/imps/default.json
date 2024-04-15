@@ -1,0 +1,23 @@
+{
+  "config": {
+    "is_Vexternal": 0.0,
+    "load_type": "open_circuit",
+    "fxdomain_large_signal": "True",
+    "fxdomain_Rload": 50.0,
+    "fxdomain_points": 30,
+    "fxdomain_n": 5,
+    "fx_modulation_type": "voltage",
+    "fxdomain_measure": "measure_current",
+    "fxdomain_voltage_modulation_max": 0.02,
+    "fxdomain_light_modulation_depth": 0.02,
+    "fxdomain_do_fit": "True",
+    "fxdomain_L": 0.0,
+    "periods_to_fit": 2,
+    "fxdomain_modulation_rolloff_enable": "False",
+    "fxdomain_modulation_rolloff_start_fx": 1000.0,
+    "fxdomain_modulation_rolloff_speed": 1.6026e-05,
+    "fxdomain_norm_tx_function": "True",
+    "dump_verbosity": 0,
+    "dump_screen_verbosity": "dump_verbosity_key_results"
+  }
+}
