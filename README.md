@@ -1,5 +1,5 @@
 
 # PyOghma
 
-A python API for OghmaNano
+A python API for OghmaNano.
 
