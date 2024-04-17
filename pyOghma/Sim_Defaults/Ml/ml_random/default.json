@@ -1,0 +1,8 @@
+{
+  "random_var_enabled":"True",
+  "json_var":"epitaxy.layer2.shape_dos.mue_y",
+  "human_var":"epitaxy/PM6:Y6/Drift diffusion/Electron mobility y",
+  "min":1e-10,
+  "max":0.0001,
+  "random_distribution":"log"
+}

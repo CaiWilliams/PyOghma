@@ -1,0 +1,15 @@
+{
+    "import_file_path":"/home/rod/oghma/oghma8.0/train/dark/jv.csv",
+    "import_x_combo_pos":14,
+    "import_data_combo_pos":7,
+    "import_x_spin":0,
+    "import_data_spin":1,
+    "import_title":"Voltage - J",
+    "import_xlabel":"Voltage",
+    "import_data_label":"J",
+    "import_area":0.104,
+    "import_data_invert":"False",
+    "import_x_invert":"False",
+    "data_file":"dark_vec.csv",
+    "id":"id172936274ef14bcc"
+}

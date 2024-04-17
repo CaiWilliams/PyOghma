@@ -1,0 +1,8 @@
+{
+  "icon":"neural_network",
+  "name":"tau_voc_1sun",
+  "enabled":"True",
+  "ml_network_inputs": {},
+  "ml_network_outputs": {},
+  "id":"ide0ec5fc7549a2246""
+}

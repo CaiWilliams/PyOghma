@@ -1,0 +1,8 @@
+{
+    "ml_output_vector_item_enabled":"True",
+    "file_name":"jv.csv",
+    "ml_token_name":"vec",
+    "vectors":"-0.1,0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0,1.1",
+    "import_config": {},
+    "id":"idc4fcb99afc1e64ff"
+}
