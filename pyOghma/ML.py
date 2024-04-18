@@ -226,6 +226,8 @@ class ml_sim_output_vector:
     def set_name(self,name):
         self.import_cofig.set_name(name)
         self.data["import_cofig"] = self.import_cofig
+
+
 class ml_sim_output_vector_import_cofig:
     def __init__(self, dest_dir):
         self.dest_dir = dest_dir
@@ -273,7 +275,6 @@ class ml_sim_output_vector_import_cofig:
         idx = list.index(match)
         return idx, list_o[idx]
 
-
 class ml_config(ml):
     def __init__(self):
         super(ml, self).__init__()
@@ -297,7 +298,36 @@ class ml_networks(ml):
         self.set_format()
 
 class ml_network:
-    def __init__(self):
-        des
+    def __init__(self, name, state, inputs, outputs):
+        self.data = {}
+        self.data["icon"] = "neural_network"
+        self.data["name"] = name
+        if state:
+            self.data["enabled"] = "True"
+        else:
+            self.data["enabled"] = "False"
+        self.data["ml_network_inputs"] = inputs.data
+        self.data["ml_network_outputs"] = outputs.data
+        self.data['id'] = 'id' + str(secrets.token_hex(8))
+
+class ml_network_input:
+    def __init__(self, *ml_output_vectors):
+        self.data = {}
+        self.data["none"] = "none"
+        self.segments = len(ml_output_vectors)
+        for idx,vector in enumerate():
+            segment_data = {}
+            segment_data["ml_input_vector"] = vector.data["file_name"]
+            self.data['segment'+str(idx)] = segment_data
+
+class ml_network_output:
+    def __init__(self, ml_output_vectors, params):
+        self.data = {}
+        self.data["none"] = "none"
+        self.segments = len(ml_output_vectors)
+        for idx,vector in enumerate(ml_output_vectors):
+            segment_data = {}
+            segment_data["ml_output_vector"] = vector.data["file_name"] + params[idx]
+            self.data['segment'+str(idx)] = segment_data
 
 if __name__ == '__main__':
