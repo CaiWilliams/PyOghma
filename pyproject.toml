@@ -1,0 +1,17 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "PyOghma"
+version = "0.0.8"
+authors = [
+  { name="Cai Williams", email="cai.williams@physik.tu-chemnitz.de" },
+]
+description = "A Python API for OghmaNano"
+readme = "README.md"
+dependencies = ["mgzip>=0.2.1", "numpy>=1.26.4", "pandas>=2.2.2", "tqdm>=4.66.2", "ujson>=5.9.0", ]
+
+[project.urls]
+Homepage = "https://github.com/CaiWilliams/pyOghma"
+Issues = "https://github.com/CaiWilliams/pyOghma/issues"

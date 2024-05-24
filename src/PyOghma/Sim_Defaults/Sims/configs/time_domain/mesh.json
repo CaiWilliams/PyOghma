@@ -1,0 +1,8 @@
+{
+  "mesh": {
+    "time_loop": "False",
+    "time_loop_times": 4,
+    "time_loop_reset_time": "False",
+    "segments": 4
+  }
+}

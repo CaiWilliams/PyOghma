@@ -1,0 +1,14 @@
+{
+  "light_model": "full",
+  "Psun": 1.0,
+  "sun": "AM1.5G",
+  "Dphotoneff": 0.6,
+  "incoherent_wavelengths": 5,
+  "NDfilter": 0.0,
+  "light_flat_generation_rate": 2e+28,
+  "light_file_generation": "Gn.inp",
+  "light_file_qe_spectra": "/home/rod/gpvdm_local/user_data/mohamed/devices/si_eqe.dat",
+  "light_file_generation_shift": 2e-07,
+  "dump_verbosity": 10,
+  "mesh_eq_device_layers": "False"
+}

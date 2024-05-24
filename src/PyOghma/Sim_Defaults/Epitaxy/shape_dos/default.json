@@ -1,0 +1,47 @@
+{
+    "enabled":"True",
+    "dd_enabled":"True",
+    "symmetric_mobility_e":"symmetric",
+    "mue_z":"1e-15",
+    "mue_x":"1e-15",
+    "mue_y":"1.057208e-07",
+    "mue_delta":0.1,
+    "symmetric_mobility_h":"symmetric",
+    "muh_z":"1e-15",
+    "muh_x":"1e-15",
+    "muh_y":"1.057208e-07",
+    "muh_delta":0.1,
+    "Nc":5e+25,
+    "Nv":5e+25,
+    "free_to_free_recombination":0.0,
+    "f2f_lambda":1.0,
+    "dos_free_carrier_stats":"mb_equation",
+    "ss_srh_enabled":"False",
+    "srh_n1":1e+20,
+    "srh_p1":1e+20,
+    "srh_tau_n":1e-15,
+    "srh_tau_p":1e-15,
+    "dostype":"exponential",
+    "complex_lumo": {
+        "id":"id88f7ec75dea5b65a",
+        "segments":1,
+        "segment0": {
+            "function":"a*exp((E-Ec)/b)",
+            "function_enable":"True",
+            "function_a":4e+20,
+            "function_b":0.06,
+            "function_c":0.0
+            }
+        },
+    "complex_homo": {
+        "id":"id39399465e033902a",
+        "segments":1,
+        "segment0": {
+            "function":"a*exp((Ev-E)/b)",
+            "function_enable":"True",
+            "function_a":4e+20,
+            "function_b":0.06,
+            "function_c":0.0
+            }
+        }
+}

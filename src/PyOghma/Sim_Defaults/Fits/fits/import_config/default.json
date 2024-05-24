@@ -1,0 +1,15 @@
+{
+    "import_file_path": "\/home\/rod\/Desktop\/p3ht_pcbm\/charge_density_dark.dat",
+    "import_x_combo_pos": 9,
+    "import_data_combo_pos": 19,
+    "import_x_spin": 0,
+    "import_data_spin": 1,
+    "import_title": "Voltage - Charge density",
+    "import_xlabel": "Voltage",
+    "import_data_label": "Charge density",
+    "import_area": 0.104,
+    "import_data_invert": "False",
+    "import_x_invert": "False",
+    "data_file": "fit_data0.inp",
+    "id": "ida6c90b60fe6a3dd5"
+}

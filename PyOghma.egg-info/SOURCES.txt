@@ -1,0 +1,17 @@
+README.md
+setup.py
+PyOghma.egg-info/PKG-INFO
+PyOghma.egg-info/SOURCES.txt
+PyOghma.egg-info/dependency_links.txt
+PyOghma.egg-info/top_level.txt
+pyOghma/Epitaxy.py
+pyOghma/Fitting.py
+pyOghma/ML.py
+pyOghma/OghmaML.py
+pyOghma/OghmaNano.py
+pyOghma/OghmaResults.py
+pyOghma/Optical.py
+pyOghma/Server.py
+pyOghma/Sims.py
+pyOghma/Thermal.py
+pyOghma/__init__.py

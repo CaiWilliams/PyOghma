@@ -1,0 +1,12 @@
+{
+    "fit_randomize": "False",
+    "fit_random_reset_ittr": 400,
+    "fit_stall_steps": 400,
+    "fit_disable_reset_at": 0.095,
+    "fit_converge_error": 0.001,
+    "fit_enable_simple_reset": "True",
+    "fit_simplexmul": 0.05,
+    "fit_simplex_reset": 200,
+    "fit_method": "simplex",
+    "fit_dump_snapshots": "False"
+}

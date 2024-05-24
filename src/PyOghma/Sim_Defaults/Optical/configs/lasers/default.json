@@ -1,0 +1,8 @@
+{
+  "laserwavelength": 5.2e-07,
+  "spotx": 0.005,
+  "spoty": 0.005,
+  "pulseJ": 5e-14,
+  "laser_pulse_width": 5e-09,
+  "laser_photon_efficiency": 1.0
+}

@@ -1,0 +1,22 @@
+{
+    "enabled": "True",
+    "sim_data": "charge.dat",
+    "fit_name": "charge_dark",
+    "fit_error_mul": 1.0,
+    "time_shift": 0.0,
+    "fit_shift_y": 0.0,
+    "start": 0.1,
+    "stop": 0.8,
+    "log_x": "False",
+    "log_y": "True",
+    "log_y_keep_sign": "False",
+    "fit_invert_simulation_y": "False",
+    "fit_subtract_lowest_point": "True",
+    "fit_set_first_point_to_zero": "False",
+    "fit_1st_deriv": "False",
+    "fit_norm_data_at": "False",
+    "fit_norm_x_point": 0.5,
+    "fit_set_error_to_zero_before": -100.0,
+    "fit_hidden": "False",
+    "fit_against": "self"
+}

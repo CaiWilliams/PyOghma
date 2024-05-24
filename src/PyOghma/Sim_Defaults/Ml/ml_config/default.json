@@ -1,0 +1,8 @@
+{
+  "ml_number_of_archives":2,
+  "ml_sims_per_archive":10,
+  "ml_archive_path":"cwd",
+  "ml_vector_file_name":"vectors.json",
+  "ml_crash_time":4.0,
+  "ml_build_vectors_when_done":"False"
+}

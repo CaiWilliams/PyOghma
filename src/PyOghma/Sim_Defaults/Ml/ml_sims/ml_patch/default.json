@@ -1,0 +1,6 @@
+{
+  "ml_patch_enabled":"True",
+  "json_var":"optical.light.Psun",
+  "human_var":"optical/light/Intensity of the sun",
+  "ml_patch_val":"0.0"
+}

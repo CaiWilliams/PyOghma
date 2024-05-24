@@ -5055,7 +5055,7 @@
 					"id":"id1ddd7caa691ae900"
 					},
 				"segment1": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.025",
 					"ml_patch": {
 						"segments":1,
@@ -5094,7 +5094,7 @@
 					"id":"idd02abb767b3dd23d"
 					},
 				"segment2": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.05",
 					"ml_patch": {
 						"segments":1,
@@ -5133,7 +5133,7 @@
 					"id":"idef1a6b71b957a81b"
 					},
 				"segment3": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.1",
 					"ml_patch": {
 						"segments":1,
@@ -5172,7 +5172,7 @@
 					"id":"idda0344f214c468f9"
 					},
 				"segment4": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.25",
 					"ml_patch": {
 						"segments":1,
@@ -5211,7 +5211,7 @@
 					"id":"id27a997c6b28bbf71"
 					},
 				"segment5": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.5",
 					"ml_patch": {
 						"segments":1,
@@ -5250,7 +5250,7 @@
 					"id":"id61080e1246bb45e7"
 					},
 				"segment6": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_0.75",
 					"ml_patch": {
 						"segments":1,
@@ -5289,7 +5289,7 @@
 					"id":"id36a4c0b1a3c0c26b"
 					},
 				"segment7": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_1.0",
 					"ml_patch": {
 						"segments":1,
@@ -5328,7 +5328,7 @@
 					"id":"id6dd8e4a7ad507241"
 					},
 				"segment8": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_1.5",
 					"ml_patch": {
 						"segments":1,
@@ -5367,7 +5367,7 @@
 					"id":"id464623c392bd80e2"
 					},
 				"segment9": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_2.0",
 					"ml_patch": {
 						"segments":1,
@@ -5406,7 +5406,7 @@
 					"id":"idff105bfa00acafa6"
 					},
 				"segment10": {
-					"ml_sim_enabled":"True",
+					"ml_sim_enabled":"False",
 					"sim_name":"light_3.0",
 					"ml_patch": {
 						"segments":1,
@@ -5446,8 +5446,8 @@
 					}
 				},
 			"ml_config": {
-				"ml_number_of_archives":2,
-				"ml_sims_per_archive":10,
+				"ml_number_of_archives":200,
+				"ml_sims_per_archive":100,
 				"ml_archive_path":"cwd",
 				"ml_vector_file_name":"vectors.json",
 				"ml_crash_time":4.0,

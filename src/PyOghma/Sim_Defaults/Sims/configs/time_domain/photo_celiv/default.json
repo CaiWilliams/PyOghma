@@ -1,0 +1,19 @@
+{
+  "config": {
+    "pulse_shift": 5e-06,
+    "load_type": "load",
+    "pulse_L": 0.0,
+    "Rload": 50.0,
+    "pump_laser": "green",
+    "pulse_bias": 0.0,
+    "pulse_light_efficiency": 1.0,
+    "pulse_subtract_dc": "false",
+    "start_time": -4e-12,
+    "fs_laser_time": 1e-06,
+    "dump_verbosity": 5,
+    "dump_energy_space": "false",
+    "dump_x": 0,
+    "dump_y": 0,
+    "dump_z": 0
+  }
+}
