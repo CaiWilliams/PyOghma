@@ -25,6 +25,7 @@ class Results():
             self.find_sim_info(j)
             self.find_snapshot(j)
             self.find_sim(j)
+            self.find_jv(j)
     
 
     def find_snapshot(self, j):
@@ -46,6 +47,12 @@ class Results():
         test = os.path.join(j.path, 'sim.json')
         if os.path.isfile(test):
             j.sim = True
+
+    def find_jv(self, j):
+        j.jv = False
+        test = os.path.join(j.path,'jv.csv')
+        if os.path.isfile(test):
+            j.jv = True
 
 
     def save_results_ml(self, light):
@@ -143,6 +150,11 @@ class Results():
             self.write_snapshots_to_job(j)
         else:
             pass
+
+        if j.jv:
+            self.write_jv_to_job(j)
+        else:
+            pass
         
     def write_sim_to_job(self, j):
         with open(os.path.join(j.path,'sim.json'),'r') as r:
@@ -160,6 +172,14 @@ class Results():
         dirs = glob.glob(os.path.join(j.path,'snapshots','*/',))
         #for 
         print(dirs)
+
+    def write_jv_to_job(self, j):
+        with open(os.path.join(j.path,'jv.csv'),'r') as r:
+            jv = pd.read_csv(r, comment='#', delimiter='\t', header=None)
+            v = list(jv[0].to_numpy())
+            j = list(jv[1].to_numpy())
+        self.exp_dict[j.hash]['jv']['j'] = j
+        self.exp_dict[j.hash]['jv']['v'] = v
 
 
     

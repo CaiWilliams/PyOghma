@@ -55,12 +55,13 @@ class Server:
         #             pbar.update()
         for i in range(len(self.jobs)):
             self.generate_job_command(self.jobs[i])
-        for job in self.jobs:
-            self.worker(job)
+        # for job in self.jobs:
+        #     self.worker(job)
         #self.worker(self.jobs[0])
-        #with mp.Pool(processes=self.cpus) as p:
-        #     for _ in p.imap_unordered(self.worker, self.jobs):
-        #        pbar.update()
+        pbar = tqdm.tqdm(self.jobs)
+        with mp.Pool(processes=self.cpus) as p:
+            for _ in p.imap_unordered(self.worker, self.jobs):
+               pbar.update()
         #self.remove_lock_files()
         #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
             #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))

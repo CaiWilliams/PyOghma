@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "PyOghma"
-version = "0.0.8"
+version = "0.0.12"
 authors = [
   { name="Cai Williams", email="cai.williams@physik.tu-chemnitz.de" },
 ]
