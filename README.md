@@ -1,6 +1,6 @@
 
 # PyOghma
-**This project is currently in the early stages and no gaurantiees are made to it working.**
+**This project is currently in the early stages and no guarantees are made to it working.**
 
 A python API for OghmaNano allowing for the programmatic discription and exceution of drift-diffusion simulations.
 
