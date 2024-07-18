@@ -5,7 +5,7 @@
 A python API for OghmaNano allowing for the programmatic discription and exceution of drift-diffusion simulations.
 
 ## Installation
-Prior to installing PyOghma it is critical that OghmaNano is installed. OghmaNano can be found to download at: [www.oghma-nano.com](www.oghma-nano.com)
+Prior to installing PyOghma it is critical that OghmaNano is installed. OghmaNano can be found to download at: [oghma-nano.com](https://www.oghma-nano.com)
 
 PyOghma may be installed using pip
 
