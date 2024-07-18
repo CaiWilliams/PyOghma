@@ -124,9 +124,7 @@ class Results():
         #self.experiment.experiment_name = np.delete(self.experiment.experiment_name, self.rjl)
         #self.experiment.dimensions = np.delete(self.experiment.dimensions, self.rjl)
         #self.experiment.variables = np.delete(self.experiment.variables, self.rjl)
-        print(self.experiment.variables)
         for v in self.experiment.variables:
-            print(v)
             self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
         #self.experiment.points = np.delete(self.experiment.points, self.rjl)
         self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))
