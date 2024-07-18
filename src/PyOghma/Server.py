@@ -71,7 +71,7 @@ class Server:
         match self.operating_system:
             case 'Linux':
                 lock = ' --lockfile '+ os.path.join(job.path, 'lock_#'+job.key+'.dat')
-                command1 = 'timeout 3s '+ self.core_name + lock
+                command1 = 'timeout 10s '+ self.core_name + lock
                 command_sep = ';'
                 command0 = 'cd ' + job.path
 
