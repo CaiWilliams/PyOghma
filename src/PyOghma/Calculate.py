@@ -1,5 +1,10 @@
+import platform
 import numpy as np
-import mgzip as mg
+match platform.system():
+    case 'Linux':   
+        import mgzip as mg
+    case 'Windows':
+        import gzip
 import ujson as json
 import scipy.constants as sc
 import scipy.interpolate as spi
@@ -12,16 +17,23 @@ class Ideality_Factor:
 
     def __init__(self, exp):
         self.exp = exp
-        with mg.open(self.exp, 'r') as f:
-            self.data = json.load(f)
+        self.system = platform.system()
+        if self.system == 'Linux':
+            with mg.open(self.exp, 'r') as f:
+                self.data = json.load(f)
+        elif self.system == 'Windows':
+            with gzip.open(self.exp, 'r') as f:
+                self.data = json.load(f)
+
 
     def calculate(self, temp=300):
         kb = sc.value('Boltzmann constant in eV/K')
+        e = sc.value('elementary charge')
         self.Voc = []
         self.GenRate = []
         for idx,h in enumerate(self.data['experiment']['hashes']):
             self.Voc.append(float(self.data[h]['sim_info']['voc']))
-            self.GenRate.append(float(self.data['experiment']['variable']['intensity'][idx])*1e6)
+            self.GenRate.append(float(self.data['experiment']['variable']['intensity'][idx]))
 
         GenRate = np.log(self.GenRate)
         
@@ -37,8 +49,13 @@ class Transport_Resistance:
     """
     def __init__(self, exp):
         self.exp = exp
-        with mg.open(self.exp, 'r') as f:
-            self.data = json.load(f)
+        self.system = platform.system()
+        if self.system == 'Linux':
+            with mg.open(self.exp, 'r') as f:
+                self.data = json.load(f)
+        elif self.system == 'Windows':
+            with gzip.open(self.exp, 'r') as f:
+                self.data = json.load(f)
         PJV = Psudo_JV(self.exp)
         PJV.calculate()
         self.pJV_j = PJV.pJV_j
@@ -52,7 +69,7 @@ class Transport_Resistance:
             pj = self.pJV_j[idx,:]
             pv = self.pJV_v[idx,:]
             x = np.linspace(np.min(v), np.max(v), 10000)
-            x = np.append(x, 0)
+            x = np.append(x, float(self.data[h]['sim_info']['voc']))
             x = np.sort(x)
             y = spi.pchip_interpolate(v, j, x)
             py = spi.pchip_interpolate(pv, pj, x)
@@ -66,7 +83,8 @@ class Transport_Resistance:
                     f = np.gradient(Vtr[jdx],x[jdx])
                     DVtr[i] = np.mean(f)
             
-            x0 = np.argwhere(x == 0).ravel()
+            x0 = np.argwhere(x == float(self.data[h]['sim_info']['voc'])).ravel()
+            print(x0)
             self.TR_Voc.append(DVtr[x0])
 
 
@@ -79,9 +97,14 @@ class Psudo_JV:
 
     def __init__(self, exp):
         self.exp = exp
-        with mg.open(self.exp, 'r') as f:
-            self.data = json.load(f)
-            json.dump(self.data, open('test.json', 'w'), indent=4)
+        self.system = platform.system()
+        if self.system == 'Linux':
+            with mg.open(self.exp, 'r') as f:
+                self.data = json.load(f)
+        elif self.system == 'Windows':
+            with gzip.open(self.exp, 'r') as f:
+                self.data = json.load(f)
+
 
     def calculate(self):
         self.pJV_j = []

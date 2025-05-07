@@ -4,6 +4,7 @@ import secrets
 import itertools
 
 import numpy as np
+import platform
 
 from .Optical import Optical
 from .Sims import Sims
@@ -22,9 +23,21 @@ class OghmaNano:
         self.Server = Server()
         self.Epitaxy = Epitaxy()
         self.ML = ml()
+        self.dimensions = None
+        self.variables = None
+        self.points = None
+        self.hashes = None
+
 
     def check_results(self):
-        results_dir = os.path.join(os.sep,'dev','shm','OghmaSims')
+        match platform.system():
+            case 'Linux':
+                results_dir = os.path.join(os.sep,'dev','shm','OghmaSims')
+            case 'Windows':
+                results_dir = os.path.join(os.getcwd(),'OghmaSims')
+            case _:
+                raise Exception('Operating System not supported')
+
         try:
             os.mkdir(results_dir)
             return results_dir

@@ -2,9 +2,15 @@ import os
 import glob
 import secrets
 
-import mgzip
+import shutil
 import datetime
 import itertools
+import platform
+match platform.system():
+    case 'Linux':
+        import mgzip
+    case 'Windows':
+        import gzip
 import ujson as json
 import numpy as np
 import pandas as pd
@@ -12,6 +18,8 @@ import pandas as pd
 class Results():
     def __init__(self):
         self.dest_dir = ""
+        self.system = platform.system()
+        
     
     def load_experiment(self, A):
         self.experiment = A
@@ -94,22 +102,40 @@ class Results():
         return
     
     def save_dict(self):
-        with mgzip.open(self.exp_dict['experiment']['name'] + '.exp', 'wt+') as j:
-            json.dump(self.exp_dict, j, indent=4)
-            j.close()
+        match self.system:
+            case 'Linux':
+                with mgzip.open(self.exp_dict['experiment']['name'] + '.exp', 'wt+') as j:
+                    json.dump(self.exp_dict, j, indent=4)
+                    j.close()
+            case 'Windows':
+                with gzip.open(self.exp_dict['experiment']['name'] + '.exp', 'wt+') as j:
+                    json.dump(self.exp_dict, j, indent=4)
+                    j.close()
         return
     
     def load_dict(self, dict_name):
-        with mgzip.open(os.path.join(os.getcwd(), dict_name), "r") as j:
-            data = json.load(j)
+        match self.system:
+            case 'Linux':
+                with mgzip.open(os.path.join(os.getcwd(), dict_name), "r") as j:
+                    data = json.load(j)
+            case 'Windows':
+                with gzip.open(os.path.join(os.getcwd(), dict_name), "r") as j:
+                    data = json.load(j)
         self.exp_dict = data
 
     def write_exp_data(self, exp):
         exp['name'] = self.experiment.experiment_name
-        exp['dimensions'] = self.experiment.dimensions
-        exp['variable'] = self.experiment.variables
-        exp['points'] = self.experiment.points
-        exp['hashes'] = self.experiment.hashes
+        if self.experiment.dimensions != None:
+            exp['dimensions'] = self.experiment.dimensions
+        
+        if self.experiment.variables != None:
+            exp['variable'] = self.experiment.variables
+        
+        if self.experiment.points != None:
+            exp['points'] = self.experiment.points
+
+        if self.experiment.hashes != None:
+            exp['hashes'] = self.experiment.hashes
     
     def variables(self):
         return self.exp_dict['experiment']['variable']
@@ -125,10 +151,11 @@ class Results():
         #self.experiment.experiment_name = np.delete(self.experiment.experiment_name, self.rjl)
         #self.experiment.dimensions = np.delete(self.experiment.dimensions, self.rjl)
         #self.experiment.variables = np.delete(self.experiment.variables, self.rjl)
-        for v in self.experiment.variables:
-            self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
-        #self.experiment.points = np.delete(self.experiment.points, self.rjl)
-        self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))
+        # for v in self.experiment.variables:
+        #     self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
+        # #self.experiment.points = np.delete(self.experiment.points, self.rjl)
+        # self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))
+        shutil.rmtree(self.experiment.dest_dir)
 
 
     def write_job(self, j):
