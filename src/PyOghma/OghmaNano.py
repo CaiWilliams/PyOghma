@@ -46,6 +46,7 @@ class OghmaNano:
         self.Epitaxy.dest_dir = self.dest_dir
         self.Optical.dest_dir = self.dest_dir
         self.Optical.Light.dest_dir = self.dest_dir
+        self.Optical.LightSources.dest_dir = self.dest_dir
         
         self.Sims.dest_dir = self.dest_dir
         self.Sims.SunsVoc.dest_dir = self.dest_dir
@@ -65,7 +66,8 @@ class OghmaNano:
         self.dimensions = len(kwargs)
         self.variables = kwargs
         for key, value in self.variables.items():
-            self.variables[key] = value.tolist()
+            if type(value) != list:
+                self.variables[key] = value.tolist()
         match iter_used:
             case 'product':
                 self.product = itertools.product(*self.variables.values())

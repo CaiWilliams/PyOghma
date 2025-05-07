@@ -1,0 +1,9 @@
+{
+	"icon":"cover_flow",
+	"item_type":"snapshots",
+	"default_plot_type":"2d",
+	"pos":0,
+	"list": {
+		"segments":0
+		}
+}

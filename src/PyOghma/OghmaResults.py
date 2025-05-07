@@ -76,6 +76,7 @@ class Results():
             json.dump(self.exp_dict, j, indent=4)
             j.close()
         return experiment_name
+    
     def create_dict(self):
         self.exp_dict = {}
         self.exp_dict['experiment'] = {}
@@ -162,7 +163,7 @@ class Results():
 
     def write_jv_to_job(self, j):
         with open(os.path.join(j.path,'jv.csv'), 'r') as r:
-            jv = pd.read_csv(r, comment='#', delimiter='\t', header=None)
+            jv = pd.read_csv(r, comment='#', delimiter=' ', header=None)
             v_jv = list(jv[0].to_numpy())
             j_jv = list(jv[1].to_numpy())
         self.exp_dict[j.hash]['jv'] = {}

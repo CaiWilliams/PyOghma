@@ -1,6 +1,5 @@
 {
   "light_model": "full",
-  "Psun": 1.0,
   "sun": "AM1.5G",
   "Dphotoneff": 0.6,
   "incoherent_wavelengths": 5,

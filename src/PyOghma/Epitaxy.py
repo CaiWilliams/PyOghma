@@ -39,9 +39,9 @@ class Epitaxy:
         with open(os.path.join(self.dest_dir,'sim.json'), 'r') as j:
             self.data = json.load(j)
         
-        num_layers = self.data['epitaxy']['layers']
+        num_layers = self.data['epitaxy']['segments']
         for idx in range(num_layers):
-            setattr(self, self.data['epitaxy']['layer'+str(idx)]['name'].lower().replace(':',''), Layer(self.data['epitaxy']['layer'+str(idx)]))
+            setattr(self, self.data['epitaxy']['segment'+str(idx)]['name'].lower().replace(':',''), Layer(self.data['epitaxy']['segment'+str(idx)]))
             #temp.append(getattr(self, self.data['epitaxy']['layer'+str(idx)]['name'].lower().replace(':','')))
         #print(temp)
             
@@ -251,10 +251,10 @@ class DOS:
 if __name__ == '__main__':
 
     A = Epitaxy()
-    A.dest_dir = 'Test_Sims'
+    A.dest_dir = '/media/cai/Big/PycharmProjects/PyOghma/standard_device'
     A.load_existing()
     print(A.ito.layer_data['dx'])
-    A.ito.thickness(500)
+    A.ito.thickness(100)
     A.ito.dos.enable()
-    A.ito.dos.shape('both', 'gaussian', 1, 2, 3, 'True')
+    A.ito.dos.mobility('both',1e-24)
     A.update()
