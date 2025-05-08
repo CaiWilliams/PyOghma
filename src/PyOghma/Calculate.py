@@ -64,31 +64,55 @@ class Transport_Resistance:
     def calculate(self):
         self.TR_Voc = []
         for idx,h in enumerate(self.data['experiment']['hashes']):
+
             v = self.data[h]['jv']['v']
             j = self.data[h]['jv']['j']
+
             pj = self.pJV_j[idx,:]
             pv = self.pJV_v[idx,:]
-            x = np.linspace(np.min(v), np.max(v), 10000)
-            x = np.append(x, float(self.data[h]['sim_info']['voc']))
+
+            v = np.asarray(v)
+            j = np.asarray(j)
+
+            pj = np.asarray(pj + j[0])
+            pv = np.asarray(pv)
+
+            pj1 = np.roll(pj, -1)
+            j1 = np.roll(j, -1)
+
+            jdx = np.argwhere(pj != pj1).ravel()
+            if len(jdx) > 0:
+                pv = pv[jdx]
+                pj = pj[jdx]
+            
+            jdx = np.argwhere(j != j1).ravel()
+            if len(jdx) > 0:
+                v = v[jdx]
+                j = j[jdx]
+
+            fjv = spi.PchipInterpolator(j, v)
+            fpjv = spi.PchipInterpolator(pj, pv)
+            
+            x = np.linspace(np.min(pj), np.max(pj), 1000)
+            x = np.append(x, 0)
             x = np.sort(x)
-            y = spi.pchip_interpolate(v, j, x)
-            py = spi.pchip_interpolate(pv, pj, x)
-            Vtr = py - y
+
+            Vtr = fjv(x) - fpjv(x)
+
             DVtr = np.zeros(len(Vtr))
-            for i in range(len(Vtr)):
-                if i == 0 or i == len(Vtr)-1:
+            for i in range(len(x)):
+                if i == 0:
+                    DVtr[i] = np.nan
+                elif i == len(x)-1:
                     DVtr[i] = np.nan
                 else:
-                    jdx = [i-1, i, i+1]
-                    f = np.gradient(Vtr[jdx],x[jdx])
-                    DVtr[i] = np.mean(f)
+                    kdx = [i-1, i, i+1]
+                    f = np.gradient(Vtr[kdx], x[kdx])
+                    DVtr[i] = f[1]
             
-            x0 = np.argwhere(x == float(self.data[h]['sim_info']['voc'])).ravel()
-            print(x0)
-            self.TR_Voc.append(DVtr[x0])
+            x0 = np.argwhere(x == 0).ravel()
+            self.TR_Voc.append(DVtr[x0[0]])
 
-
-                
 
 class Psudo_JV:
     """

@@ -10,10 +10,13 @@
     "jv_Rcontact": -1.0,
     "jv_Rshunt": -1.0,
     "jv_single_point": "False",
-    "dump_verbosity": 5,
+    "jv_light_efficiency": 1.0,
+    "charge_carrier_generation_model": "transfer_matrix",
+    "dump_verbosity": 0,
     "dump_energy_space": "false",
     "dump_x": 0,
     "dump_y": 0,
-    "dump_z": 0
+    "dump_z": 0,
+    "dump_sclc": "false"
   }
 }
