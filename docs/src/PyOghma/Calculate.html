@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>src.PyOghma.Calculate API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.PyOghma.Calculate</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.PyOghma.Calculate.Ideality_Factor"><code class="flex name class">
+<span>class <span class="ident">Ideality_Factor</span></span>
+<span>(</span><span>exp)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Ideality_Factor:
+    &#34;&#34;&#34;
+    Class to calculate the ideality factor of a diode.
+    &#34;&#34;&#34;
+
+    def __init__(self, exp):
+        self.exp = exp
+        self.system = platform.system()
+        if self.system == &#39;Linux&#39;:
+            with mg.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+        elif self.system == &#39;Windows&#39;:
+            with gzip.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+
+
+    def calculate(self, temp=300):
+        kb = sc.value(&#39;Boltzmann constant in eV/K&#39;)
+        e = sc.value(&#39;elementary charge&#39;)
+        self.Voc = []
+        self.GenRate = []
+        for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+            self.Voc.append(float(self.data[h][&#39;sim_info&#39;][&#39;voc&#39;]))
+            self.GenRate.append(float(self.data[&#39;experiment&#39;][&#39;variable&#39;][&#39;intensity&#39;][idx]))
+
+        GenRate = np.log(self.GenRate)
+        
+        plt.show()
+        grad = np.mean(np.gradient(GenRate, self.Voc))
+        Nid = 1/(kb * temp * grad)
+
+        self.result = Nid</code></pre>
+</details>
+<div class="desc"><p>Class to calculate the ideality factor of a diode.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="src.PyOghma.Calculate.Ideality_Factor.calculate"><code class="name flex">
+<span>def <span class="ident">calculate</span></span>(<span>self, temp=300)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate(self, temp=300):
+    kb = sc.value(&#39;Boltzmann constant in eV/K&#39;)
+    e = sc.value(&#39;elementary charge&#39;)
+    self.Voc = []
+    self.GenRate = []
+    for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+        self.Voc.append(float(self.data[h][&#39;sim_info&#39;][&#39;voc&#39;]))
+        self.GenRate.append(float(self.data[&#39;experiment&#39;][&#39;variable&#39;][&#39;intensity&#39;][idx]))
+
+    GenRate = np.log(self.GenRate)
+    
+    plt.show()
+    grad = np.mean(np.gradient(GenRate, self.Voc))
+    Nid = 1/(kb * temp * grad)
+
+    self.result = Nid</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="src.PyOghma.Calculate.Psudo_JV"><code class="flex name class">
+<span>class <span class="ident">Psudo_JV</span></span>
+<span>(</span><span>exp)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Psudo_JV:
+    &#34;&#34;&#34;
+    Class to calculate the pseudo JV of a diode.
+    &#34;&#34;&#34;
+
+    def __init__(self, exp):
+        self.exp = exp
+        self.system = platform.system()
+        if self.system == &#39;Linux&#39;:
+            with mg.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+        elif self.system == &#39;Windows&#39;:
+            with gzip.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+
+
+    def calculate(self):
+        self.pJV_j = []
+        self.pJV_v = []
+        pj = []
+        pv = []
+        for jv in self.data[&#39;experiment&#39;][&#39;hashes&#39;]:
+            #try:
+            self.pJV_j.append(np.abs(self.data[jv][&#39;jv&#39;][&#39;j&#39;][0]))
+            self.pJV_v.append(float(self.data[jv][&#39;sim_info&#39;][&#39;voc&#39;]))
+            # except:
+            #     self.pJV_j.append(np.nan)
+            #     self.pJV_v.append(np.nan)
+        
+        idx = np.argwhere(np.isnan(self.pJV_j))
+        self.pJV_j = np.delete(self.pJV_j, idx)
+        self.pJV_v = np.delete(self.pJV_v, idx)
+
+        self.pJV_j = np.array(self.pJV_j)
+        self.pJV_v = np.array(self.pJV_v)
+
+        self.pJV_j = np.tile(self.pJV_j, (len(self.data[&#39;experiment&#39;][&#39;hashes&#39;]),1))
+        self.pJV_v = np.tile(self.pJV_v, (len(self.data[&#39;experiment&#39;][&#39;hashes&#39;]),1))
+
+        for idx, jv in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+            self.pJV_j[idx,:] = self.pJV_j[idx,:] + self.data[jv][&#39;jv&#39;][&#39;j&#39;][0]
+        
+        # self.pJV_j = self.pJV_j.T
+        # self.pJV_v = self.pJV_v.T</code></pre>
+</details>
+<div class="desc"><p>Class to calculate the pseudo JV of a diode.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="src.PyOghma.Calculate.Psudo_JV.calculate"><code class="name flex">
+<span>def <span class="ident">calculate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate(self):
+    self.pJV_j = []
+    self.pJV_v = []
+    pj = []
+    pv = []
+    for jv in self.data[&#39;experiment&#39;][&#39;hashes&#39;]:
+        #try:
+        self.pJV_j.append(np.abs(self.data[jv][&#39;jv&#39;][&#39;j&#39;][0]))
+        self.pJV_v.append(float(self.data[jv][&#39;sim_info&#39;][&#39;voc&#39;]))
+        # except:
+        #     self.pJV_j.append(np.nan)
+        #     self.pJV_v.append(np.nan)
+    
+    idx = np.argwhere(np.isnan(self.pJV_j))
+    self.pJV_j = np.delete(self.pJV_j, idx)
+    self.pJV_v = np.delete(self.pJV_v, idx)
+
+    self.pJV_j = np.array(self.pJV_j)
+    self.pJV_v = np.array(self.pJV_v)
+
+    self.pJV_j = np.tile(self.pJV_j, (len(self.data[&#39;experiment&#39;][&#39;hashes&#39;]),1))
+    self.pJV_v = np.tile(self.pJV_v, (len(self.data[&#39;experiment&#39;][&#39;hashes&#39;]),1))
+
+    for idx, jv in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+        self.pJV_j[idx,:] = self.pJV_j[idx,:] + self.data[jv][&#39;jv&#39;][&#39;j&#39;][0]
+    
+    # self.pJV_j = self.pJV_j.T
+    # self.pJV_v = self.pJV_v.T</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="src.PyOghma.Calculate.Transport_Resistance"><code class="flex name class">
+<span>class <span class="ident">Transport_Resistance</span></span>
+<span>(</span><span>exp)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Transport_Resistance:
+    &#34;&#34;&#34;
+    Class to calculate the transport resistance of a diode.
+    &#34;&#34;&#34;
+    def __init__(self, exp):
+        self.exp = exp
+        self.system = platform.system()
+        if self.system == &#39;Linux&#39;:
+            with mg.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+        elif self.system == &#39;Windows&#39;:
+            with gzip.open(self.exp, &#39;r&#39;) as f:
+                self.data = json.load(f)
+        PJV = Psudo_JV(self.exp)
+        PJV.calculate()
+        self.pJV_j = PJV.pJV_j
+        self.pJV_v = PJV.pJV_v
+
+    def calculate(self):
+        self.TR_Voc = []
+        for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+
+            v = self.data[h][&#39;jv&#39;][&#39;v&#39;]
+            j = self.data[h][&#39;jv&#39;][&#39;j&#39;]
+
+            pj = self.pJV_j[idx,:]
+            pv = self.pJV_v[idx,:]
+
+            v = np.asarray(v)
+            j = np.asarray(j)
+
+            pj = np.asarray(pj + j[0])
+            pv = np.asarray(pv)
+
+            pj1 = np.roll(pj, -1)
+            j1 = np.roll(j, -1)
+
+            jdx = np.argwhere(pj != pj1).ravel()
+            if len(jdx) &gt; 0:
+                pv = pv[jdx]
+                pj = pj[jdx]
+            
+            jdx = np.argwhere(j != j1).ravel()
+            if len(jdx) &gt; 0:
+                v = v[jdx]
+                j = j[jdx]
+
+            fjv = spi.PchipInterpolator(j, v)
+            fpjv = spi.PchipInterpolator(pj, pv)
+            
+            x = np.linspace(np.min(pj), np.max(pj), 1000)
+            x = np.append(x, 0)
+            x = np.sort(x)
+
+            Vtr = fjv(x) - fpjv(x)
+
+            DVtr = np.zeros(len(Vtr))
+            for i in range(len(x)):
+                if i == 0:
+                    DVtr[i] = np.nan
+                elif i == len(x)-1:
+                    DVtr[i] = np.nan
+                else:
+                    kdx = [i-1, i, i+1]
+                    f = np.gradient(Vtr[kdx], x[kdx])
+                    DVtr[i] = f[1]
+            
+            x0 = np.argwhere(x == 0).ravel()
+            self.TR_Voc.append(DVtr[x0[0]])</code></pre>
+</details>
+<div class="desc"><p>Class to calculate the transport resistance of a diode.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="src.PyOghma.Calculate.Transport_Resistance.calculate"><code class="name flex">
+<span>def <span class="ident">calculate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate(self):
+    self.TR_Voc = []
+    for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
+
+        v = self.data[h][&#39;jv&#39;][&#39;v&#39;]
+        j = self.data[h][&#39;jv&#39;][&#39;j&#39;]
+
+        pj = self.pJV_j[idx,:]
+        pv = self.pJV_v[idx,:]
+
+        v = np.asarray(v)
+        j = np.asarray(j)
+
+        pj = np.asarray(pj + j[0])
+        pv = np.asarray(pv)
+
+        pj1 = np.roll(pj, -1)
+        j1 = np.roll(j, -1)
+
+        jdx = np.argwhere(pj != pj1).ravel()
+        if len(jdx) &gt; 0:
+            pv = pv[jdx]
+            pj = pj[jdx]
+        
+        jdx = np.argwhere(j != j1).ravel()
+        if len(jdx) &gt; 0:
+            v = v[jdx]
+            j = j[jdx]
+
+        fjv = spi.PchipInterpolator(j, v)
+        fpjv = spi.PchipInterpolator(pj, pv)
+        
+        x = np.linspace(np.min(pj), np.max(pj), 1000)
+        x = np.append(x, 0)
+        x = np.sort(x)
+
+        Vtr = fjv(x) - fpjv(x)
+
+        DVtr = np.zeros(len(Vtr))
+        for i in range(len(x)):
+            if i == 0:
+                DVtr[i] = np.nan
+            elif i == len(x)-1:
+                DVtr[i] = np.nan
+            else:
+                kdx = [i-1, i, i+1]
+                f = np.gradient(Vtr[kdx], x[kdx])
+                DVtr[i] = f[1]
+        
+        x0 = np.argwhere(x == 0).ravel()
+        self.TR_Voc.append(DVtr[x0[0]])</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.PyOghma" href="index.html">src.PyOghma</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.PyOghma.Calculate.Ideality_Factor" href="#src.PyOghma.Calculate.Ideality_Factor">Ideality_Factor</a></code></h4>
+<ul class="">
+<li><code><a title="src.PyOghma.Calculate.Ideality_Factor.calculate" href="#src.PyOghma.Calculate.Ideality_Factor.calculate">calculate</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.PyOghma.Calculate.Psudo_JV" href="#src.PyOghma.Calculate.Psudo_JV">Psudo_JV</a></code></h4>
+<ul class="">
+<li><code><a title="src.PyOghma.Calculate.Psudo_JV.calculate" href="#src.PyOghma.Calculate.Psudo_JV.calculate">calculate</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="src.PyOghma.Calculate.Transport_Resistance" href="#src.PyOghma.Calculate.Transport_Resistance">Transport_Resistance</a></code></h4>
+<ul class="">
+<li><code><a title="src.PyOghma.Calculate.Transport_Resistance.calculate" href="#src.PyOghma.Calculate.Transport_Resistance.calculate">calculate</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
