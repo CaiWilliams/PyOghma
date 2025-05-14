@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>PyOghma.Server API documentation</title>
+<meta name="description" content="This module provides functionality for managing and executing simulation jobs on a server.
+It includes methods for adding jobs, running them in …">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>PyOghma.Server</code></h1>
+</header>
+<section id="section-intro">
+<p>This module provides functionality for managing and executing simulation jobs on a server.
+It includes methods for adding jobs, running them in parallel using multiple CPUs, generating
+commands for execution, and cleaning up simulation directories. The module also defines a
+job class to represent individual simulation tasks.</p>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="PyOghma.Server.Server"><code class="flex name class">
+<span>class <span class="ident">Server</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Server:
+    &#34;&#34;&#34;
+    Class to manage and execute simulation jobs on the server.
+    Attributes:
+        running (bool): Indicates if the server is running.
+        stop_work (bool): Flag to stop the server&#39;s work.
+        start_time (float): The start time of the server.
+        cpus (int): Number of CPUs available for processing.
+        jobs (list): List of jobs to be executed.
+        callback (callable): Callback function for job completion.
+        max_job_time (float): Maximum allowed time for a job.
+        time_out (bool): Indicates if a job timed out.
+        core_name (str): Name of the simulation core executable.
+        sim_dir (str): Directory for simulation files.
+        operating_system (str): The operating system of the platform.
+        dest_dir (str): The destination directory for job files.
+    &#34;&#34;&#34;
+    def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the Server class.
+        &#34;&#34;&#34;
+        self.running = False
+        self.stop_work = False
+        self.start_time = 0
+        self.update_cpu_count()
+        self.clear_jobs()
+        self.callback=None
+        self.max_job_time=None
+        self.time_out=False
+        self.core_name = &#39;oghma_core&#39;
+        self.sim_dir = &#34;&#34;
+        self.operating_system = platform.system()
+        self.dest_dir = &#34;&#34;
+
+    def update_cpu_count(self):
+        &#34;&#34;&#34;
+        Update the number of CPUs available for processing.
+        &#34;&#34;&#34;
+        self.cpus = mp.cpu_count()
+        if self.cpus &gt; 4:
+            self.cpus = self.cpus - 2
+        return
+
+    def clear_jobs(self):
+        &#34;&#34;&#34;
+        Clear the list of jobs.
+        &#34;&#34;&#34;
+        self.jobs = []
+
+    def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
+        &#34;&#34;&#34;
+        Add a new job to the server.
+        Args:
+            dest_dir (str): The destination directory for the job.
+            hash (str): The unique hash for the job. Defaults to an empty string.
+            args (str): Additional arguments for the job. Defaults to an empty string.
+        &#34;&#34;&#34;
+        j = job()
+        j.path = self.dest_dir
+        j.sim_dir = os.path.join(j.path,&#39;sim.json&#39;)
+        j.args = args
+        j.status = 0
+        j.name = hash
+        j.hash = hash
+        self.jobs.append(j)
+
+    def run(self):
+        &#34;&#34;&#34;
+        Execute all jobs on the server.
+        &#34;&#34;&#34;
+        self.start_time = time.time()
+        self.stop_work = False
+
+        for i in range(len(self.jobs)):
+            self.generate_job_command(self.jobs[i])
+        pbar = tqdm.tqdm(self.jobs)
+        with mp.Pool(processes=self.cpus) as p:
+            for _ in p.imap_unordered(self.worker, self.jobs):
+               pbar.update()
+
+    def generate_job_command(self, job):
+        &#34;&#34;&#34;
+        Generate the command to execute a job.
+        Args:
+            job (job): The job object.
+        Returns:
+            job: The updated job object with the full command.
+        &#34;&#34;&#34;
+        job.key = secrets.token_urlsafe(8)
+        match self.operating_system:
+            case &#39;Linux&#39;:
+                lock = &#39; --lockfile &#39;+ os.path.join(job.path, &#39;lock_#&#39;+job.key+&#39;.dat&#39;)
+                command1 = &#39;timeout 10s &#39;+ self.core_name + lock
+                command_sep = &#39;;&#39;
+                command0 = &#39;cd &#39; + job.path
+
+                job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
+            case &#39;Windows&#39;:
+                lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
+                command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
+                command_sep = &#39; &amp; &#39;
+                command0 = &#39;cd &#39; + job.path
+                job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
+            case _:
+                print(&#39;OS Not Currently Supported!&#39;)
+        return job
+    
+    @staticmethod
+    def worker(job):
+        &#34;&#34;&#34;
+        Execute a single job.
+        Args:
+            job (job): The job object.
+        Returns:
+            int: Status of the job execution.
+        &#34;&#34;&#34;
+        os.system(job.full_command)
+        return 1
+    
+    def run_command(self, command):
+        &#34;&#34;&#34;
+        Execute a custom command.
+        Args:
+            command (str): The command to execute.
+        &#34;&#34;&#34;
+        return 
+
+    def remove_files(self):
+        &#34;&#34;&#34;
+        Remove all files in the simulation directory.
+        &#34;&#34;&#34;
+        for f in glob.glob(os.path.join(os.getcwd(),&#39;OghmaSims&#39;,&#39;*&#39;), recursive=True):
+            shutil.rmtree(f)
+        return</code></pre>
+</details>
+<div class="desc"><p>Class to manage and execute simulation jobs on the server.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>running</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Indicates if the server is running.</dd>
+<dt><strong><code>stop_work</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Flag to stop the server's work.</dd>
+<dt><strong><code>start_time</code></strong> :&ensp;<code>float</code></dt>
+<dd>The start time of the server.</dd>
+<dt><strong><code>cpus</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of CPUs available for processing.</dd>
+<dt><strong><code>jobs</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of jobs to be executed.</dd>
+<dt><strong><code>callback</code></strong> :&ensp;<code>callable</code></dt>
+<dd>Callback function for job completion.</dd>
+<dt><strong><code>max_job_time</code></strong> :&ensp;<code>float</code></dt>
+<dd>Maximum allowed time for a job.</dd>
+<dt><strong><code>time_out</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Indicates if a job timed out.</dd>
+<dt><strong><code>core_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>Name of the simulation core executable.</dd>
+<dt><strong><code>sim_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Directory for simulation files.</dd>
+<dt><strong><code>operating_system</code></strong> :&ensp;<code>str</code></dt>
+<dd>The operating system of the platform.</dd>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The destination directory for job files.</dd>
+</dl>
+<p>Initialize the Server class.</p></div>
+<h3>Static methods</h3>
+<dl>
+<dt id="PyOghma.Server.Server.worker"><code class="name flex">
+<span>def <span class="ident">worker</span></span>(<span>job)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def worker(job):
+    &#34;&#34;&#34;
+    Execute a single job.
+    Args:
+        job (job): The job object.
+    Returns:
+        int: Status of the job execution.
+    &#34;&#34;&#34;
+    os.system(job.full_command)
+    return 1</code></pre>
+</details>
+<div class="desc"><p>Execute a single job.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>job</code></strong> :&ensp;<code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
+<dd>The job object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>Status of the job execution.</dd>
+</dl></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="PyOghma.Server.Server.add_job"><code class="name flex">
+<span>def <span class="ident">add_job</span></span>(<span>self, dest_dir, hash='', args='')</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
+    &#34;&#34;&#34;
+    Add a new job to the server.
+    Args:
+        dest_dir (str): The destination directory for the job.
+        hash (str): The unique hash for the job. Defaults to an empty string.
+        args (str): Additional arguments for the job. Defaults to an empty string.
+    &#34;&#34;&#34;
+    j = job()
+    j.path = self.dest_dir
+    j.sim_dir = os.path.join(j.path,&#39;sim.json&#39;)
+    j.args = args
+    j.status = 0
+    j.name = hash
+    j.hash = hash
+    self.jobs.append(j)</code></pre>
+</details>
+<div class="desc"><p>Add a new job to the server.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The destination directory for the job.</dd>
+<dt><strong><code>hash</code></strong> :&ensp;<code>str</code></dt>
+<dd>The unique hash for the job. Defaults to an empty string.</dd>
+<dt><strong><code>args</code></strong> :&ensp;<code>str</code></dt>
+<dd>Additional arguments for the job. Defaults to an empty string.</dd>
+</dl></div>
+</dd>
+<dt id="PyOghma.Server.Server.clear_jobs"><code class="name flex">
+<span>def <span class="ident">clear_jobs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear_jobs(self):
+    &#34;&#34;&#34;
+    Clear the list of jobs.
+    &#34;&#34;&#34;
+    self.jobs = []</code></pre>
+</details>
+<div class="desc"><p>Clear the list of jobs.</p></div>
+</dd>
+<dt id="PyOghma.Server.Server.generate_job_command"><code class="name flex">
+<span>def <span class="ident">generate_job_command</span></span>(<span>self, job)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_job_command(self, job):
+    &#34;&#34;&#34;
+    Generate the command to execute a job.
+    Args:
+        job (job): The job object.
+    Returns:
+        job: The updated job object with the full command.
+    &#34;&#34;&#34;
+    job.key = secrets.token_urlsafe(8)
+    match self.operating_system:
+        case &#39;Linux&#39;:
+            lock = &#39; --lockfile &#39;+ os.path.join(job.path, &#39;lock_#&#39;+job.key+&#39;.dat&#39;)
+            command1 = &#39;timeout 10s &#39;+ self.core_name + lock
+            command_sep = &#39;;&#39;
+            command0 = &#39;cd &#39; + job.path
+
+            job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
+        case &#39;Windows&#39;:
+            lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
+            command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
+            command_sep = &#39; &amp; &#39;
+            command0 = &#39;cd &#39; + job.path
+            job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
+        case _:
+            print(&#39;OS Not Currently Supported!&#39;)
+    return job</code></pre>
+</details>
+<div class="desc"><p>Generate the command to execute a job.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>job</code></strong> :&ensp;<code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
+<dd>The job object.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
+<dd>The updated job object with the full command.</dd>
+</dl></div>
+</dd>
+<dt id="PyOghma.Server.Server.remove_files"><code class="name flex">
+<span>def <span class="ident">remove_files</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove_files(self):
+    &#34;&#34;&#34;
+    Remove all files in the simulation directory.
+    &#34;&#34;&#34;
+    for f in glob.glob(os.path.join(os.getcwd(),&#39;OghmaSims&#39;,&#39;*&#39;), recursive=True):
+        shutil.rmtree(f)
+    return</code></pre>
+</details>
+<div class="desc"><p>Remove all files in the simulation directory.</p></div>
+</dd>
+<dt id="PyOghma.Server.Server.run"><code class="name flex">
+<span>def <span class="ident">run</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run(self):
+    &#34;&#34;&#34;
+    Execute all jobs on the server.
+    &#34;&#34;&#34;
+    self.start_time = time.time()
+    self.stop_work = False
+
+    for i in range(len(self.jobs)):
+        self.generate_job_command(self.jobs[i])
+    pbar = tqdm.tqdm(self.jobs)
+    with mp.Pool(processes=self.cpus) as p:
+        for _ in p.imap_unordered(self.worker, self.jobs):
+           pbar.update()</code></pre>
+</details>
+<div class="desc"><p>Execute all jobs on the server.</p></div>
+</dd>
+<dt id="PyOghma.Server.Server.run_command"><code class="name flex">
+<span>def <span class="ident">run_command</span></span>(<span>self, command)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def run_command(self, command):
+    &#34;&#34;&#34;
+    Execute a custom command.
+    Args:
+        command (str): The command to execute.
+    &#34;&#34;&#34;
+    return </code></pre>
+</details>
+<div class="desc"><p>Execute a custom command.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>command</code></strong> :&ensp;<code>str</code></dt>
+<dd>The command to execute.</dd>
+</dl></div>
+</dd>
+<dt id="PyOghma.Server.Server.update_cpu_count"><code class="name flex">
+<span>def <span class="ident">update_cpu_count</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update_cpu_count(self):
+    &#34;&#34;&#34;
+    Update the number of CPUs available for processing.
+    &#34;&#34;&#34;
+    self.cpus = mp.cpu_count()
+    if self.cpus &gt; 4:
+        self.cpus = self.cpus - 2
+    return</code></pre>
+</details>
+<div class="desc"><p>Update the number of CPUs available for processing.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="PyOghma.Server.job"><code class="flex name class">
+<span>class <span class="ident">job</span></span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class job:
+    &#34;&#34;&#34;
+    Class to represent a single simulation job.
+    Attributes:
+        name (str): The name of the job.
+        path (str): The path to the job directory.
+        args (str): Additional arguments for the job.
+        start_time (float): The start time of the job.
+        cpus (int): Number of CPUs allocated for the job.
+        status (int): The status of the job.
+    &#34;&#34;&#34;
+    def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the job class.
+        &#34;&#34;&#34;
+        self.name = &#39;&#39;
+        self.path = &#39;&#39;
+        self.args = &#39;&#39;
+        self.start_time = 0
+        self.cpus = 1
+        self.status = 0</code></pre>
+</details>
+<div class="desc"><p>Class to represent a single simulation job.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the job.</dd>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
+<dd>The path to the job directory.</dd>
+<dt><strong><code>args</code></strong> :&ensp;<code>str</code></dt>
+<dd>Additional arguments for the job.</dd>
+<dt><strong><code>start_time</code></strong> :&ensp;<code>float</code></dt>
+<dd>The start time of the job.</dd>
+<dt><strong><code>cpus</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of CPUs allocated for the job.</dd>
+<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
+<dd>The status of the job.</dd>
+</dl>
+<p>Initialize the job class.</p></div>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="PyOghma" href="index.html">PyOghma</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="PyOghma.Server.Server" href="#PyOghma.Server.Server">Server</a></code></h4>
+<ul class="">
+<li><code><a title="PyOghma.Server.Server.add_job" href="#PyOghma.Server.Server.add_job">add_job</a></code></li>
+<li><code><a title="PyOghma.Server.Server.clear_jobs" href="#PyOghma.Server.Server.clear_jobs">clear_jobs</a></code></li>
+<li><code><a title="PyOghma.Server.Server.generate_job_command" href="#PyOghma.Server.Server.generate_job_command">generate_job_command</a></code></li>
+<li><code><a title="PyOghma.Server.Server.remove_files" href="#PyOghma.Server.Server.remove_files">remove_files</a></code></li>
+<li><code><a title="PyOghma.Server.Server.run" href="#PyOghma.Server.Server.run">run</a></code></li>
+<li><code><a title="PyOghma.Server.Server.run_command" href="#PyOghma.Server.Server.run_command">run_command</a></code></li>
+<li><code><a title="PyOghma.Server.Server.update_cpu_count" href="#PyOghma.Server.Server.update_cpu_count">update_cpu_count</a></code></li>
+<li><code><a title="PyOghma.Server.Server.worker" href="#PyOghma.Server.Server.worker">worker</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
