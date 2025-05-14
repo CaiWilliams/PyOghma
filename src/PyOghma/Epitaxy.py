@@ -4,26 +4,29 @@ import ujson as json
 
 class Epitaxy:
     """
-    Class to handle the epitaxy configuration and data.
+    Handles the epitaxy configuration and data.
+
     Attributes:
         json_name (str): The name of the JSON configuration.
         name (str): The name of the epitaxy instance.
         dest_dir (str): The destination directory for saving or loading data.
+
     Methods:
-        load_config(file):
-            Load the configuration from a JSON file.
-        find_file(file):
-            Find the JSON file in the specified directory.
-        set_format():
-            Set the format of the JSON data based on the json_name.
-        update():
-            Update the JSON file with the current data.
-        load_existing():
-            Load the existing JSON data from the specified directory.
+        load_config(file: str) -> dict:
+            Loads the configuration from a JSON file.
+        find_file(file: str) -> str:
+            Finds the JSON file in the specified directory.
+        set_format() -> None:
+            Sets the format of the JSON data based on the json_name.
+        update() -> None:
+            Updates the JSON file with the current data.
+        load_existing() -> None:
+            Loads the existing JSON data from the specified directory.
     """
     def __init__(self):
         """
-        Initialize the Epitaxy class.
+        Initializes the Epitaxy class.
+
         Attributes:
             json_name (str): The name of the JSON configuration.
             name (str): The name of the epitaxy instance.
@@ -35,21 +38,25 @@ class Epitaxy:
 
     def load_config(self, file):
         """
-        Load the configuration from a JSON file.
+        Loads the configuration from a JSON file.
+
         Args:
             file (str): The name of the JSON file to load.
+
         Returns:
             dict: The loaded JSON data.
-        """ 
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
         """
-        Find the JSON file in the specified directory.
+        Finds the JSON file in the specified directory.
+
         Args:
             file (str): The name of the JSON file to find.
+
         Returns:
             str: The path to the found JSON file.
         """
@@ -60,7 +67,10 @@ class Epitaxy:
 
     def set_format(self):
         """
-        Set the format of the JSON data based on the json_name.
+        Sets the format of the JSON data based on the json_name.
+
+        Returns:
+            None
         """
         match self.json_name:
             case 'light':
@@ -72,7 +82,8 @@ class Epitaxy:
 
     def update(self):
         """
-        Update the JSON file with the current data.
+        Updates the JSON file with the current data.
+
         Returns:
             None
         """
@@ -82,9 +93,13 @@ class Epitaxy:
     
     def load_existing(self):
         """
-        Load the existing JSON data from the specified directory.
+        Loads the existing JSON data from the specified directory.
+
         Attributes:
             data (dict): The loaded JSON data.
+
+        Returns:
+            None
         """
         with open(os.path.join(self.dest_dir,'sim.json'), 'r') as j:
             self.data = json.load(j)
@@ -92,29 +107,32 @@ class Epitaxy:
         num_layers = self.data['epitaxy']['segments']
         for idx in range(num_layers):
             setattr(self, self.data['epitaxy']['segment'+str(idx)]['name'].lower().replace(':',''), Layer(self.data['epitaxy']['segment'+str(idx)]))
-            #temp.append(getattr(self, self.data['epitaxy']['layer'+str(idx)]['name'].lower().replace(':','')))
-        #print(temp)
             
 
 
 class Layer(Epitaxy):
     """
-    Class to handle the layer data and properties.
-    Inherits from:
+    Handles the layer data and properties.
+
+    Inherits:
         Epitaxy
+
     Attributes:
         layer_data (dict): The data for the specific layer.
         name (str): The name of the layer.
         dos (DOS): An instance of the DOS class for managing density of states.
+
     Methods:
-        thickness(dx):
-            Set the thickness of the layer.
+        thickness(dx: float) -> None:
+            Sets the thickness of the layer.
     """
     def __init__(self, layer):
         """
-        Initialize the Layer class.
+        Initializes the Layer class.
+
         Args:
             layer (dict): The layer data.
+
         Attributes:
             layer_data (dict): The data for the specific layer.
             name (str): The name of the layer.
@@ -122,18 +140,21 @@ class Layer(Epitaxy):
         """
         super(Epitaxy, self).__init__()
         self.layer_data = layer
-        #print(self.layer_data.keys())
         self.name = self.layer_data['name']
         self.layer_data['id'] = 'id' + str(secrets.token_hex(8))
         self.dos = DOS()
         self.dos.set_dos(self.layer_data)
 
     
-    def thickness(self,dx):
+    def thickness(self, dx):
         """
-        Set the thickness of the layer.
+        Sets the thickness of the layer.
+
         Args:
             dx (float): The thickness of the layer.
+
+        Returns:
+            None
         """
         self.layer_data['dx'] =  dx
 
@@ -141,45 +162,48 @@ class Layer(Epitaxy):
 
 class DOS:
     """
-    Class to handle the density of states (DOS) data and properties.
+    Handles the density of states (DOS) data and properties.
+
     Attributes:
         dos_name (str): The name of the DOS configuration.
         data (dict): The DOS data for the layer.
+
     Methods:
-        set_dos(layer_data):
-            Set the DOS data for the layer.
-        enable():
-            Enable the DOS.
-        disable():
-            Disable the DOS.
-        type(type):
-            Set the type of DOS.
-        shape(band, function, a=0, b=0, c=0):
-            Set the shape of the DOS.
-        apply_shape(dos, func, a, b, c, state='True'):
-            Apply the shape function to the DOS data.
-        mobility(carriers, mobility):
-            Set the mobility for the specified carriers.
-        free_states_density(carriers, density):
-            Set the free states density for the specified carriers.
-        trap_density(carriers, density):
-            Set the trap density for the specified carriers.
-        urbach_energy(carriers, energy):
-            Set the Urbach energy for the specified carriers.
-        trapping_rate(carriers, direction, rate):
-            Set the trapping rate for the specified carriers and direction.
-        Xi(xi):
-            Set the electron affinity (Xi).
-        Eg(eg):
-            Set the bandgap energy (Eg).
-        relative_permittivity(er):
-            Set the relative permittivity.
-        shape_bands(bands):
-            Set the shape of the bands.
+        set_dos(layer_data: dict) -> None:
+            Sets the DOS data for the layer.
+        enable() -> None:
+            Enables the DOS.
+        disable() -> None:
+            Disables the DOS.
+        type(type: str) -> None:
+            Sets the type of DOS.
+        shape(band: str, function: str, a: float = 0, b: float = 0, c: float = 0) -> None:
+            Sets the shape of the DOS.
+        apply_shape(dos: dict, func: str, a: float, b: float, c: float, state: str = 'True') -> None:
+            Applies the shape function to the DOS data.
+        mobility(carriers: str, mobility: float) -> None:
+            Sets the mobility for the specified carriers.
+        free_states_density(carriers: str, density: float) -> None:
+            Sets the free states density for the specified carriers.
+        trap_density(carriers: str, density: float) -> None:
+            Sets the trap density for the specified carriers.
+        urbach_energy(carriers: str, energy: float) -> None:
+            Sets the Urbach energy for the specified carriers.
+        trapping_rate(carriers: str, direction: str, rate: float) -> None:
+            Sets the trapping rate for the specified carriers and direction.
+        Xi(xi: float) -> None:
+            Sets the electron affinity (Xi).
+        Eg(eg: float) -> None:
+            Sets the bandgap energy (Eg).
+        relative_permittivity(er: float) -> None:
+            Sets the relative permittivity.
+        shape_bands(bands: str) -> None:
+            Sets the shape of the bands.
     """
     def __ini__(self):
         """
-        Initialize the DOS class.
+        Initializes the DOS class.
+
         Attributes:
             dos_name (str): The name of the DOS configuration.
         """
@@ -187,29 +211,43 @@ class DOS:
     
     def set_dos(self, layer_data):
         """
-        Set the DOS data for the layer.
+        Sets the DOS data for the layer.
+
         Args:
             layer_data (dict): The layer data.
+
+        Returns:
+            None
         """
         self.data = layer_data['shape_dos']
 
     def enable(self):
         """
-        Enable the DOS.
+        Enables the DOS.
+
+        Returns:
+            None
         """
         self.data['enabled'] = 'True'
 
     def disable(self):
         """
-        Disable the DOS.
+        Disables the DOS.
+
+        Returns:
+            None
         """
         self.data['enabled'] = 'False'
     
     def type(self, type):
         """
-        Set the type of DOS.
+        Sets the type of DOS.
+
         Args:
             type (str): The type of DOS.
+
+        Returns:
+            None
         """
         match type.lower():
             case 'exponential':
@@ -221,13 +259,17 @@ class DOS:
     
     def shape(self, band, function, a=0, b=0, c=0):
         """
-        Set the shape of the DOS.
+        Sets the shape of the DOS.
+
         Args:
             band (str): The band type (e.g., 'homo', 'lumo', 'both').
-            function(str): The function defining the DOS (e.g, 'exponentional', 'gaussian', 'powerlaw', 'lorentzian', 'custom').
-            a (float): Function specific parameter.
-            b (float): Function specific parameter.
-            c (float): Function specific parameter.
+            function (str): The function defining the DOS (e.g., 'exponential', 'gaussian', 'powerlaw', 'lorentzian', 'custom').
+            a (float): Function-specific parameter.
+            b (float): Function-specific parameter.
+            c (float): Function-specific parameter.
+
+        Returns:
+            None
         """
         match function.lower():
             case 'exponential':
@@ -273,17 +315,17 @@ class DOS:
         """
         Modifies the 'segment0' of the given data structure (dos) by applying a specified function 
         and its parameters, and optionally enabling or disabling the function.
+
         Args:
             dos (dict): A dictionary representing the data structure to be modified. 
-                        It must contain a 'segment0' key.
             func (str): The name of the function to be applied.
             a (float): The first parameter for the function.
             b (float): The second parameter for the function.
             c (float): The third parameter for the function.
-            state (str, optional): A string indicating whether the function is enabled. 
-                                   Defaults to 'True'.
+            state (str, optional): A string indicating whether the function is enabled. Defaults to 'True'.
+
         Returns:
-            None: This method modifies the input dictionary in place.
+            None
         """
         dos['segment0']['function'] = func
         dos['segment0']['function_enable'] = state
@@ -293,10 +335,14 @@ class DOS:
 
     def mobility(self, carriers, mobility):
         """
-        Set the mobility for the specified carriers.
+        Sets the mobility for the specified carriers.
+
         Args:
             carriers (str): The type of carriers ('electrons', 'holes', 'both').
             mobility (float): The mobility value.
+
+        Returns:
+            None
         """
         match carriers.lower():
             case 'electrons':
@@ -311,10 +357,14 @@ class DOS:
     
     def free_states_density(self, carriers, density):
         """
-        Set the free states density for the specified carriers.
+        Sets the free states density for the specified carriers.
+
         Args:
             carriers (str): The type of carriers ('electrons', 'holes', 'both').
             density (float): The density value.
+
+        Returns:
+            None
         """
         match carriers.lower():
             case 'electrons':
@@ -329,10 +379,14 @@ class DOS:
     
     def trap_density(self, carriers, density):
         """
-        Set the trap density for the specified carriers.
+        Sets the trap density for the specified carriers.
+
         Args:
             carriers (str): The type of carriers ('electrons', 'holes', 'both').
             density (float): The density value.
+
+        Returns:
+            None
         """
         match self.data['dostype']:
             case 'exponential':
@@ -355,10 +409,14 @@ class DOS:
     
     def urbach_energy(self, carriers, energy):
         """
-        Set the Urbach energy for the specified carriers.
+        Sets the Urbach energy for the specified carriers.
+
         Args:
             carriers (str): The type of carriers ('electrons', 'holes', 'both').
             energy (float): The Urbach energy value.
+
+        Returns:
+            None
         """
         match carriers.lower():
             case 'electrons':
@@ -374,42 +432,62 @@ class DOS:
     def fe_to_te(self, rate):
         """
         Set the free-to-trap rate for electrons.
+
         Args:
             rate (float): The rate value.
+
+        Returns:
+            None
         """
         self.data['srhsigman_e'] = rate
 
     def te_to_fh(self, rate):
         """
         Set the trap-to-free rate for electrons.
+
         Args:
             rate (float): The rate value.
+
+        Returns:
+            None
         """
         self.data['srhsigmap_e'] = rate
 
     def th_to_fe(self, rate):
         """
         Set the trap-to-free rate for holes.
+
         Args:
             rate (float): The rate value.
+
+        Returns:
+            None
         """
         self.data['srhsigman_h'] = rate
 
     def fh_to_th(self, rate):
         """
         Set the free-to-trap rate for holes.
+
         Args:
             rate (float): The rate value.
+
+        Returns:
+            None
         """
         self.data['srhsigmap_h'] = rate
     
     def trapping_rate(self, carriers, direction, rate):
         """
-        Set the trapping rate for the specified carriers and direction.
+        Sets the trapping rate for the specified carriers and direction.
+
         Args:
             carriers (str): The type of carriers ('electrons', 'holes', 'both').
             direction (str): The direction of trapping ('free to trap', 'trap to free').
             rate (float): The trapping rate value.
+
+        Returns:
+            None
         """
         match carriers.lower():
             case 'electrons':
@@ -443,33 +521,49 @@ class DOS:
     
     def Xi(self, xi):
         """
-        Set the electron affinity (Xi).
+        Sets the electron affinity (Xi).
+
         Args:
             xi (float): The electron affinity value.
+
+        Returns:
+            None
         """
         self.data['Xi'] = xi
     
     def Eg(self, eg):
         """
-        Set the bandgap energy (Eg).
+        Sets the bandgap energy (Eg).
+
         Args:
             eg (float): The bandgap energy value.
+
+        Returns:
+            None
         """
         self.data['Eg'] = eg
     
     def relative_permittivity(self, er):
         """
-        Set the relative permittivity.
+        Sets the relative permittivity.
+
         Args:
             er (float): The relative permittivity value.
+
+        Returns:
+            None
         """
         self.data['epsilonr'] = er
     
     def shape_bands(self, bands):
         """
-        Set the shape of the bands.
+        Sets the shape of the bands.
+
         Args:
             bands (str): The band shape configuration.
+
+        Returns:
+            None
         """
         self.data['srh_bands'] = bands
 
