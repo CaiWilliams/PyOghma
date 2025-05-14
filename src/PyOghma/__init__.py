@@ -5,10 +5,6 @@ PyOghma provides a programmatic interface to configure, execute, and analyze dri
 It simplifies workflows for researchers and engineers by enabling seamless integration of optical, thermal, epitaxy, 
 and simulation configurations. PyOghma also includes tools for analyzing simulation results and calculating key metrics.
 
-Modules:
-- OghmaNano: Main class to manage simulations and configurations.
-- Results: Class to handle and analyze simulation results.
-- Calculate: Classes to compute metrics such as ideality factor, transport resistance, and pseudo JV curves.
 """
 
 from .OghmaNano import OghmaNano
