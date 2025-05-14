@@ -55,26 +55,8 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Server:
-    &#34;&#34;&#34;
-    Class to manage and execute simulation jobs on the server.
-    Attributes:
-        running (bool): Indicates if the server is running.
-        stop_work (bool): Flag to stop the server&#39;s work.
-        start_time (float): The start time of the server.
-        cpus (int): Number of CPUs available for processing.
-        jobs (list): List of jobs to be executed.
-        callback (callable): Callback function for job completion.
-        max_job_time (float): Maximum allowed time for a job.
-        time_out (bool): Indicates if a job timed out.
-        core_name (str): Name of the simulation core executable.
-        sim_dir (str): Directory for simulation files.
-        operating_system (str): The operating system of the platform.
-        dest_dir (str): The destination directory for job files.
-    &#34;&#34;&#34;
+
     def __init__(self):
-        &#34;&#34;&#34;
-        Initialize the Server class.
-        &#34;&#34;&#34;
         self.running = False
         self.stop_work = False
         self.start_time = 0
@@ -88,29 +70,17 @@ el.replaceWith(d);
         self.operating_system = platform.system()
         self.dest_dir = &#34;&#34;
 
+
     def update_cpu_count(self):
-        &#34;&#34;&#34;
-        Update the number of CPUs available for processing.
-        &#34;&#34;&#34;
         self.cpus = mp.cpu_count()
         if self.cpus &gt; 4:
             self.cpus = self.cpus - 2
         return
 
     def clear_jobs(self):
-        &#34;&#34;&#34;
-        Clear the list of jobs.
-        &#34;&#34;&#34;
         self.jobs = []
 
     def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
-        &#34;&#34;&#34;
-        Add a new job to the server.
-        Args:
-            dest_dir (str): The destination directory for the job.
-            hash (str): The unique hash for the job. Defaults to an empty string.
-            args (str): Additional arguments for the job. Defaults to an empty string.
-        &#34;&#34;&#34;
         j = job()
         j.path = self.dest_dir
         j.sim_dir = os.path.join(j.path,&#39;sim.json&#39;)
@@ -121,27 +91,27 @@ el.replaceWith(d);
         self.jobs.append(j)
 
     def run(self):
-        &#34;&#34;&#34;
-        Execute all jobs on the server.
-        &#34;&#34;&#34;
         self.start_time = time.time()
         self.stop_work = False
 
+        # with mp.Pool(processes=self.cpus) as p:
+        #     with tqdm.tqdm(total=len(self.jobs)) as pbar:
+        #         for _ in p.imap(self.generate_job_command, self.jobs):
+        #             pbar.update()
         for i in range(len(self.jobs)):
             self.generate_job_command(self.jobs[i])
+        # for job in self.jobs:
+        #     self.worker(job)
+        #self.worker(self.jobs[0])
         pbar = tqdm.tqdm(self.jobs)
         with mp.Pool(processes=self.cpus) as p:
             for _ in p.imap_unordered(self.worker, self.jobs):
                pbar.update()
+        #self.remove_lock_files()
+        #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
+            #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))
 
-    def generate_job_command(self, job):
-        &#34;&#34;&#34;
-        Generate the command to execute a job.
-        Args:
-            job (job): The job object.
-        Returns:
-            job: The updated job object with the full command.
-        &#34;&#34;&#34;
+    def generate_job_command(self,job):
         job.key = secrets.token_urlsafe(8)
         match self.operating_system:
             case &#39;Linux&#39;:
@@ -150,12 +120,17 @@ el.replaceWith(d);
                 command_sep = &#39;;&#39;
                 command0 = &#39;cd &#39; + job.path
 
-                job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
+                job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;#+ &#39; --sim-root-path &#39; + job.sim_dir&#39;
             case &#39;Windows&#39;:
                 lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
+                #command1 = os.path.join(&#34;C:&#34;, os.sep, &#39;Program Files (x86)&#39;, &#39;OghmaNano&#39;)
                 command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
                 command_sep = &#39; &amp; &#39;
                 command0 = &#39;cd &#39; + job.path
+               # command1 = os.path.join(os.getcwd(), &#39;standard_device&#39;) + &#39; &amp; &#34;oghma_core.exe&#34;&#39; #+ command1 + &#34;&#34;
+                #command1 = command1 + lock
+
+                #command1 = self.core_name + &#39;.exe&#39;
                 job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
             case _:
                 print(&#39;OS Not Currently Supported!&#39;)
@@ -163,61 +138,18 @@ el.replaceWith(d);
     
     @staticmethod
     def worker(job):
-        &#34;&#34;&#34;
-        Execute a single job.
-        Args:
-            job (job): The job object.
-        Returns:
-            int: Status of the job execution.
-        &#34;&#34;&#34;
         os.system(job.full_command)
         return 1
     
-    def run_command(self, command):
-        &#34;&#34;&#34;
-        Execute a custom command.
-        Args:
-            command (str): The command to execute.
-        &#34;&#34;&#34;
+    def run_command(comand):
         return 
 
     def remove_files(self):
-        &#34;&#34;&#34;
-        Remove all files in the simulation directory.
-        &#34;&#34;&#34;
         for f in glob.glob(os.path.join(os.getcwd(),&#39;OghmaSims&#39;,&#39;*&#39;), recursive=True):
             shutil.rmtree(f)
         return</code></pre>
 </details>
-<div class="desc"><p>Class to manage and execute simulation jobs on the server.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>running</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Indicates if the server is running.</dd>
-<dt><strong><code>stop_work</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Flag to stop the server's work.</dd>
-<dt><strong><code>start_time</code></strong> :&ensp;<code>float</code></dt>
-<dd>The start time of the server.</dd>
-<dt><strong><code>cpus</code></strong> :&ensp;<code>int</code></dt>
-<dd>Number of CPUs available for processing.</dd>
-<dt><strong><code>jobs</code></strong> :&ensp;<code>list</code></dt>
-<dd>List of jobs to be executed.</dd>
-<dt><strong><code>callback</code></strong> :&ensp;<code>callable</code></dt>
-<dd>Callback function for job completion.</dd>
-<dt><strong><code>max_job_time</code></strong> :&ensp;<code>float</code></dt>
-<dd>Maximum allowed time for a job.</dd>
-<dt><strong><code>time_out</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Indicates if a job timed out.</dd>
-<dt><strong><code>core_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>Name of the simulation core executable.</dd>
-<dt><strong><code>sim_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>Directory for simulation files.</dd>
-<dt><strong><code>operating_system</code></strong> :&ensp;<code>str</code></dt>
-<dd>The operating system of the platform.</dd>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory for job files.</dd>
-</dl>
-<p>Initialize the Server class.</p></div>
+<div class="desc"></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="PyOghma.Server.Server.worker"><code class="name flex">
@@ -230,27 +162,10 @@ el.replaceWith(d);
 </summary>
 <pre><code class="python">@staticmethod
 def worker(job):
-    &#34;&#34;&#34;
-    Execute a single job.
-    Args:
-        job (job): The job object.
-    Returns:
-        int: Status of the job execution.
-    &#34;&#34;&#34;
     os.system(job.full_command)
     return 1</code></pre>
 </details>
-<div class="desc"><p>Execute a single job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>job</code></strong> :&ensp;<code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
-<dd>The job object.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>int</code></dt>
-<dd>Status of the job execution.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 <h3>Methods</h3>
@@ -264,13 +179,6 @@ def worker(job):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
-    &#34;&#34;&#34;
-    Add a new job to the server.
-    Args:
-        dest_dir (str): The destination directory for the job.
-        hash (str): The unique hash for the job. Defaults to an empty string.
-        args (str): Additional arguments for the job. Defaults to an empty string.
-    &#34;&#34;&#34;
     j = job()
     j.path = self.dest_dir
     j.sim_dir = os.path.join(j.path,&#39;sim.json&#39;)
@@ -280,16 +188,7 @@ def worker(job):
     j.hash = hash
     self.jobs.append(j)</code></pre>
 </details>
-<div class="desc"><p>Add a new job to the server.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory for the job.</dd>
-<dt><strong><code>hash</code></strong> :&ensp;<code>str</code></dt>
-<dd>The unique hash for the job. Defaults to an empty string.</dd>
-<dt><strong><code>args</code></strong> :&ensp;<code>str</code></dt>
-<dd>Additional arguments for the job. Defaults to an empty string.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.clear_jobs"><code class="name flex">
 <span>def <span class="ident">clear_jobs</span></span>(<span>self)</span>
@@ -300,12 +199,9 @@ def worker(job):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def clear_jobs(self):
-    &#34;&#34;&#34;
-    Clear the list of jobs.
-    &#34;&#34;&#34;
     self.jobs = []</code></pre>
 </details>
-<div class="desc"><p>Clear the list of jobs.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.generate_job_command"><code class="name flex">
 <span>def <span class="ident">generate_job_command</span></span>(<span>self, job)</span>
@@ -315,14 +211,7 @@ def worker(job):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_job_command(self, job):
-    &#34;&#34;&#34;
-    Generate the command to execute a job.
-    Args:
-        job (job): The job object.
-    Returns:
-        job: The updated job object with the full command.
-    &#34;&#34;&#34;
+<pre><code class="python">def generate_job_command(self,job):
     job.key = secrets.token_urlsafe(8)
     match self.operating_system:
         case &#39;Linux&#39;:
@@ -331,28 +220,23 @@ def worker(job):
             command_sep = &#39;;&#39;
             command0 = &#39;cd &#39; + job.path
 
-            job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
+            job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;#+ &#39; --sim-root-path &#39; + job.sim_dir&#39;
         case &#39;Windows&#39;:
             lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
+            #command1 = os.path.join(&#34;C:&#34;, os.sep, &#39;Program Files (x86)&#39;, &#39;OghmaNano&#39;)
             command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
             command_sep = &#39; &amp; &#39;
             command0 = &#39;cd &#39; + job.path
+           # command1 = os.path.join(os.getcwd(), &#39;standard_device&#39;) + &#39; &amp; &#34;oghma_core.exe&#34;&#39; #+ command1 + &#34;&#34;
+            #command1 = command1 + lock
+
+            #command1 = self.core_name + &#39;.exe&#39;
             job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
         case _:
             print(&#39;OS Not Currently Supported!&#39;)
     return job</code></pre>
 </details>
-<div class="desc"><p>Generate the command to execute a job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>job</code></strong> :&ensp;<code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
-<dd>The job object.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code><a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></code></dt>
-<dd>The updated job object with the full command.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.remove_files"><code class="name flex">
 <span>def <span class="ident">remove_files</span></span>(<span>self)</span>
@@ -363,14 +247,11 @@ def worker(job):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def remove_files(self):
-    &#34;&#34;&#34;
-    Remove all files in the simulation directory.
-    &#34;&#34;&#34;
     for f in glob.glob(os.path.join(os.getcwd(),&#39;OghmaSims&#39;,&#39;*&#39;), recursive=True):
         shutil.rmtree(f)
     return</code></pre>
 </details>
-<div class="desc"><p>Remove all files in the simulation directory.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.run"><code class="name flex">
 <span>def <span class="ident">run</span></span>(<span>self)</span>
@@ -381,43 +262,40 @@ def worker(job):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def run(self):
-    &#34;&#34;&#34;
-    Execute all jobs on the server.
-    &#34;&#34;&#34;
     self.start_time = time.time()
     self.stop_work = False
 
+    # with mp.Pool(processes=self.cpus) as p:
+    #     with tqdm.tqdm(total=len(self.jobs)) as pbar:
+    #         for _ in p.imap(self.generate_job_command, self.jobs):
+    #             pbar.update()
     for i in range(len(self.jobs)):
         self.generate_job_command(self.jobs[i])
+    # for job in self.jobs:
+    #     self.worker(job)
+    #self.worker(self.jobs[0])
     pbar = tqdm.tqdm(self.jobs)
     with mp.Pool(processes=self.cpus) as p:
         for _ in p.imap_unordered(self.worker, self.jobs):
-           pbar.update()</code></pre>
+           pbar.update()
+    #self.remove_lock_files()
+    #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
+        #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))</code></pre>
 </details>
-<div class="desc"><p>Execute all jobs on the server.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.run_command"><code class="name flex">
-<span>def <span class="ident">run_command</span></span>(<span>self, command)</span>
+<span>def <span class="ident">run_command</span></span>(<span>comand)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run_command(self, command):
-    &#34;&#34;&#34;
-    Execute a custom command.
-    Args:
-        command (str): The command to execute.
-    &#34;&#34;&#34;
+<pre><code class="python">def run_command(comand):
     return </code></pre>
 </details>
-<div class="desc"><p>Execute a custom command.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>command</code></strong> :&ensp;<code>str</code></dt>
-<dd>The command to execute.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Server.Server.update_cpu_count"><code class="name flex">
 <span>def <span class="ident">update_cpu_count</span></span>(<span>self)</span>
@@ -428,15 +306,12 @@ def worker(job):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update_cpu_count(self):
-    &#34;&#34;&#34;
-    Update the number of CPUs available for processing.
-    &#34;&#34;&#34;
     self.cpus = mp.cpu_count()
     if self.cpus &gt; 4:
         self.cpus = self.cpus - 2
     return</code></pre>
 </details>
-<div class="desc"><p>Update the number of CPUs available for processing.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -448,21 +323,8 @@ def worker(job):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class job:
-    &#34;&#34;&#34;
-    Class to represent a single simulation job.
-    Attributes:
-        name (str): The name of the job.
-        path (str): The path to the job directory.
-        args (str): Additional arguments for the job.
-        start_time (float): The start time of the job.
-        cpus (int): Number of CPUs allocated for the job.
-        status (int): The status of the job.
-    &#34;&#34;&#34;
+<pre><code class="python">class job():
     def __init__(self):
-        &#34;&#34;&#34;
-        Initialize the job class.
-        &#34;&#34;&#34;
         self.name = &#39;&#39;
         self.path = &#39;&#39;
         self.args = &#39;&#39;
@@ -470,23 +332,7 @@ def worker(job):
         self.cpus = 1
         self.status = 0</code></pre>
 </details>
-<div class="desc"><p>Class to represent a single simulation job.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the job.</dd>
-<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The path to the job directory.</dd>
-<dt><strong><code>args</code></strong> :&ensp;<code>str</code></dt>
-<dd>Additional arguments for the job.</dd>
-<dt><strong><code>start_time</code></strong> :&ensp;<code>float</code></dt>
-<dd>The start time of the job.</dd>
-<dt><strong><code>cpus</code></strong> :&ensp;<code>int</code></dt>
-<dd>Number of CPUs allocated for the job.</dd>
-<dt><strong><code>status</code></strong> :&ensp;<code>int</code></dt>
-<dd>The status of the job.</dd>
-</dl>
-<p>Initialize the job class.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </section>
