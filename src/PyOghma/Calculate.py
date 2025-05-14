@@ -15,11 +15,6 @@ class Ideality_Factor:
         Voc (list): List of open-circuit voltages extracted from the experimental data.
         GenRate (list): List of generation rates extracted from the experimental data.
         result (float): The calculated ideality factor.
-    Methods:
-        __init__(exp):
-            Initializes the Ideality_Factor object by loading experimental data from the given file.
-        calculate(temp=300):
-            Calculates the ideality factor based on the experimental data.
     """
     def __init__(self, exp):
         """
@@ -35,7 +30,6 @@ class Ideality_Factor:
             FileNotFoundError: If the specified file does not exist.
             json.JSONDecodeError: If the file content is not valid JSON.
         """
-        
         self.exp = exp
         self.system = platform.system()
         if self.system == 'Linux':
@@ -46,7 +40,6 @@ class Ideality_Factor:
             import gzip
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
-
 
     def calculate(self, temp=300):
         """
@@ -70,7 +63,6 @@ class Ideality_Factor:
             - The Boltzmann constant and elementary charge are retrieved using 
               the `scipy.constants.value` function.
         """
-
         kb = sc.value('Boltzmann constant in eV/K')
         e = sc.value('elementary charge')
         self.Voc = []
@@ -97,15 +89,7 @@ class Transport_Resistance:
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
         TR_Voc (list): List of calculated transport resistance at open-circuit voltage.
-    Methods:
-        __init__(exp):
-            Initializes the Transport_Resistance object, loads experimental data,
-            and calculates pseudo JV data.
-        calculate():
-            Calculates the transport resistance at open-circuit voltage (TR_Voc)
-            for each experimental hash in the data.
     """
-
     def __init__(self, exp):
         """
         Initializes the Transport_Resistance class.
@@ -121,7 +105,6 @@ class Transport_Resistance:
             OSError: If there is an issue opening or reading the file.
             JSONDecodeError: If the file content is not valid JSON.
         """
-
         self.exp = exp
         self.system = platform.system()
         if self.system == 'Linux':
@@ -139,20 +122,13 @@ class Transport_Resistance:
 
     def calculate(self):
         """
-        Perform calculations to compute the transient recombination open-circuit voltage (TR_Voc) 
+        Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
         for experimental data.
         This method processes JV (current-voltage) data and pJV (perturbed JV) data for each 
         experimental hash, interpolates the data using PCHIP (Piecewise Cubic Hermite Interpolating 
         Polynomial), and calculates the derivative of the voltage difference (Vtr) with respect to 
         the perturbed current density (pj). The resulting derivative at zero current density is 
         appended to the TR_Voc list.
-        Steps:
-        1. Extract JV and pJV data for each experimental hash.
-        2. Ensure data consistency by removing duplicate values.
-        3. Interpolate JV and pJV data using PCHIP.
-        4. Compute the voltage difference (Vtr) between the interpolated JV and pJV data.
-        5. Calculate the derivative of Vtr with respect to pj.
-        6. Append the derivative value at zero current density to the TR_Voc list.
         Attributes:
             self.TR_Voc (list): A list to store the calculated TR_Voc values for each experimental hash.
         Raises:
@@ -162,7 +138,6 @@ class Transport_Resistance:
               'experiment' and 'hashes', and that JV and pJV data are provided for each hash.
             - The interpolation and derivative calculations rely on numpy and scipy libraries.
         """
-
         self.TR_Voc = []
         for idx,h in enumerate(self.data['experiment']['hashes']):
 
@@ -214,7 +189,6 @@ class Transport_Resistance:
             x0 = np.argwhere(x == 0).ravel()
             self.TR_Voc.append(DVtr[x0[0]])
 
-
 class Psudo_JV:
     """
     Class to calculate the pseudo JV of a diode.
@@ -224,13 +198,7 @@ class Psudo_JV:
         data (dict): The experimental data loaded from the file.
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
-    Methods:
-        __init__(exp):
-            Initializes the Psudo_JV object and loads experimental data.
-        calculate():
-            Calculates the pseudo JV data for the diode.
     """
-
     def __init__(self, exp):
         """
         Initializes the Psudo_JV class.
@@ -254,7 +222,6 @@ class Psudo_JV:
             import gzip
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
-
 
     def calculate(self):
         """

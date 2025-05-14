@@ -21,17 +21,6 @@ class ml:
         ml_sim (ml_sim): Instance of the ml_sim class.
         ml_config (ml_config): Instance of the ml_config class.
         ml_networks (ml_networks): Instance of the ml_networks class.
-    Methods:
-        propegate_dest_dir(dest_dir):
-            Propagate the destination directory to all subcomponents.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
     """
     def __init__(self):
         """
@@ -127,9 +116,6 @@ class ml_random(ml):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The random input configuration data.
-    Methods:
-        set_inputs(*inputs):
-            Set the random inputs for the configuration.
     """
     def __init__(self):
         """
@@ -162,13 +148,6 @@ class ml_input:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The input configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_input(state, param, param_min, param_max):
-            Set the input parameters.
     """
     def __init__(self, dest_dir):
         """
@@ -280,9 +259,6 @@ class ml_sim(ml):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The simulation configuration data.
-    Methods:
-        set_sim(Sims):
-            Set the simulation configurations.
     """
     def __init__(self):
         """
@@ -339,13 +315,6 @@ class ml_sim_patch:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The patch configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_patch(state, param, param_val):
-            Set the patch parameters.
     """
     def __init__(self, dest_dir):
         """
@@ -408,15 +377,6 @@ class ml_sim_output_vector:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The output vector configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_output_vector(state, file_name, vector_start, vector_end, vector_step, import_config):
-            Set the output vector parameters.
-        set_name(name):
-            Set the name for the output vector configuration.
     """
     def __init__(self, dest_dir):
         """
@@ -500,17 +460,6 @@ class ml_sim_output_vector_import_cofig:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The import configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_import_cofig(import_dir, x_data, y_data, import_area, x_spin, data_spin):
-            Set the import configuration parameters.
-        set_name(file_name, sim_name):
-            Set the name for the import configuration.
-        get_combo_pos(x):
-            Get the position of a combo box item.
     """
     def __init__(self, dest_dir):
         """
@@ -609,11 +558,6 @@ class ml_config(ml):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The configuration data.
-    Methods:
-        set_config(num_archives, sim_per_archive):
-            Set the configuration parameters.
-        find_file(file):
-            Find a file in the directory structure.
     """
     def __init__(self):
         """
@@ -711,7 +655,7 @@ class ml_network_input:
         self.data = {}
         self.data["none"] = "none"
         self.segments = len(ml_output_vectors)
-        for idx,vector in enumerate():
+        for idx,vector in enumerate(ml_output_vectors):
             segment_data = {}
             segment_data["ml_input_vector"] = vector.data["file_name"]
             self.data['segment'+str(idx)] = segment_data

@@ -10,18 +10,6 @@ class Epitaxy:
         json_name (str): The name of the JSON configuration.
         name (str): The name of the epitaxy instance.
         dest_dir (str): The destination directory for saving or loading data.
-
-    Methods:
-        load_config(file: str) -> dict:
-            Loads the configuration from a JSON file.
-        find_file(file: str) -> str:
-            Finds the JSON file in the specified directory.
-        set_format() -> None:
-            Sets the format of the JSON data based on the json_name.
-        update() -> None:
-            Updates the JSON file with the current data.
-        load_existing() -> None:
-            Loads the existing JSON data from the specified directory.
     """
     def __init__(self):
         """
@@ -121,10 +109,6 @@ class Layer(Epitaxy):
         layer_data (dict): The data for the specific layer.
         name (str): The name of the layer.
         dos (DOS): An instance of the DOS class for managing density of states.
-
-    Methods:
-        thickness(dx: float) -> None:
-            Sets the thickness of the layer.
     """
     def __init__(self, layer):
         """
@@ -167,38 +151,6 @@ class DOS:
     Attributes:
         dos_name (str): The name of the DOS configuration.
         data (dict): The DOS data for the layer.
-
-    Methods:
-        set_dos(layer_data: dict) -> None:
-            Sets the DOS data for the layer.
-        enable() -> None:
-            Enables the DOS.
-        disable() -> None:
-            Disables the DOS.
-        type(type: str) -> None:
-            Sets the type of DOS.
-        shape(band: str, function: str, a: float = 0, b: float = 0, c: float = 0) -> None:
-            Sets the shape of the DOS.
-        apply_shape(dos: dict, func: str, a: float, b: float, c: float, state: str = 'True') -> None:
-            Applies the shape function to the DOS data.
-        mobility(carriers: str, mobility: float) -> None:
-            Sets the mobility for the specified carriers.
-        free_states_density(carriers: str, density: float) -> None:
-            Sets the free states density for the specified carriers.
-        trap_density(carriers: str, density: float) -> None:
-            Sets the trap density for the specified carriers.
-        urbach_energy(carriers: str, energy: float) -> None:
-            Sets the Urbach energy for the specified carriers.
-        trapping_rate(carriers: str, direction: str, rate: float) -> None:
-            Sets the trapping rate for the specified carriers and direction.
-        Xi(xi: float) -> None:
-            Sets the electron affinity (Xi).
-        Eg(eg: float) -> None:
-            Sets the bandgap energy (Eg).
-        relative_permittivity(er: float) -> None:
-            Sets the relative permittivity.
-        shape_bands(bands: str) -> None:
-            Sets the shape of the bands.
     """
     def __ini__(self):
         """

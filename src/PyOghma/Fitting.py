@@ -18,17 +18,6 @@ class Fitting:
         Vars (Vars): Instance of the Vars class.
         Rules (Rules): Instance of the Rules class.
         Fits (Fits): Instance of the Fits class.
-    Methods:
-        propegate_dest_dir(dest_dir):
-            Propagate the destination directory to all subcomponents.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
     """
     def __init__(self):
         """
@@ -120,11 +109,6 @@ class Fit_Config(Fitting):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit configuration data.
-    Methods:
-        set_simplexmul(multiplier):
-            Set the simplex multiplier.
-        set_simplex_reset(reset):
-            Set the simplex reset value.
     """
     def __init__(self):
         """
@@ -159,9 +143,6 @@ class Duplicate(Fitting):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The duplication configuration data.
-    Methods:
-        set_duplications(*duplications):
-            Set the duplications for the configuration.
     """
     def __init__(self):
         """
@@ -196,13 +177,6 @@ class Dupe:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The duplication data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_duplication(src, dest, multiplier='x'):
-            Set the duplication parameters.
     """
     def __init__(self, dest_dir, layer):
         """
@@ -271,9 +245,6 @@ class Vars(Fitting):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The variable configuration data.
-    Methods:
-        set_variables(*variables):
-            Set the variables for the configuration.
     """
     def __init__(self):
         """
@@ -306,13 +277,6 @@ class Variable:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The variable data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_variable(state, param, min, max, log_fit):
-            Set the variable parameters.
     """
     def __init__(self, dest_dir):
         """
@@ -410,9 +374,6 @@ class Rules(Fitting):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The rule configuration data.
-    Methods:
-        set_Rules(*fitrules):
-            Set the rules for the configuration.
     """
     def __init__(self):
         """
@@ -443,13 +404,6 @@ class Rule:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The rule data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_rule(state, param_x, param_y, funciton):
-            Set the rule parameters.
     """
     def __init__(self, dest_dir):
         """
@@ -544,9 +498,6 @@ class Fits(Fitting):
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit configuration data.
-    Methods:
-        set_datasets(*datasets):
-            Set the datasets for the configuration.
     """
     def __init__(self):
         """
@@ -577,13 +528,6 @@ class Dataset:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The dataset data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_local_duplicate():
-            Set the local duplicate parameters.
     """
     def __init__(self, dest_dir, config='', import_config='', *fitpathces):
         """
@@ -648,13 +592,6 @@ class FitPatch:
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit patch data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_patch(param, val):
-            Set the patch parameters.
     """
     def __init__(self):
         """
@@ -706,13 +643,6 @@ class Config:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_fit_params(**kwargs):
-            Set the fit parameters.
     """
     def __init__(self, dest_dir, fit_against='jv.dat'):
         """
@@ -768,17 +698,6 @@ class ImportConfig:
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The import configuration data.
-    Methods:
-        get_combo_pos(x):
-            Get the combo position for a given label.
-        create_inp():
-            Create the input file for import.
-        set_import_params(**kwargs):
-            Set the import parameters.
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
     """
     def __init__(self, dest_dir, import_dir='jv.dat', x_data='J (A/cm^2)', y_data = 'V (Voltage)'):
         """

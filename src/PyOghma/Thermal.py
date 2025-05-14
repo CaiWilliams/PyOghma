@@ -13,19 +13,6 @@ class Thermal:
         dest_dir (str): The destination directory for saving or loading data.
         temperature (float): The set temperature for the thermal configuration.
         json_format (dict): The formatted JSON data for updates.
-    Methods:
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
-        set_temperature(temperature):
-            Set the temperature for the thermal configuration.
-        set_mesh(start, stop, points):
-            Set the mesh configuration for the thermal simulation.
     """
     def __init__(self):
         """
@@ -113,6 +100,7 @@ class Thermal:
         segment0['mul'] = 1
         segment0['left_right'] = 'left'
         self.data['mesh']['mesh_t']['segment0'] = segment0
+
 
 if __name__ == '__main__':
     """

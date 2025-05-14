@@ -24,23 +24,6 @@ class Server:
         sim_dir (str): Directory for simulation files.
         operating_system (str): The operating system of the platform.
         dest_dir (str): The destination directory for job files.
-    Methods:
-        update_cpu_count():
-            Update the number of CPUs available for processing.
-        clear_jobs():
-            Clear the list of jobs.
-        add_job(dest_dir, hash='', args=''):
-            Add a new job to the server.
-        run():
-            Execute all jobs on the server.
-        generate_job_command(job):
-            Generate the command to execute a job.
-        worker(job):
-            Execute a single job.
-        run_command(command):
-            Execute a custom command.
-        remove_files():
-            Remove all files in the simulation directory.
     """
     def __init__(self):
         """
@@ -98,24 +81,14 @@ class Server:
         self.start_time = time.time()
         self.stop_work = False
 
-        # with mp.Pool(processes=self.cpus) as p:
-        #     with tqdm.tqdm(total=len(self.jobs)) as pbar:
-        #         for _ in p.imap(self.generate_job_command, self.jobs):
-        #             pbar.update()
         for i in range(len(self.jobs)):
             self.generate_job_command(self.jobs[i])
-        # for job in self.jobs:
-        #     self.worker(job)
-        #self.worker(self.jobs[0])
         pbar = tqdm.tqdm(self.jobs)
         with mp.Pool(processes=self.cpus) as p:
             for _ in p.imap_unordered(self.worker, self.jobs):
                pbar.update()
-        #self.remove_lock_files()
-        #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
-            #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))
 
-    def generate_job_command(self,job):
+    def generate_job_command(self, job):
         """
         Generate the command to execute a job.
         Args:
@@ -131,17 +104,12 @@ class Server:
                 command_sep = ';'
                 command0 = 'cd ' + job.path
 
-                job.full_command = command0 + command_sep + command1 +' 2>&1 >' + ' /dev/null'#+ ' --sim-root-path ' + job.sim_dir'
+                job.full_command = command0 + command_sep + command1 +' 2>&1 >' + ' /dev/null'
             case 'Windows':
                 lock = ' --lockfile ' + os.path.join(job.path, 'lock_#' + job.key + '.dat')
-                #command1 = os.path.join("C:", os.sep, 'Program Files (x86)', 'OghmaNano')
                 command1 = os.path.join(self.core_name + '.exe' + lock)
                 command_sep = ' & '
                 command0 = 'cd ' + job.path
-               # command1 = os.path.join(os.getcwd(), 'standard_device') + ' & "oghma_core.exe"' #+ command1 + ""
-                #command1 = command1 + lock
-
-                #command1 = self.core_name + '.exe'
                 job.full_command = command0 + command_sep + command1 + ' > nul'
             case _:
                 print('OS Not Currently Supported!')
@@ -197,7 +165,11 @@ class job:
         self.cpus = 1
         self.status = 0
 
+
 if __name__ == "__main__":
+    """
+    Main execution block for testing the Server class.
+    """
     dir = os.path.join(os.getcwd(),'standard_device')
     A = Server()
     A.add_job(dest_dir=dir)

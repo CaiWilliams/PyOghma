@@ -28,53 +28,6 @@ class Results:
         exp_dict (dict): Dictionary to store experiment results.
         rjl (list): List of indices of jobs to be removed.
         product (list): Cartesian product of variable values.
-    Methods:
-        load_experiment(A):
-            Load the experiment details.
-        find_results():
-            Find all result files for the jobs.
-        find_snapshot(j):
-            Check if snapshots exist for a job.
-        find_sim_info(j):
-            Check if simulation info exists for a job.
-        find_sim(j):
-            Check if simulation JSON exists for a job.
-        find_jv(j):
-            Check if JV data exists for a job.
-        save_results_ml(light):
-            Save results for machine learning experiments.
-        create_dict():
-            Create a dictionary of experiment results.
-        save_dict():
-            Save the experiment dictionary to a file.
-        load_dict(dict_name):
-            Load an experiment dictionary from a file.
-        write_exp_data(exp):
-            Write experiment metadata to the dictionary.
-        variables():
-            Get the variables from the experiment dictionary.
-        hashes():
-            Get the hashes from the experiment dictionary.
-        remove_job_list(j):
-            Mark a job for removal.
-        remove_jobs():
-            Remove marked jobs from the experiment.
-        write_job(j):
-            Write job results to the experiment dictionary.
-        write_sim_to_job(j):
-            Write simulation JSON to the job dictionary.
-        write_sim_info_to_job(j):
-            Write simulation info to the job dictionary.
-        write_jv_to_job(j):
-            Write JV data to the job dictionary.
-        convert_exp_file_to_igor(exp_dict_dir, param):
-            Convert experiment results to IGOR format.
-        read_sim_info(param):
-            Read a specific parameter from the simulation info.
-        create_product():
-            Create a Cartesian product of variable values.
-        load_results(file, param, idx):
-            Load specific results from the experiment dictionary.
     """
     def __init__(self):
         """
@@ -189,7 +142,6 @@ class Results:
         self.exp_dict = {}
         self.exp_dict['experiment'] = {}
         exp = self.exp_dict['experiment']
-        #self.write_exp_data(exp)
         self.find_results()
         self.rjl = []
         for j in self.jobs:
@@ -279,13 +231,6 @@ class Results:
         """
         Remove marked jobs from the experiment.
         """
-        #self.experiment.experiment_name = np.delete(self.experiment.experiment_name, self.rjl)
-        #self.experiment.dimensions = np.delete(self.experiment.dimensions, self.rjl)
-        #self.experiment.variables = np.delete(self.experiment.variables, self.rjl)
-        # for v in self.experiment.variables:
-        #     self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
-        # #self.experiment.points = np.delete(self.experiment.points, self.rjl)
-        # self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))
         shutil.rmtree(self.experiment.dest_dir)
 
 
@@ -357,7 +302,6 @@ class Results:
             exp_dict_dir (str): The directory of the experiment dictionary.
             param (str): The parameter to convert.
         """
-        #exp = self.exp_dict['experiment']
         keys = self.exp_dict['experiment']['variable'].keys()
         values = self.exp_dict['experiment']['variable'].values()
         Zeroth_key = list(keys)[0]

@@ -32,17 +32,6 @@ class Sims:
         CE (CE): Instance of the CE class.
         PL_SS (PL_SS): Instance of the PL_SS class.
         EQE (EQE): Instance of the EQE class.
-    Methods:
-        set_format():
-            Set the format of the JSON data.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        update():
-            Update the JSON file with the current data.
-        change_experiment(exp_name):
-            Change the experiment mode in the simulation configuration.
     """
     def __init__(self):
         """
@@ -173,13 +162,6 @@ class JV(Sims):
     Class to handle JV curve simulations.
     Inherits from:
         Sims
-    Methods:
-        set_voltage_range(start, stop, step):
-            Set the voltage range for the JV simulation.
-        set_jv_properties(**kwargs):
-            Set additional JV properties.
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the JV simulation.
     """
     def __init__(self):
         """
@@ -235,13 +217,6 @@ class SunsVoc(Sims):
     Class to handle SunsVoc simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_range(start, stop, mul):
-            Set the sun intensity range for the simulation.
-        set_single_point(set):
-            Enable or disable single-point simulation.
-        set_dump_properties(**kwargs):
-            Set dump properties for the SunsVoc simulation.
     """
     def __init__(self):
         """
@@ -297,9 +272,6 @@ class SunsJsc(Sims):
     Class to handle SunsJsc simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_range(start, stop, dp, dpmul):
-            Set the sun intensity range for the simulation.
     """
     def __init__(self):
         """
@@ -338,13 +310,6 @@ class TimeDomainMesh:
     Attributes:
         segments_number (int): The number of segments in the mesh.
         mesh (dict): The mesh configuration data.
-    Methods:
-        load_mesh(file):
-            Load the mesh configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_loop(loop, loop_times, loop_reset_time):
-            Set loop properties for the time domain mesh.
     """
     def __init__(self, *segments):
         """
@@ -400,19 +365,6 @@ class TimeDomainSegment:
     Class to handle individual time domain segment configurations.
     Attributes:
         segment (dict): The segment configuration data.
-    Methods:
-        load_segment(file):
-            Load the segment configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_time(length, dt):
-            Set the time properties for the segment.
-        set_volgate(start, stop, mul):
-            Set the voltage properties for the segment.
-        set_sun(start, stop):
-            Set the sun properties for the segment.
-        set_laser(start, stop):
-            Set the laser properties for the segment.
     """
     def __init__(self):
         """
@@ -495,9 +447,6 @@ class CELIV(Sims):
     Class to handle CELIV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the CELIV simulation.
     """
     def __init__(self):
         """
@@ -538,9 +487,6 @@ class PhotoCELIV(Sims):
     Class to handle PhotoCELIV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the PhotoCELIV simulation.
     """
     def __init__(self):
         """
@@ -581,9 +527,6 @@ class TPC(Sims):
     Class to handle TPC simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the TPC simulation.
     """
     def __init__(self):
         """
@@ -622,9 +565,6 @@ class TPV(Sims):
     Class to handle TPV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the TPV simulation.
     """
     def __init__(self):
         """
@@ -665,13 +605,6 @@ class FrequencyDomainMesh:
         stop (float): The stopping frequency.
         steps (int): The number of steps in the frequency range.
         mesh (dict): The mesh configuration data.
-    Methods:
-        linear():
-            Generate a linear frequency mesh.
-        logarithmic():
-            Generate a logarithmic frequency mesh.
-        geometric():
-            Generate a geometric frequency mesh.
     """
     def __init__(self, start, stop, steps, space):
         """
@@ -727,13 +660,6 @@ class FrequencyDomainSegment:
     Class to handle individual frequency domain segment configurations.
     Attributes:
         segment (dict): The segment configuration data.
-    Methods:
-        set_frequency(frequency):
-            Set the frequency properties for the segment.
-        load_segment(file):
-            Load the segment configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
     """
     def __init__(self, frequency):
         """
@@ -785,9 +711,6 @@ class IMPS(Sims):
     Class to handle IMPS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IMPS simulation.
     """
     def __init__(self):
         """
@@ -823,9 +746,6 @@ class IMVS(Sims):
     Class to handle IMVS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IMVS simulation.
     """
     def __init__(self):
         """
@@ -861,9 +781,6 @@ class IS(Sims):
     Class to handle IS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IS simulation.
     """
     def __init__(self):
         """
@@ -899,9 +816,6 @@ class CV(Sims):
     Class to handle CV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_voltage_range(start, stop, step, frequency):
-            Set the voltage range and frequency for the CV simulation.
     """
     def __init__(self):
         """
@@ -939,9 +853,6 @@ class CE(Sims):
     Class to handle CE simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_properties(start, stop, steps, on_time, off_time):
-            Set the sun properties for the CE simulation.
     """
     def __init__(self):
         """
@@ -1022,6 +933,9 @@ class EQE(Sims):
 
 
 if __name__ == '__main__':
+    """
+    Main execution block for testing the Sims class and its subcomponents.
+    """
     # A = EQE()
     A = A.Sim()
     # A = FrequencyDomainMesh(0,3,4,'log')

@@ -29,31 +29,6 @@ class OghmaNano:
         variables (dict): Dictionary of variables for simulations.
         points (int): Number of points in the variable space.
         hashes (list): List of unique hashes for simulations.
-    Methods:
-        check_results():
-            Check and create the results directory based on the operating system.
-        set_experiment_name(experiment_name):
-            Set the name of the experiment.
-        set_source_simulation(source_simulation):
-            Set the source directory for the simulation.
-        set_dest_dir(dest_dir):
-            Set the destination directory for the simulation.
-        propagate_dest_dir():
-            Propagate the destination directory to all subcomponents.
-        set_variables(iter_used='product', **kwargs):
-            Set the variables for the simulation.
-        gen_hashes(points):
-            Generate unique hashes for the given number of points.
-        clone(dest_dir):
-            Clone the source simulation to the destination directory.
-        load(dest_dir):
-            Load an existing simulation from the destination directory.
-        add_job(hash=''):
-            Add a job to the server for execution.
-        clean_up():
-            Remove the results directory and its contents.
-        run_jobs():
-            Execute all jobs on the server.
     """
     def __init__(self):
         """
@@ -71,7 +46,6 @@ class OghmaNano:
         self.points = None
         self.hashes = None
 
-
     def check_results(self):
         """
         Check and create the results directory based on the operating system.
@@ -80,9 +54,9 @@ class OghmaNano:
         """
         match platform.system():
             case 'Linux':
-                results_dir = os.path.join(os.sep,'dev','shm','OghmaSims')
+                results_dir = os.path.join(os.sep, 'dev', 'shm', 'OghmaSims')
             case 'Windows':
-                results_dir = os.path.join(os.getcwd(),'OghmaSims')
+                results_dir = os.path.join(os.getcwd(), 'OghmaSims')
             case _:
                 raise Exception('Operating System not supported')
 
@@ -91,7 +65,7 @@ class OghmaNano:
             return results_dir
         except:
             return results_dir
-        
+
     def set_experiment_name(self, experiment_name):
         """
         Set the name of the experiment.
@@ -106,9 +80,9 @@ class OghmaNano:
         Args:
             source_simulation (str): The name of the source simulation directory.
         """
-        self.src_dir = os.path.join(os.getcwd(),source_simulation)
+        self.src_dir = os.path.join(os.getcwd(), source_simulation)
         return
-    
+
     def set_dest_dir(self, dest_dir):
         """
         Set the destination directory for the simulation.
@@ -126,7 +100,7 @@ class OghmaNano:
         self.Optical.dest_dir = self.dest_dir
         self.Optical.Light.dest_dir = self.dest_dir
         self.Optical.LightSources.dest_dir = self.dest_dir
-        
+
         self.Sims.dest_dir = self.dest_dir
         self.Sims.SunsVoc.dest_dir = self.dest_dir
         self.Sims.JV.dest_dir = self.dest_dir
@@ -134,13 +108,6 @@ class OghmaNano:
         self.Thermal.dest_dir = self.dest_dir
         self.Server.dest_dir = self.dest_dir
 
-        # self.Fitting.dest_dir = self.dest_dir
-        # self.Fitting.Fit_Config.dest_dir = self.dest_dir
-        # self.Fitting.Duplitate.dest_dir = self.dest_dir
-        # self.Fitting.Vars.dest_dir = self.dest_dir
-        # self.Fitting.Rules.dest_dir = self.dest_dir
-        # self.Fitting.Fits.dest_dir = self.dest_dir
-    
     def set_variables(self, iter_used='product', **kwargs):
         """
         Set the variables for the simulation.
@@ -172,14 +139,14 @@ class OghmaNano:
             points (int): The number of points to generate hashes for.
         """
         self.hashes = [secrets.token_urlsafe(8) for i in range(points)]
-    
+
     def clone(self, dest_dir):
         """
         Clone the source simulation to the destination directory.
         Args:
             dest_dir (str): The name of the destination directory.
         """
-        dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
+        dest = os.path.join(os.getcwd(), self.results_dir, dest_dir)
         self.dest_dir = dest
         self.propagate_dest_dir()
         shutil.copytree(self.src_dir, dest)
@@ -191,7 +158,7 @@ class OghmaNano:
         Args:
             dest_dir (str): The name of the destination directory.
         """
-        dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
+        dest = os.path.join(os.getcwd(), self.results_dir, dest_dir)
         self.dest_dir = dest
         self.propagate_dest_dir()
 
@@ -201,14 +168,14 @@ class OghmaNano:
         Args:
             hash (str): The unique hash for the job. Defaults to an empty string.
         """
-        self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir,'sim.json'), hash, args="")
+        self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir, 'sim.json'), hash, args="")
         return
-    
+
     def clean_up(self):
         """
         Remove the results directory and its contents.
         """
-        shutil.rmtree(os.path.join(os.getcwd(),self.results_dir))
+        shutil.rmtree(os.path.join(os.getcwd(), self.results_dir))
 
     def run_jobs(self):
         """
@@ -217,27 +184,30 @@ class OghmaNano:
         self.Server.run()
         return
 
+
 if __name__ == "__main__":
-     A = OghmaNano()
-     A.set_source_simulation('pm')
+    """
+    Main execution block for testing the OghmaNano class.
+    """
+    A = OghmaNano()
+    A.set_source_simulation('pm')
 
-     T = np.arange(250,351,1)
-     L = np.geomspace(0.01,2,29,endpoint=True)
+    T = np.arange(250, 351, 1)
+    L = np.geomspace(0.01, 2, 29, endpoint=True)
 
-
-     R = np.zeros(shape=(len(T),len(L)))
-     T_m = np.zeros(shape=(len(T),len(L)))
-     L_m = np.zeros(shape=(len(T),len(L)))
-     print(R)
-     for idx,x in enumerate(T):
-         for jdx,y in enumerate(L):
-             exp_dir = 'Test_X' + str(idx) + '_Y' + str(jdx)
-             exp_res = os.path.join(os.getcwd(), A.results_dir, exp_dir, 'sim_info.dat')
-             R[idx,jdx] = A.Results.read_sim_info(exp_res,'voc')
-             T_m[idx,jdx] = x
-             L_m[idx,jdx] = y
-     plt.pcolormesh(T_m,L_m,R)
-     plt.colorbar()
-     plt.yscale('log')
-     plt.show()
+    R = np.zeros(shape=(len(T), len(L)))
+    T_m = np.zeros(shape=(len(T), len(L)))
+    L_m = np.zeros(shape=(len(T), len(L)))
+    print(R)
+    for idx, x in enumerate(T):
+        for jdx, y in enumerate(L):
+            exp_dir = 'Test_X' + str(idx) + '_Y' + str(jdx)
+            exp_res = os.path.join(os.getcwd(), A.results_dir, exp_dir, 'sim_info.dat')
+            R[idx, jdx] = A.Results.read_sim_info(exp_res, 'voc')
+            T_m[idx, jdx] = x
+            L_m[idx, jdx] = y
+    plt.pcolormesh(T_m, L_m, R)
+    plt.colorbar()
+    plt.yscale('log')
+    plt.show()
 
