@@ -76,7 +76,7 @@ job class to represent individual simulation tasks.</p>
         operating_system (str): The operating system of the platform.
         dest_dir (str): The destination directory for job files.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the Server class.
         &#34;&#34;&#34;
@@ -93,7 +93,7 @@ job class to represent individual simulation tasks.</p>
         self.operating_system = platform.system()
         self.dest_dir = &#34;&#34;
 
-    def update_cpu_count(self):
+    def update_cpu_count(self) -&gt; None:
         &#34;&#34;&#34;
         Update the number of CPUs available for processing.
         &#34;&#34;&#34;
@@ -102,13 +102,13 @@ job class to represent individual simulation tasks.</p>
             self.cpus = self.cpus - 2
         return
 
-    def clear_jobs(self):
+    def clear_jobs(self) -&gt; None:
         &#34;&#34;&#34;
         Clear the list of jobs.
         &#34;&#34;&#34;
         self.jobs = []
 
-    def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
+    def add_job(self, dest_dir: str, hash: str = &#39;&#39;, args: str = &#39;&#39;) -&gt; None:
         &#34;&#34;&#34;
         Add a new job to the server.
         Args:
@@ -125,7 +125,7 @@ job class to represent individual simulation tasks.</p>
         j.hash = hash
         self.jobs.append(j)
 
-    def run(self):
+    def run(self) -&gt; None:
         &#34;&#34;&#34;
         Execute all jobs on the server.
         &#34;&#34;&#34;
@@ -139,7 +139,7 @@ job class to represent individual simulation tasks.</p>
             for _ in p.imap_unordered(self.worker, self.jobs):
                pbar.update()
 
-    def generate_job_command(self, job):
+    def generate_job_command(self, job: &#39;job&#39;) -&gt; &#39;job&#39;:
         &#34;&#34;&#34;
         Generate the command to execute a job.
         Args:
@@ -167,7 +167,7 @@ job class to represent individual simulation tasks.</p>
         return job
     
     @staticmethod
-    def worker(job):
+    def worker(job: &#39;job&#39;) -&gt; int:
         &#34;&#34;&#34;
         Execute a single job.
         Args:
@@ -178,7 +178,7 @@ job class to represent individual simulation tasks.</p>
         os.system(job.full_command)
         return 1
     
-    def run_command(self, command):
+    def run_command(self, command: str) -&gt; None:
         &#34;&#34;&#34;
         Execute a custom command.
         Args:
@@ -186,7 +186,7 @@ job class to represent individual simulation tasks.</p>
         &#34;&#34;&#34;
         return 
 
-    def remove_files(self):
+    def remove_files(self) -&gt; None:
         &#34;&#34;&#34;
         Remove all files in the simulation directory.
         &#34;&#34;&#34;
@@ -226,7 +226,7 @@ job class to represent individual simulation tasks.</p>
 <h3>Static methods</h3>
 <dl>
 <dt id="PyOghma.Server.Server.worker"><code class="name flex">
-<span>def <span class="ident">worker</span></span>(<span>job)</span>
+<span>def <span class="ident">worker</span></span>(<span>job: <a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a>) ‑> int</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -234,7 +234,7 @@ job class to represent individual simulation tasks.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def worker(job):
+def worker(job: &#39;job&#39;) -&gt; int:
     &#34;&#34;&#34;
     Execute a single job.
     Args:
@@ -261,14 +261,14 @@ def worker(job):
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Server.Server.add_job"><code class="name flex">
-<span>def <span class="ident">add_job</span></span>(<span>self, dest_dir, hash='', args='')</span>
+<span>def <span class="ident">add_job</span></span>(<span>self, dest_dir: str, hash: str = '', args: str = '') ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_job(self, dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
+<pre><code class="python">def add_job(self, dest_dir: str, hash: str = &#39;&#39;, args: str = &#39;&#39;) -&gt; None:
     &#34;&#34;&#34;
     Add a new job to the server.
     Args:
@@ -297,14 +297,14 @@ def worker(job):
 </dl></div>
 </dd>
 <dt id="PyOghma.Server.Server.clear_jobs"><code class="name flex">
-<span>def <span class="ident">clear_jobs</span></span>(<span>self)</span>
+<span>def <span class="ident">clear_jobs</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def clear_jobs(self):
+<pre><code class="python">def clear_jobs(self) -&gt; None:
     &#34;&#34;&#34;
     Clear the list of jobs.
     &#34;&#34;&#34;
@@ -313,14 +313,14 @@ def worker(job):
 <div class="desc"><p>Clear the list of jobs.</p></div>
 </dd>
 <dt id="PyOghma.Server.Server.generate_job_command"><code class="name flex">
-<span>def <span class="ident">generate_job_command</span></span>(<span>self, job)</span>
+<span>def <span class="ident">generate_job_command</span></span>(<span>self, job: <a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a>) ‑> <a title="PyOghma.Server.job" href="#PyOghma.Server.job">job</a></span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_job_command(self, job):
+<pre><code class="python">def generate_job_command(self, job: &#39;job&#39;) -&gt; &#39;job&#39;:
     &#34;&#34;&#34;
     Generate the command to execute a job.
     Args:
@@ -360,14 +360,14 @@ def worker(job):
 </dl></div>
 </dd>
 <dt id="PyOghma.Server.Server.remove_files"><code class="name flex">
-<span>def <span class="ident">remove_files</span></span>(<span>self)</span>
+<span>def <span class="ident">remove_files</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def remove_files(self):
+<pre><code class="python">def remove_files(self) -&gt; None:
     &#34;&#34;&#34;
     Remove all files in the simulation directory.
     &#34;&#34;&#34;
@@ -378,14 +378,14 @@ def worker(job):
 <div class="desc"><p>Remove all files in the simulation directory.</p></div>
 </dd>
 <dt id="PyOghma.Server.Server.run"><code class="name flex">
-<span>def <span class="ident">run</span></span>(<span>self)</span>
+<span>def <span class="ident">run</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run(self):
+<pre><code class="python">def run(self) -&gt; None:
     &#34;&#34;&#34;
     Execute all jobs on the server.
     &#34;&#34;&#34;
@@ -402,14 +402,14 @@ def worker(job):
 <div class="desc"><p>Execute all jobs on the server.</p></div>
 </dd>
 <dt id="PyOghma.Server.Server.run_command"><code class="name flex">
-<span>def <span class="ident">run_command</span></span>(<span>self, command)</span>
+<span>def <span class="ident">run_command</span></span>(<span>self, command: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run_command(self, command):
+<pre><code class="python">def run_command(self, command: str) -&gt; None:
     &#34;&#34;&#34;
     Execute a custom command.
     Args:
@@ -425,14 +425,14 @@ def worker(job):
 </dl></div>
 </dd>
 <dt id="PyOghma.Server.Server.update_cpu_count"><code class="name flex">
-<span>def <span class="ident">update_cpu_count</span></span>(<span>self)</span>
+<span>def <span class="ident">update_cpu_count</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update_cpu_count(self):
+<pre><code class="python">def update_cpu_count(self) -&gt; None:
     &#34;&#34;&#34;
     Update the number of CPUs available for processing.
     &#34;&#34;&#34;
@@ -464,7 +464,7 @@ def worker(job):
         cpus (int): Number of CPUs allocated for the job.
         status (int): The status of the job.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the job class.
         &#34;&#34;&#34;

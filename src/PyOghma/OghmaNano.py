@@ -37,7 +37,7 @@ class OghmaNano:
         points (int): Number of points in the variable space.
         hashes (list): List of unique hashes for simulations.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the OghmaNano class and its subcomponents.
         """
@@ -53,7 +53,7 @@ class OghmaNano:
         self.points = None
         self.hashes = None
 
-    def check_results(self):
+    def check_results(self) -> str:
         """
         Check and create the results directory based on the operating system.
         Returns:
@@ -73,7 +73,7 @@ class OghmaNano:
         except:
             return results_dir
 
-    def set_experiment_name(self, experiment_name):
+    def set_experiment_name(self, experiment_name: str) -> None:
         """
         Set the name of the experiment.
         Args:
@@ -81,7 +81,7 @@ class OghmaNano:
         """
         self.experiment_name = experiment_name
 
-    def set_source_simulation(self, source_simulation):
+    def set_source_simulation(self, source_simulation: str) -> None:
         """
         Set the source directory for the simulation.
         Args:
@@ -90,7 +90,7 @@ class OghmaNano:
         self.src_dir = os.path.join(os.getcwd(), source_simulation)
         return
 
-    def set_dest_dir(self, dest_dir):
+    def set_dest_dir(self, dest_dir: str) -> None:
         """
         Set the destination directory for the simulation.
         Args:
@@ -99,7 +99,7 @@ class OghmaNano:
         self.dest_dir = dest_dir
         self.propagate_dest_dir()
 
-    def propagate_dest_dir(self):
+    def propagate_dest_dir(self) -> None:
         """
         Propagate the destination directory to all subcomponents.
         """
@@ -115,7 +115,7 @@ class OghmaNano:
         self.Thermal.dest_dir = self.dest_dir
         self.Server.dest_dir = self.dest_dir
 
-    def set_variables(self, iter_used='product', **kwargs):
+    def set_variables(self, iter_used: str = 'product', **kwargs: dict) -> None:
         """
         Set the variables for the simulation.
         Args:
@@ -139,7 +139,7 @@ class OghmaNano:
             case _:
                 print('Iterator has not been implemented')
 
-    def gen_hashes(self, points):
+    def gen_hashes(self, points: int) -> None:
         """
         Generate unique hashes for the given number of points.
         Args:
@@ -147,7 +147,7 @@ class OghmaNano:
         """
         self.hashes = [secrets.token_urlsafe(8) for i in range(points)]
 
-    def clone(self, dest_dir):
+    def clone(self, dest_dir: str) -> None:
         """
         Clone the source simulation to the destination directory.
         Args:
@@ -159,7 +159,7 @@ class OghmaNano:
         shutil.copytree(self.src_dir, dest)
         return
 
-    def load(self, dest_dir):
+    def load(self, dest_dir: str) -> None:
         """
         Load an existing simulation from the destination directory.
         Args:
@@ -169,7 +169,7 @@ class OghmaNano:
         self.dest_dir = dest
         self.propagate_dest_dir()
 
-    def add_job(self, hash=''):
+    def add_job(self, hash: str = '') -> None:
         """
         Add a job to the server for execution.
         Args:
@@ -178,13 +178,13 @@ class OghmaNano:
         self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir, 'sim.json'), hash, args="")
         return
 
-    def clean_up(self):
+    def clean_up(self) -> None:
         """
         Remove the results directory and its contents.
         """
         shutil.rmtree(os.path.join(os.getcwd(), self.results_dir))
 
-    def run_jobs(self):
+    def run_jobs(self) -> None:
         """
         Execute all jobs on the server.
         """

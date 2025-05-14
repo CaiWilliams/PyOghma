@@ -21,7 +21,7 @@ class Ideality_Factor:
         GenRate (list): List of generation rates extracted from the experimental data.
         result (float): The calculated ideality factor.
     """
-    def __init__(self, exp):
+    def __init__(self, exp: str) -> None:
         """
         Initializes the Ideality_Factor class.
         Args:
@@ -46,7 +46,7 @@ class Ideality_Factor:
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
 
-    def calculate(self, temp=300):
+    def calculate(self, temp: float = 300) -> None:
         """
         Calculates the ideality factor (Nid) based on the given data.
         This method computes the ideality factor using the relationship between 
@@ -95,7 +95,7 @@ class Transport_Resistance:
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
         TR_Voc (list): List of calculated transport resistance at open-circuit voltage.
     """
-    def __init__(self, exp):
+    def __init__(self, exp: str) -> None:
         """
         Initializes the Transport_Resistance class.
         Args:
@@ -125,7 +125,7 @@ class Transport_Resistance:
         self.pJV_j = PJV.pJV_j
         self.pJV_v = PJV.pJV_v
 
-    def calculate(self):
+    def calculate(self) -> None:
         """
         Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
         for experimental data.
@@ -204,7 +204,7 @@ class Psudo_JV:
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
     """
-    def __init__(self, exp):
+    def __init__(self, exp: str) -> None:
         """
         Initializes the Psudo_JV class.
         Args:
@@ -228,7 +228,7 @@ class Psudo_JV:
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
 
-    def calculate(self):
+    def calculate(self) -> None:
         """
         Calculate the pseudo JV of the diode.
         This method processes the experimental data to compute pseudo JV current density 

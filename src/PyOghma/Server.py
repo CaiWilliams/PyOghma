@@ -32,7 +32,7 @@ class Server:
         operating_system (str): The operating system of the platform.
         dest_dir (str): The destination directory for job files.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the Server class.
         """
@@ -49,7 +49,7 @@ class Server:
         self.operating_system = platform.system()
         self.dest_dir = ""
 
-    def update_cpu_count(self):
+    def update_cpu_count(self) -> None:
         """
         Update the number of CPUs available for processing.
         """
@@ -58,13 +58,13 @@ class Server:
             self.cpus = self.cpus - 2
         return
 
-    def clear_jobs(self):
+    def clear_jobs(self) -> None:
         """
         Clear the list of jobs.
         """
         self.jobs = []
 
-    def add_job(self, dest_dir, hash='', args=''):
+    def add_job(self, dest_dir: str, hash: str = '', args: str = '') -> None:
         """
         Add a new job to the server.
         Args:
@@ -81,7 +81,7 @@ class Server:
         j.hash = hash
         self.jobs.append(j)
 
-    def run(self):
+    def run(self) -> None:
         """
         Execute all jobs on the server.
         """
@@ -95,7 +95,7 @@ class Server:
             for _ in p.imap_unordered(self.worker, self.jobs):
                pbar.update()
 
-    def generate_job_command(self, job):
+    def generate_job_command(self, job: 'job') -> 'job':
         """
         Generate the command to execute a job.
         Args:
@@ -123,7 +123,7 @@ class Server:
         return job
     
     @staticmethod
-    def worker(job):
+    def worker(job: 'job') -> int:
         """
         Execute a single job.
         Args:
@@ -134,7 +134,7 @@ class Server:
         os.system(job.full_command)
         return 1
     
-    def run_command(self, command):
+    def run_command(self, command: str) -> None:
         """
         Execute a custom command.
         Args:
@@ -142,7 +142,7 @@ class Server:
         """
         return 
 
-    def remove_files(self):
+    def remove_files(self) -> None:
         """
         Remove all files in the simulation directory.
         """
@@ -161,7 +161,7 @@ class job:
         cpus (int): Number of CPUs allocated for the job.
         status (int): The status of the job.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the job class.
         """

@@ -20,7 +20,7 @@ class Thermal:
         temperature (float): The set temperature for the thermal configuration.
         json_format (dict): The formatted JSON data for updates.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the Thermal class.
         """
@@ -29,7 +29,7 @@ class Thermal:
         self.set_format()
         self.dest_dir = ''
 
-    def load_config(self, file):
+    def load_config(self, file: str) -> dict:
         """
         Load a configuration file.
         Args:
@@ -41,7 +41,7 @@ class Thermal:
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def find_file(self, file):
+    def find_file(self, file: str) -> str:
         """
         Find a file in the directory structure.
         Args:
@@ -53,13 +53,13 @@ class Thermal:
             resources.files("PyOghma.Sim_Defaults.Thermal.configs." + self.json_name).joinpath(file)).args[0]
         return config_dir
 
-    def set_format(self):
+    def set_format(self) -> None:
         """
         Set the format of the JSON data.
         """
         self.json_format = {self.json_name: self.data}
 
-    def update(self):
+    def update(self) -> None:
         """
         Update the JSON file with the current data.
         """
@@ -73,7 +73,7 @@ class Thermal:
 
         return
 
-    def set_temperature(self, temperature):
+    def set_temperature(self, temperature: float) -> None:
         """
         Set the temperature for the thermal configuration.
         Args:
@@ -88,7 +88,7 @@ class Thermal:
         self.data['thermal_boundary']['Tz0'] = self.temperature
         self.data['thermal_boundary']['Tz1'] = self.temperature
     
-    def set_mesh(self, start, stop, points):
+    def set_mesh(self, start: float, stop: float, points: int) -> None:
         """
         Set the mesh configuration for the thermal simulation.
         Args:

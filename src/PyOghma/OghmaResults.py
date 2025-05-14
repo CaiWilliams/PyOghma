@@ -36,14 +36,14 @@ class Results:
         rjl (list): List of indices of jobs to be removed.
         product (list): Cartesian product of variable values.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the Results class.
         """
         self.dest_dir = ""
         self.system = platform.system()
         
-    def load_experiment(self, A):
+    def load_experiment(self, A: object) -> None:
         """
         Load the experiment details.
         Args:
@@ -55,7 +55,7 @@ class Results:
             self.src_json = json.load(j)
         self.jobs = A.Server.jobs
 
-    def find_results(self):
+    def find_results(self) -> None:
         """
         Find all result files for the jobs.
         """
@@ -66,7 +66,7 @@ class Results:
             self.find_jv(j)
     
 
-    def find_snapshot(self, j):
+    def find_snapshot(self, j: object) -> None:
         """
         Check if snapshots exist for a job.
         Args:
@@ -78,7 +78,7 @@ class Results:
             j.snapshots = True
 
 
-    def find_sim_info(self, j):
+    def find_sim_info(self, j: object) -> None:
         """
         Check if simulation info exists for a job.
         Args:
@@ -90,7 +90,7 @@ class Results:
             j.sim_info = True
     
 
-    def find_sim(self, j):
+    def find_sim(self, j: object) -> None:
         """
         Check if simulation JSON exists for a job.
         Args:
@@ -101,7 +101,7 @@ class Results:
         if os.path.isfile(test):
             j.sim = True
 
-    def find_jv(self, j):
+    def find_jv(self, j: object) -> None:
         """
         Check if JV data exists for a job.
         Args:
@@ -113,7 +113,7 @@ class Results:
             j.jv = True
 
 
-    def save_results_ml(self, light):
+    def save_results_ml(self, light: object) -> str:
         """
         Save results for machine learning experiments.
         Args:
@@ -142,7 +142,7 @@ class Results:
             j.close()
         return experiment_name
     
-    def create_dict(self):
+    def create_dict(self) -> None:
         """
         Create a dictionary of experiment results.
         """
@@ -160,7 +160,7 @@ class Results:
         self.write_exp_data(exp)
         return
     
-    def save_dict(self):
+    def save_dict(self) -> None:
         """
         Save the experiment dictionary to a file.
         """
@@ -175,7 +175,7 @@ class Results:
                     j.close()
         return
     
-    def load_dict(self, dict_name):
+    def load_dict(self, dict_name: str) -> None:
         """
         Load an experiment dictionary from a file.
         Args:
@@ -190,7 +190,7 @@ class Results:
                     data = json.load(j)
         self.exp_dict = data
 
-    def write_exp_data(self, exp):
+    def write_exp_data(self, exp: dict) -> None:
         """
         Write experiment metadata to the dictionary.
         Args:
@@ -209,7 +209,7 @@ class Results:
         if self.experiment.hashes != None:
             exp['hashes'] = self.experiment.hashes
     
-    def variables(self):
+    def variables(self) -> dict:
         """
         Get the variables from the experiment dictionary.
         Returns:
@@ -217,7 +217,7 @@ class Results:
         """
         return self.exp_dict['experiment']['variable']
     
-    def hashes(self):
+    def hashes(self) -> list:
         """
         Get the hashes from the experiment dictionary.
         Returns:
@@ -225,7 +225,7 @@ class Results:
         """
         return self.exp_dict['experiment']['hashes']
 
-    def remove_job_list(self,j):
+    def remove_job_list(self, j: object) -> None:
         """
         Mark a job for removal.
         Args:
@@ -234,14 +234,14 @@ class Results:
         idx = self.experiment.hashes.index(j.hash)
         self.rjl.append(idx)
 
-    def remove_jobs(self):
+    def remove_jobs(self) -> None:
         """
         Remove marked jobs from the experiment.
         """
         shutil.rmtree(self.experiment.dest_dir)
 
 
-    def write_job(self, j):
+    def write_job(self, j: object) -> None:
         """
         Write job results to the experiment dictionary.
         Args:
@@ -265,7 +265,7 @@ class Results:
         else:
             pass
         
-    def write_sim_to_job(self, j):
+    def write_sim_to_job(self, j: object) -> None:
         """
         Write simulation JSON to the job dictionary.
         Args:
@@ -276,7 +276,7 @@ class Results:
         results = sim
         self.exp_dict[j.hash]['sim'] = results
 
-    def write_sim_info_to_job(self, j):
+    def write_sim_info_to_job(self, j: object) -> None:
         """
         Write simulation info to the job dictionary.
         Args:
@@ -286,7 +286,7 @@ class Results:
             sim = json.load(r)
         self.exp_dict[j.hash]['sim_info'] = sim
 
-    def write_jv_to_job(self, j):
+    def write_jv_to_job(self, j: object) -> None:
         """
         Write JV data to the job dictionary.
         Args:
@@ -302,7 +302,7 @@ class Results:
 
 
     
-    def convert_exp_file_to_igor(self, exp_dict_dir='', param=''):
+    def convert_exp_file_to_igor(self, exp_dict_dir: str = '', param: str = '') -> None:
         """
         Convert experiment results to IGOR format.
         Args:
@@ -324,7 +324,7 @@ class Results:
             self.save_as_igor_file(list(keys), param, product[idx[-1]], x, y)
     
     @staticmethod
-    def match_conditions(prod, product):
+    def match_conditions(prod: tuple, product: tuple) -> bool:
         """
         Check if the conditions of two products match.
         Args:
@@ -338,7 +338,7 @@ class Results:
         return False
     
     @staticmethod
-    def save_as_igor_file(keys, param, last_prod, x, y):
+    def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list) -> None:
         """
         Save experiment results as an IGOR file.
         Args:
@@ -362,7 +362,7 @@ class Results:
             fp.write(header)
             data.to_csv(fp, sep=' ',index=False, header=None, lineterminator='\n')
 
-    def read_sim_info(self, param):
+    def read_sim_info(self, param: str) -> object:
         """
         Read a specific parameter from the simulation info.
         Args:
@@ -374,7 +374,7 @@ class Results:
             data = json.load()
         return data[param]
     
-    def create_product(self):
+    def create_product(self) -> None:
         """
         Create a Cartesian product of variable values.
         """
@@ -386,7 +386,7 @@ class Results:
         list_values = list(values)[1:]
         self.product = list(itertools.product(*values))
     
-    def load_results(self, file, param, idx):
+    def load_results(self, file: str, param: str, idx: int) -> object:
         """
         Load specific results from the experiment dictionary.
         Args:

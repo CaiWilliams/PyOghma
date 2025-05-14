@@ -68,7 +68,7 @@ and updating simulation data in JSON format for thermal analysis.</p>
         temperature (float): The set temperature for the thermal configuration.
         json_format (dict): The formatted JSON data for updates.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the Thermal class.
         &#34;&#34;&#34;
@@ -77,7 +77,7 @@ and updating simulation data in JSON format for thermal analysis.</p>
         self.set_format()
         self.dest_dir = &#39;&#39;
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -89,7 +89,7 @@ and updating simulation data in JSON format for thermal analysis.</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -101,13 +101,13 @@ and updating simulation data in JSON format for thermal analysis.</p>
             resources.files(&#34;PyOghma.Sim_Defaults.Thermal.configs.&#34; + self.json_name).joinpath(file)).args[0]
         return config_dir
 
-    def set_format(self):
+    def set_format(self) -&gt; None:
         &#34;&#34;&#34;
         Set the format of the JSON data.
         &#34;&#34;&#34;
         self.json_format = {self.json_name: self.data}
 
-    def update(self):
+    def update(self) -&gt; None:
         &#34;&#34;&#34;
         Update the JSON file with the current data.
         &#34;&#34;&#34;
@@ -121,7 +121,7 @@ and updating simulation data in JSON format for thermal analysis.</p>
 
         return
 
-    def set_temperature(self, temperature):
+    def set_temperature(self, temperature: float) -&gt; None:
         &#34;&#34;&#34;
         Set the temperature for the thermal configuration.
         Args:
@@ -136,7 +136,7 @@ and updating simulation data in JSON format for thermal analysis.</p>
         self.data[&#39;thermal_boundary&#39;][&#39;Tz0&#39;] = self.temperature
         self.data[&#39;thermal_boundary&#39;][&#39;Tz1&#39;] = self.temperature
     
-    def set_mesh(self, start, stop, points):
+    def set_mesh(self, start: float, stop: float, points: int) -&gt; None:
         &#34;&#34;&#34;
         Set the mesh configuration for the thermal simulation.
         Args:
@@ -173,14 +173,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Thermal.Thermal.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -205,14 +205,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.Thermal.Thermal.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -237,14 +237,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.Thermal.Thermal.set_format"><code class="name flex">
-<span>def <span class="ident">set_format</span></span>(<span>self)</span>
+<span>def <span class="ident">set_format</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_format(self):
+<pre><code class="python">def set_format(self) -&gt; None:
     &#34;&#34;&#34;
     Set the format of the JSON data.
     &#34;&#34;&#34;
@@ -253,14 +253,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 <div class="desc"><p>Set the format of the JSON data.</p></div>
 </dd>
 <dt id="PyOghma.Thermal.Thermal.set_mesh"><code class="name flex">
-<span>def <span class="ident">set_mesh</span></span>(<span>self, start, stop, points)</span>
+<span>def <span class="ident">set_mesh</span></span>(<span>self, start: float, stop: float, points: int) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_mesh(self, start, stop, points):
+<pre><code class="python">def set_mesh(self, start: float, stop: float, points: int) -&gt; None:
     &#34;&#34;&#34;
     Set the mesh configuration for the thermal simulation.
     Args:
@@ -291,14 +291,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.Thermal.Thermal.set_temperature"><code class="name flex">
-<span>def <span class="ident">set_temperature</span></span>(<span>self, temperature)</span>
+<span>def <span class="ident">set_temperature</span></span>(<span>self, temperature: float) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_temperature(self, temperature):
+<pre><code class="python">def set_temperature(self, temperature: float) -&gt; None:
     &#34;&#34;&#34;
     Set the temperature for the thermal configuration.
     Args:
@@ -321,14 +321,14 @@ and updating simulation data in JSON format for thermal analysis.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.Thermal.Thermal.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self)</span>
+<span>def <span class="ident">update</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self):
+<pre><code class="python">def update(self) -&gt; None:
     &#34;&#34;&#34;
     Update the JSON file with the current data.
     &#34;&#34;&#34;

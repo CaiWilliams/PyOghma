@@ -39,7 +39,7 @@ class Sims:
         PL_SS (PL_SS): Instance of the PL_SS class.
         EQE (EQE): Instance of the EQE class.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the Sims class and its subcomponents.
         """
@@ -73,7 +73,7 @@ class Sims:
         self.PL_SS = PL_SS()
         self.EQE = EQE
 
-    def set_format(self):
+    def set_format(self) -> None:
         """
         Set the format of the JSON data based on the json_name.
         """
@@ -105,7 +105,7 @@ class Sims:
                                                                                             "id": self.id}}}
         return
 
-    def load_config(self, file):
+    def load_config(self, file: str) -> None:
         """
         Load a configuration file.
         Args:
@@ -116,7 +116,7 @@ class Sims:
             self.config = json.loads(j.read())
         return
 
-    def find_file(self, file):
+    def find_file(self, file: str) -> str:
         """
         Find a file in the directory structure.
         Args:
@@ -131,7 +131,7 @@ class Sims:
                 resources.files("PyOghma.Sim_Defaults.Sims.configs." + self.json_name + "."+ self.name.lower().replace("\n", "_")).joinpath(file)).args[0]
         return config_dir
 
-    def update(self):
+    def update(self) -> None:
         """
         Update the JSON file with the current data.
         """
@@ -145,7 +145,7 @@ class Sims:
 
         return
 
-    def change_experiment(self, exp_name):
+    def change_experiment(self, exp_name: str) -> None:
         """
         Change the experiment mode in the simulation configuration.
         Args:
@@ -169,7 +169,7 @@ class JV(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the JV class.
         """
@@ -184,7 +184,7 @@ class JV(Sims):
         self.load_config('default')
         self.set_format()
 
-    def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02):
+    def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02) -> 'JV':
         """
         Set the voltage range for the JV simulation.
         Args:
@@ -197,7 +197,7 @@ class JV(Sims):
         self.config['config']['Vstep'] = step
         return self
 
-    def set_jv_properties(self, **kwargs):
+    def set_jv_properties(self, **kwargs: dict) -> 'JV':
         """
         Set additional JV properties.
         Args:
@@ -207,7 +207,7 @@ class JV(Sims):
             self.config['config']['jv_' + str(key)] = value
         return self
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'JV':
         """
         Set dump properties for the JV simulation.
         Args:
@@ -224,7 +224,7 @@ class SunsVoc(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the SunsVoc class.
         """
@@ -239,7 +239,7 @@ class SunsVoc(Sims):
         self.load_config('default')
         self.set_format()
 
-    def set_sun_range(self, start, stop, mul):
+    def set_sun_range(self, start: float, stop: float, mul: float) -> 'SunsVoc':
         """
         Set the sun intensity range for the simulation.
         Args:
@@ -253,7 +253,7 @@ class SunsVoc(Sims):
         self.config['config']['sun_voc_mul'] = mul
         return self
 
-    def set_single_point(self, set=True):
+    def set_single_point(self, set: bool = True) -> 'SunsVoc':
         """
         Enable or disable single-point simulation.
         Args:
@@ -262,7 +262,7 @@ class SunsVoc(Sims):
         self.config['config']['sun_voc_single_point'] = str(set)
         return self
 
-    def set_dump_properties(self, **kwargs):
+    def set_dump_properties(self, **kwargs: dict) -> 'SunsVoc':
         """
         Set dump properties for the SunsVoc simulation.
         Args:
@@ -279,7 +279,7 @@ class SunsJsc(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the SunsJsc class.
         """
@@ -294,7 +294,7 @@ class SunsJsc(Sims):
         self.load_config('default')
         self.set_format()
 
-    def set_sun_range(self, start, stop, dp, dpmul):
+    def set_sun_range(self, start: float, stop: float, dp: float, dpmul: float) -> 'SunsJsc':
         """
         Set the sun intensity range for the simulation.
         Args:
@@ -317,7 +317,7 @@ class TimeDomainMesh:
         segments_number (int): The number of segments in the mesh.
         mesh (dict): The mesh configuration data.
     """
-    def __init__(self, *segments):
+    def __init__(self, *segments: object) -> None:
         """
         Initialize the TimeDomainMesh class.
         Args:
@@ -328,7 +328,7 @@ class TimeDomainMesh:
         for idx, segment in enumerate(segments):
             self.mesh['mesh'].update({"segment" + str(idx): segment.segment})
 
-    def load_mesh(self, file):
+    def load_mesh(self, file: str) -> None:
         """
         Load the mesh configuration from a file.
         Args:
@@ -339,7 +339,7 @@ class TimeDomainMesh:
             self.mesh = json.loads(j.read())
         return
 
-    def find_file(self, file):
+    def find_file(self, file: str) -> str:
         """
         Find a file in the directory structure.
         Args:
@@ -352,7 +352,7 @@ class TimeDomainMesh:
 
         return config_dir
 
-    def set_loop(self, loop=False, loop_times=0, loop_reset_time=False):
+    def set_loop(self, loop: bool = False, loop_times: int = 0, loop_reset_time: bool = False) -> 'TimeDomainMesh':
         """
         Set loop properties for the time domain mesh.
         Args:
@@ -372,13 +372,13 @@ class TimeDomainSegment:
     Attributes:
         segment (dict): The segment configuration data.
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the TimeDomainSegment class.
         """
         self.load_segment('segment')
 
-    def load_segment(self, file):
+    def load_segment(self, file: str) -> None:
         """
         Load the segment configuration from a file.
         Args:
@@ -389,7 +389,7 @@ class TimeDomainSegment:
             self.segment = json.loads(j.read())
         return
 
-    def find_file(self, file):
+    def find_file(self, file: str) -> str:
         """
         Find a file in the directory structure.
         Args:
@@ -401,7 +401,7 @@ class TimeDomainSegment:
             resources.files("PyOghma.Sim_Defaults.Sims.configs.time_domain").joinpath(file)).args[0]
         return config_dir
 
-    def set_time(self, length, dt):
+    def set_time(self, length: float, dt: float) -> 'TimeDomainSegment':
         """
         Set the time properties for the segment.
         Args:
@@ -412,7 +412,7 @@ class TimeDomainSegment:
         self.segment['dt'] = dt
         return
 
-    def set_volgate(self, start, stop, mul):
+    def set_volgate(self, start: float, stop: float, mul: float) -> 'TimeDomainSegment':
         """
         Set the voltage properties for the segment.
         Args:
@@ -425,7 +425,7 @@ class TimeDomainSegment:
         self.segment['mul'] = mul
         return
 
-    def set_sun(self, start, stop):
+    def set_sun(self, start: float, stop: float) -> 'TimeDomainSegment':
         """
         Set the sun properties for the segment.
         Args:
@@ -436,7 +436,7 @@ class TimeDomainSegment:
         self.segment['sun_stop'] = stop
         return
 
-    def set_laser(self, start, stop):
+    def set_laser(self, start: float, stop: float) -> 'TimeDomainSegment':
         """
         Set the laser properties for the segment.
         Args:
@@ -454,7 +454,7 @@ class CELIV(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the CELIV class.
         """
@@ -477,7 +477,7 @@ class CELIV(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'CELIV':
         """
         Set dump properties for the CELIV simulation.
         Args:
@@ -494,7 +494,7 @@ class PhotoCELIV(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the PhotoCELIV class.
         """
@@ -517,7 +517,7 @@ class PhotoCELIV(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'PhotoCELIV':
         """
         Set dump properties for the PhotoCELIV simulation.
         Args:
@@ -534,7 +534,7 @@ class TPC(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the TPC class.
         """
@@ -555,7 +555,7 @@ class TPC(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'TPC':
         """
         Set dump properties for the TPC simulation.
         Args:
@@ -572,7 +572,7 @@ class TPV(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the TPV class.
         """
@@ -592,7 +592,7 @@ class TPV(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'TPV':
         """
         Set dump properties for the TPV simulation.
         Args:
@@ -612,7 +612,7 @@ class FrequencyDomainMesh:
         steps (int): The number of steps in the frequency range.
         mesh (dict): The mesh configuration data.
     """
-    def __init__(self, start, stop, steps, space):
+    def __init__(self, start: float, stop: float, steps: int, space: str) -> None:
         """
         Initialize the FrequencyDomainMesh class.
         Args:
@@ -633,7 +633,7 @@ class FrequencyDomainMesh:
             case 'geo':
                 self.geometric()
 
-    def linear(self):
+    def linear(self) -> None:
         """
         Generate a linear frequency mesh.
         """
@@ -642,7 +642,7 @@ class FrequencyDomainMesh:
             self.mesh["mesh"].update({"segment" + str(idx): FrequencyDomainSegment(freq).segment})
         return
 
-    def logarithmic(self):
+    def logarithmic(self) -> None:
         """
         Generate a logarithmic frequency mesh.
         """
@@ -651,7 +651,7 @@ class FrequencyDomainMesh:
             self.mesh["mesh"].update({"segment" + str(idx): FrequencyDomainSegment(freq).segment})
         return
 
-    def geometric(self):
+    def geometric(self) -> None:
         """
         Generate a geometric frequency mesh.
         """
@@ -667,7 +667,7 @@ class FrequencyDomainSegment:
     Attributes:
         segment (dict): The segment configuration data.
     """
-    def __init__(self, frequency):
+    def __init__(self, frequency: float) -> None:
         """
         Initialize the FrequencyDomainSegment class.
         Args:
@@ -676,7 +676,7 @@ class FrequencyDomainSegment:
         self.load_segment('segment')
         self.set_frequency(frequency)
 
-    def set_frequency(self, frequency):
+    def set_frequency(self, frequency: float) -> None:
         """
         Set the frequency properties for the segment.
         Args:
@@ -688,7 +688,7 @@ class FrequencyDomainSegment:
         self.segment['mul'] = 1.0
         return
 
-    def load_segment(self, file):
+    def load_segment(self, file: str) -> None:
         """
         Load the segment configuration from a file.
         Args:
@@ -699,7 +699,7 @@ class FrequencyDomainSegment:
             self.segment = json.loads(j.read())
         return
 
-    def find_file(self, file):
+    def find_file(self, file: str) -> str:
         """
         Find a file in the directory structure.
         Args:
@@ -718,7 +718,7 @@ class IMPS(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the IMPS class.
         """
@@ -736,7 +736,7 @@ class IMPS(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'IMPS':
         """
         Set dump properties for the IMPS simulation.
         Args:
@@ -753,7 +753,7 @@ class IMVS(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the IMVS class.
         """
@@ -771,7 +771,7 @@ class IMVS(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'IMVS':
         """
         Set dump properties for the IMVS simulation.
         Args:
@@ -788,7 +788,7 @@ class IS(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the IS class.
         """
@@ -806,7 +806,7 @@ class IS(Sims):
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs):
+    def set_dump_proprperties(self, **kwargs: dict) -> 'IS':
         """
         Set dump properties for the IS simulation.
         Args:
@@ -823,7 +823,7 @@ class CV(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the CV class.
         """
@@ -838,7 +838,7 @@ class CV(Sims):
         self.load_config('default')
         self.set_format()
 
-    def set_voltage_range(self, start, stop, step, frequency):
+    def set_voltage_range(self, start: float, stop: float, step: float, frequency: float) -> 'CV':
         """
         Set the voltage range and frequency for the CV simulation.
         Args:
@@ -860,7 +860,7 @@ class CE(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the CE class.
         """
@@ -875,7 +875,7 @@ class CE(Sims):
         self.load_config('default')
         self.set_format()
 
-    def set_sun_properties(self, start, stop, steps, on_time, off_time):
+    def set_sun_properties(self, start: float, stop: float, steps: int, on_time: float, off_time: float) -> 'CE':
         """
         Set the sun properties for the CE simulation.
         Args:
@@ -899,7 +899,7 @@ class PL_SS(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the PL_SS class.
         """
@@ -921,7 +921,7 @@ class EQE(Sims):
     Inherits from:
         Sims
     """
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize the EQE class.
         """

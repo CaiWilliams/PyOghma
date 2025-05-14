@@ -75,7 +75,7 @@ job execution and cleanup of simulation results.</p>
         points (int): Number of points in the variable space.
         hashes (list): List of unique hashes for simulations.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the OghmaNano class and its subcomponents.
         &#34;&#34;&#34;
@@ -91,7 +91,7 @@ job execution and cleanup of simulation results.</p>
         self.points = None
         self.hashes = None
 
-    def check_results(self):
+    def check_results(self) -&gt; str:
         &#34;&#34;&#34;
         Check and create the results directory based on the operating system.
         Returns:
@@ -111,7 +111,7 @@ job execution and cleanup of simulation results.</p>
         except:
             return results_dir
 
-    def set_experiment_name(self, experiment_name):
+    def set_experiment_name(self, experiment_name: str) -&gt; None:
         &#34;&#34;&#34;
         Set the name of the experiment.
         Args:
@@ -119,7 +119,7 @@ job execution and cleanup of simulation results.</p>
         &#34;&#34;&#34;
         self.experiment_name = experiment_name
 
-    def set_source_simulation(self, source_simulation):
+    def set_source_simulation(self, source_simulation: str) -&gt; None:
         &#34;&#34;&#34;
         Set the source directory for the simulation.
         Args:
@@ -128,7 +128,7 @@ job execution and cleanup of simulation results.</p>
         self.src_dir = os.path.join(os.getcwd(), source_simulation)
         return
 
-    def set_dest_dir(self, dest_dir):
+    def set_dest_dir(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Set the destination directory for the simulation.
         Args:
@@ -137,7 +137,7 @@ job execution and cleanup of simulation results.</p>
         self.dest_dir = dest_dir
         self.propagate_dest_dir()
 
-    def propagate_dest_dir(self):
+    def propagate_dest_dir(self) -&gt; None:
         &#34;&#34;&#34;
         Propagate the destination directory to all subcomponents.
         &#34;&#34;&#34;
@@ -153,7 +153,7 @@ job execution and cleanup of simulation results.</p>
         self.Thermal.dest_dir = self.dest_dir
         self.Server.dest_dir = self.dest_dir
 
-    def set_variables(self, iter_used=&#39;product&#39;, **kwargs):
+    def set_variables(self, iter_used: str = &#39;product&#39;, **kwargs: dict) -&gt; None:
         &#34;&#34;&#34;
         Set the variables for the simulation.
         Args:
@@ -177,7 +177,7 @@ job execution and cleanup of simulation results.</p>
             case _:
                 print(&#39;Iterator has not been implemented&#39;)
 
-    def gen_hashes(self, points):
+    def gen_hashes(self, points: int) -&gt; None:
         &#34;&#34;&#34;
         Generate unique hashes for the given number of points.
         Args:
@@ -185,7 +185,7 @@ job execution and cleanup of simulation results.</p>
         &#34;&#34;&#34;
         self.hashes = [secrets.token_urlsafe(8) for i in range(points)]
 
-    def clone(self, dest_dir):
+    def clone(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Clone the source simulation to the destination directory.
         Args:
@@ -197,7 +197,7 @@ job execution and cleanup of simulation results.</p>
         shutil.copytree(self.src_dir, dest)
         return
 
-    def load(self, dest_dir):
+    def load(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Load an existing simulation from the destination directory.
         Args:
@@ -207,7 +207,7 @@ job execution and cleanup of simulation results.</p>
         self.dest_dir = dest
         self.propagate_dest_dir()
 
-    def add_job(self, hash=&#39;&#39;):
+    def add_job(self, hash: str = &#39;&#39;) -&gt; None:
         &#34;&#34;&#34;
         Add a job to the server for execution.
         Args:
@@ -216,13 +216,13 @@ job execution and cleanup of simulation results.</p>
         self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir, &#39;sim.json&#39;), hash, args=&#34;&#34;)
         return
 
-    def clean_up(self):
+    def clean_up(self) -&gt; None:
         &#34;&#34;&#34;
         Remove the results directory and its contents.
         &#34;&#34;&#34;
         shutil.rmtree(os.path.join(os.getcwd(), self.results_dir))
 
-    def run_jobs(self):
+    def run_jobs(self) -&gt; None:
         &#34;&#34;&#34;
         Execute all jobs on the server.
         &#34;&#34;&#34;
@@ -259,14 +259,14 @@ job execution and cleanup of simulation results.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.OghmaNano.OghmaNano.add_job"><code class="name flex">
-<span>def <span class="ident">add_job</span></span>(<span>self, hash='')</span>
+<span>def <span class="ident">add_job</span></span>(<span>self, hash: str = '') ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def add_job(self, hash=&#39;&#39;):
+<pre><code class="python">def add_job(self, hash: str = &#39;&#39;) -&gt; None:
     &#34;&#34;&#34;
     Add a job to the server for execution.
     Args:
@@ -283,14 +283,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.check_results"><code class="name flex">
-<span>def <span class="ident">check_results</span></span>(<span>self)</span>
+<span>def <span class="ident">check_results</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def check_results(self):
+<pre><code class="python">def check_results(self) -&gt; str:
     &#34;&#34;&#34;
     Check and create the results directory based on the operating system.
     Returns:
@@ -318,14 +318,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.clean_up"><code class="name flex">
-<span>def <span class="ident">clean_up</span></span>(<span>self)</span>
+<span>def <span class="ident">clean_up</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def clean_up(self):
+<pre><code class="python">def clean_up(self) -&gt; None:
     &#34;&#34;&#34;
     Remove the results directory and its contents.
     &#34;&#34;&#34;
@@ -334,14 +334,14 @@ job execution and cleanup of simulation results.</p>
 <div class="desc"><p>Remove the results directory and its contents.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.clone"><code class="name flex">
-<span>def <span class="ident">clone</span></span>(<span>self, dest_dir)</span>
+<span>def <span class="ident">clone</span></span>(<span>self, dest_dir: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def clone(self, dest_dir):
+<pre><code class="python">def clone(self, dest_dir: str) -&gt; None:
     &#34;&#34;&#34;
     Clone the source simulation to the destination directory.
     Args:
@@ -361,14 +361,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.gen_hashes"><code class="name flex">
-<span>def <span class="ident">gen_hashes</span></span>(<span>self, points)</span>
+<span>def <span class="ident">gen_hashes</span></span>(<span>self, points: int) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def gen_hashes(self, points):
+<pre><code class="python">def gen_hashes(self, points: int) -&gt; None:
     &#34;&#34;&#34;
     Generate unique hashes for the given number of points.
     Args:
@@ -384,14 +384,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.load"><code class="name flex">
-<span>def <span class="ident">load</span></span>(<span>self, dest_dir)</span>
+<span>def <span class="ident">load</span></span>(<span>self, dest_dir: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load(self, dest_dir):
+<pre><code class="python">def load(self, dest_dir: str) -&gt; None:
     &#34;&#34;&#34;
     Load an existing simulation from the destination directory.
     Args:
@@ -409,14 +409,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.propagate_dest_dir"><code class="name flex">
-<span>def <span class="ident">propagate_dest_dir</span></span>(<span>self)</span>
+<span>def <span class="ident">propagate_dest_dir</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def propagate_dest_dir(self):
+<pre><code class="python">def propagate_dest_dir(self) -&gt; None:
     &#34;&#34;&#34;
     Propagate the destination directory to all subcomponents.
     &#34;&#34;&#34;
@@ -435,14 +435,14 @@ job execution and cleanup of simulation results.</p>
 <div class="desc"><p>Propagate the destination directory to all subcomponents.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.run_jobs"><code class="name flex">
-<span>def <span class="ident">run_jobs</span></span>(<span>self)</span>
+<span>def <span class="ident">run_jobs</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def run_jobs(self):
+<pre><code class="python">def run_jobs(self) -&gt; None:
     &#34;&#34;&#34;
     Execute all jobs on the server.
     &#34;&#34;&#34;
@@ -452,14 +452,14 @@ job execution and cleanup of simulation results.</p>
 <div class="desc"><p>Execute all jobs on the server.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_dest_dir"><code class="name flex">
-<span>def <span class="ident">set_dest_dir</span></span>(<span>self, dest_dir)</span>
+<span>def <span class="ident">set_dest_dir</span></span>(<span>self, dest_dir: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dest_dir(self, dest_dir):
+<pre><code class="python">def set_dest_dir(self, dest_dir: str) -&gt; None:
     &#34;&#34;&#34;
     Set the destination directory for the simulation.
     Args:
@@ -476,14 +476,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_experiment_name"><code class="name flex">
-<span>def <span class="ident">set_experiment_name</span></span>(<span>self, experiment_name)</span>
+<span>def <span class="ident">set_experiment_name</span></span>(<span>self, experiment_name: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_experiment_name(self, experiment_name):
+<pre><code class="python">def set_experiment_name(self, experiment_name: str) -&gt; None:
     &#34;&#34;&#34;
     Set the name of the experiment.
     Args:
@@ -499,14 +499,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_source_simulation"><code class="name flex">
-<span>def <span class="ident">set_source_simulation</span></span>(<span>self, source_simulation)</span>
+<span>def <span class="ident">set_source_simulation</span></span>(<span>self, source_simulation: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_source_simulation(self, source_simulation):
+<pre><code class="python">def set_source_simulation(self, source_simulation: str) -&gt; None:
     &#34;&#34;&#34;
     Set the source directory for the simulation.
     Args:
@@ -523,14 +523,14 @@ job execution and cleanup of simulation results.</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_variables"><code class="name flex">
-<span>def <span class="ident">set_variables</span></span>(<span>self, iter_used='product', **kwargs)</span>
+<span>def <span class="ident">set_variables</span></span>(<span>self, iter_used: str = 'product', **kwargs: dict) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_variables(self, iter_used=&#39;product&#39;, **kwargs):
+<pre><code class="python">def set_variables(self, iter_used: str = &#39;product&#39;, **kwargs: dict) -&gt; None:
     &#34;&#34;&#34;
     Set the variables for the simulation.
     Args:

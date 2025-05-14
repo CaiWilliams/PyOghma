@@ -67,7 +67,7 @@ simulation parameters, and network configurations for machine learning tasks.</p
         json_name (str): The name of the JSON configuration.
         data (dict): The duplication configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the duplicate class.
         &#34;&#34;&#34;
@@ -127,7 +127,7 @@ ml</p>
         ml_config (ml_config): Instance of the ml_config class.
         ml_networks (ml_networks): Instance of the ml_networks class.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml class and its subcomponents.
         &#34;&#34;&#34;
@@ -141,7 +141,7 @@ ml</p>
         self.ml_networks = ml_networks()
         return
 
-    def propegate_dest_dir(self, dest_dir):
+    def propegate_dest_dir(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Propagate the destination directory to all subcomponents.
         Args:
@@ -154,7 +154,7 @@ ml</p>
         self.ml_config.dest_dir = dest_dir
         self.ml_sim.dest_dir = dest_dir
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -166,7 +166,7 @@ ml</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -178,7 +178,7 @@ ml</p>
             resources.files(&#34;PyOghma.Sim_Defaults.Ml.configs&#34; + self.json_name).joinpath(file)).args[0]
         return config_dir
 
-    def set_format(self):
+    def set_format(self) -&gt; None:
         &#34;&#34;&#34;
         Set the format of the JSON data based on the json_name.
         &#34;&#34;&#34;
@@ -198,7 +198,7 @@ ml</p>
             case _:
                 self.json_format = {self.json_name: self.data}
 
-    def update(self):
+    def update(self) -&gt; None:
         &#34;&#34;&#34;
         Update the JSON file with the current data.
         &#34;&#34;&#34;
@@ -245,14 +245,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -277,14 +277,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -309,14 +309,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml.propegate_dest_dir"><code class="name flex">
-<span>def <span class="ident">propegate_dest_dir</span></span>(<span>self, dest_dir)</span>
+<span>def <span class="ident">propegate_dest_dir</span></span>(<span>self, dest_dir: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def propegate_dest_dir(self, dest_dir):
+<pre><code class="python">def propegate_dest_dir(self, dest_dir: str) -&gt; None:
     &#34;&#34;&#34;
     Propagate the destination directory to all subcomponents.
     Args:
@@ -337,14 +337,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml.set_format"><code class="name flex">
-<span>def <span class="ident">set_format</span></span>(<span>self)</span>
+<span>def <span class="ident">set_format</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_format(self):
+<pre><code class="python">def set_format(self) -&gt; None:
     &#34;&#34;&#34;
     Set the format of the JSON data based on the json_name.
     &#34;&#34;&#34;
@@ -367,14 +367,14 @@ ml</p>
 <div class="desc"><p>Set the format of the JSON data based on the json_name.</p></div>
 </dd>
 <dt id="PyOghma.ML.ml.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self)</span>
+<span>def <span class="ident">update</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self):
+<pre><code class="python">def update(self) -&gt; None:
     &#34;&#34;&#34;
     Update the JSON file with the current data.
     &#34;&#34;&#34;
@@ -409,7 +409,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_config class.
         &#34;&#34;&#34;
@@ -419,7 +419,7 @@ ml</p>
         self.data = self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_config(self, num_archives, sim_per_archive):
+    def set_config(self, num_archives: int, sim_per_archive: int) -&gt; None:
         &#34;&#34;&#34;
         Set the configuration parameters.
         Args:
@@ -429,7 +429,7 @@ ml</p>
         self.data[&#39;ml_number_of_archives&#39;] = num_archives
         self.data[&#39;ml_sims_per_archive&#39;] = sim_per_archive
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -459,14 +459,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_config.set_config"><code class="name flex">
-<span>def <span class="ident">set_config</span></span>(<span>self, num_archives, sim_per_archive)</span>
+<span>def <span class="ident">set_config</span></span>(<span>self, num_archives: int, sim_per_archive: int) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_config(self, num_archives, sim_per_archive):
+<pre><code class="python">def set_config(self, num_archives: int, sim_per_archive: int) -&gt; None:
     &#34;&#34;&#34;
     Set the configuration parameters.
     Args:
@@ -501,7 +501,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_input"><code class="flex name class">
 <span>class <span class="ident">ml_input</span></span>
-<span>(</span><span>dest_dir)</span>
+<span>(</span><span>dest_dir: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -516,7 +516,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The input configuration data.
     &#34;&#34;&#34;
-    def __init__(self, dest_dir):
+    def __init__(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_input class.
         Args:
@@ -526,7 +526,7 @@ ml</p>
         self.json_name = &#39;ml_random&#39;
         self.data = self.load_config(&#39;default&#39;)
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -539,7 +539,7 @@ ml</p>
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -551,7 +551,7 @@ ml</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def set_input(self, state=True, param=&#39;&#39;, param_min=-1, param_max=1):
+    def set_input(self, state: bool = True, param: str = &#39;&#39;, param_min: float = -1, param_max: float = 1) -&gt; None:
         &#34;&#34;&#34;
         Set the input parameters.
         Args:
@@ -595,14 +595,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_input.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -628,14 +628,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_input.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -660,14 +660,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_input.set_input"><code class="name flex">
-<span>def <span class="ident">set_input</span></span>(<span>self, state=True, param='', param_min=-1, param_max=1)</span>
+<span>def <span class="ident">set_input</span></span>(<span>self,<br>state: bool = True,<br>param: str = '',<br>param_min: float = -1,<br>param_max: float = 1) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_input(self, state=True, param=&#39;&#39;, param_min=-1, param_max=1):
+<pre><code class="python">def set_input(self, state: bool = True, param: str = &#39;&#39;, param_min: float = -1, param_max: float = 1) -&gt; None:
     &#34;&#34;&#34;
     Set the input parameters.
     Args:
@@ -709,7 +709,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_network"><code class="flex name class">
 <span>class <span class="ident">ml_network</span></span>
-<span>(</span><span>name, state, inputs, outputs)</span>
+<span>(</span><span>name: str, state: bool, inputs: object, outputs: object)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -722,7 +722,7 @@ ml</p>
     Attributes:
         data (dict): The network configuration data.
     &#34;&#34;&#34;
-    def __init__(self, name, state, inputs, outputs):
+    def __init__(self, name: str, state: bool, inputs: object, outputs: object) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_network class.
         Args:
@@ -763,7 +763,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_network_input"><code class="flex name class">
 <span>class <span class="ident">ml_network_input</span></span>
-<span>(</span><span>*ml_output_vectors)</span>
+<span>(</span><span>*ml_output_vectors: object)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -776,7 +776,7 @@ ml</p>
     Attributes:
         data (dict): The input configuration data.
     &#34;&#34;&#34;
-    def __init__(self, *ml_output_vectors):
+    def __init__(self, *ml_output_vectors: object) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_network_input class.
         Args:
@@ -805,7 +805,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_network_output"><code class="flex name class">
 <span>class <span class="ident">ml_network_output</span></span>
-<span>(</span><span>ml_output_vectors, params)</span>
+<span>(</span><span>ml_output_vectors: list, params: list)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -818,7 +818,7 @@ ml</p>
     Attributes:
         data (dict): The output configuration data.
     &#34;&#34;&#34;
-    def __init__(self, ml_output_vectors, params):
+    def __init__(self, ml_output_vectors: list, params: list) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_network_output class.
         Args:
@@ -865,7 +865,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The network configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_networks class.
         &#34;&#34;&#34;
@@ -921,7 +921,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The patch configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_patch class.
         &#34;&#34;&#34;
@@ -976,7 +976,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The random input configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_random class.
         &#34;&#34;&#34;
@@ -986,7 +986,7 @@ ml</p>
         self.data[&#39;segments&#39;] = 0
         self.set_format()
 
-    def set_inputs(self, *inputs):
+    def set_inputs(self, *inputs: object) -&gt; None:
         &#34;&#34;&#34;
         Set the random inputs for the configuration.
         Args:
@@ -1017,14 +1017,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_random.set_inputs"><code class="name flex">
-<span>def <span class="ident">set_inputs</span></span>(<span>self, *inputs)</span>
+<span>def <span class="ident">set_inputs</span></span>(<span>self, *inputs: object) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_inputs(self, *inputs):
+<pre><code class="python">def set_inputs(self, *inputs: object) -&gt; None:
     &#34;&#34;&#34;
     Set the random inputs for the configuration.
     Args:
@@ -1075,7 +1075,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The simulation configuration data.
     &#34;&#34;&#34;
-    def __init__(self):
+    def __init__(self) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_sim class.
         &#34;&#34;&#34;
@@ -1086,7 +1086,7 @@ ml</p>
         self.data[&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
         self.set_format()
 
-    def set_sim(self, Sims):
+    def set_sim(self, Sims: list) -&gt; None:
         &#34;&#34;&#34;
         Set the simulation configurations.
         Args:
@@ -1140,14 +1140,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_sim.set_sim"><code class="name flex">
-<span>def <span class="ident">set_sim</span></span>(<span>self, Sims)</span>
+<span>def <span class="ident">set_sim</span></span>(<span>self, Sims: list) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_sim(self, Sims):
+<pre><code class="python">def set_sim(self, Sims: list) -&gt; None:
     &#34;&#34;&#34;
     Set the simulation configurations.
     Args:
@@ -1206,7 +1206,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector"><code class="flex name class">
 <span>class <span class="ident">ml_sim_output_vector</span></span>
-<span>(</span><span>dest_dir)</span>
+<span>(</span><span>dest_dir: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -1221,7 +1221,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The output vector configuration data.
     &#34;&#34;&#34;
-    def __init__(self, dest_dir):
+    def __init__(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_sim_output_vector class.
         Args:
@@ -1231,7 +1231,7 @@ ml</p>
         self.json_name = &#39;ml_output_vectors&#39;
         self.data = self.load_config(&#39;default&#39;)
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -1244,7 +1244,7 @@ ml</p>
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -1256,7 +1256,7 @@ ml</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def set_output_vector(self, state, file_name, vector_start, vector_end, vector_step, import_config):
+    def set_output_vector(self, state: bool, file_name: str, vector_start: float, vector_end: float, vector_step: float, import_config: object) -&gt; None:
         &#34;&#34;&#34;
         Set the output vector parameters.
         Args:
@@ -1286,7 +1286,7 @@ ml</p>
         self.data[&#34;import_config&#34;] = import_config.data
         self.data[&#34;id&#34;] = &#34;id&#34; + str(secrets.token_hex(8))
 
-    def set_name(self, name):
+    def set_name(self, name: str) -&gt; None:
         &#34;&#34;&#34;
         Set the name for the output vector configuration.
         Args:
@@ -1314,14 +1314,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_sim_output_vector.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -1347,14 +1347,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -1379,14 +1379,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector.set_name"><code class="name flex">
-<span>def <span class="ident">set_name</span></span>(<span>self, name)</span>
+<span>def <span class="ident">set_name</span></span>(<span>self, name: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_name(self, name):
+<pre><code class="python">def set_name(self, name: str) -&gt; None:
     &#34;&#34;&#34;
     Set the name for the output vector configuration.
     Args:
@@ -1403,14 +1403,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector.set_output_vector"><code class="name flex">
-<span>def <span class="ident">set_output_vector</span></span>(<span>self, state, file_name, vector_start, vector_end, vector_step, import_config)</span>
+<span>def <span class="ident">set_output_vector</span></span>(<span>self,<br>state: bool,<br>file_name: str,<br>vector_start: float,<br>vector_end: float,<br>vector_step: float,<br>import_config: object) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_output_vector(self, state, file_name, vector_start, vector_end, vector_step, import_config):
+<pre><code class="python">def set_output_vector(self, state: bool, file_name: str, vector_start: float, vector_end: float, vector_step: float, import_config: object) -&gt; None:
     &#34;&#34;&#34;
     Set the output vector parameters.
     Args:
@@ -1461,7 +1461,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig"><code class="flex name class">
 <span>class <span class="ident">ml_sim_output_vector_import_cofig</span></span>
-<span>(</span><span>dest_dir)</span>
+<span>(</span><span>dest_dir: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -1476,7 +1476,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The import configuration data.
     &#34;&#34;&#34;
-    def __init__(self, dest_dir):
+    def __init__(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_sim_output_vector_import_cofig class.
         Args:
@@ -1486,7 +1486,7 @@ ml</p>
         self.json_name = &#39;import_config&#39;
         self.data = self.load_config(&#39;default&#39;)
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -1499,7 +1499,7 @@ ml</p>
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -1511,7 +1511,7 @@ ml</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def set_import_cofig(self, import_dir=&#39;jv.dat&#39;, x_data=&#39;J (A/cm^2)&#39;, y_data = &#39;V (Voltage)&#39;, import_area=0.104, x_spin=0, data_spin=1):
+    def set_import_cofig(self, import_dir: str = &#39;jv.dat&#39;, x_data: str = &#39;J (A/cm^2)&#39;, y_data: str = &#39;V (Voltage)&#39;, import_area: float = 0.104, x_spin: int = 0, data_spin: int = 1) -&gt; None:
         &#34;&#34;&#34;
         Set the import configuration parameters.
         Args:
@@ -1536,7 +1536,7 @@ ml</p>
         self.data[&#39;data_file&#39;] = &#39;&#39;
         self.data[&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
 
-    def set_name(self, file_name, sim_name):
+    def set_name(self, file_name: str, sim_name: str) -&gt; None:
         &#34;&#34;&#34;
         Set the name for the import configuration.
         Args:
@@ -1546,7 +1546,7 @@ ml</p>
         self.data[&#39;import_file_path&#39;] = self.dest_dir + &#39;/&#39; + file_name
         self.data[&#39;data_file&#39;] = sim_name + &#39;_vec.csv&#39;
 
-    def get_combo_pos(self, x):
+    def get_combo_pos(self, x: str) -&gt; tuple:
         &#34;&#34;&#34;
         Get the position of a combo box item.
         Args:
@@ -1583,14 +1583,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -1616,14 +1616,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig.get_combo_pos"><code class="name flex">
-<span>def <span class="ident">get_combo_pos</span></span>(<span>self, x)</span>
+<span>def <span class="ident">get_combo_pos</span></span>(<span>self, x: str) ‑> tuple</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_combo_pos(self, x):
+<pre><code class="python">def get_combo_pos(self, x: str) -&gt; tuple:
     &#34;&#34;&#34;
     Get the position of a combo box item.
     Args:
@@ -1654,14 +1654,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -1686,14 +1686,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig.set_import_cofig"><code class="name flex">
-<span>def <span class="ident">set_import_cofig</span></span>(<span>self,<br>import_dir='jv.dat',<br>x_data='J (A/cm^2)',<br>y_data='V (Voltage)',<br>import_area=0.104,<br>x_spin=0,<br>data_spin=1)</span>
+<span>def <span class="ident">set_import_cofig</span></span>(<span>self,<br>import_dir: str = 'jv.dat',<br>x_data: str = 'J (A/cm^2)',<br>y_data: str = 'V (Voltage)',<br>import_area: float = 0.104,<br>x_spin: int = 0,<br>data_spin: int = 1) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_import_cofig(self, import_dir=&#39;jv.dat&#39;, x_data=&#39;J (A/cm^2)&#39;, y_data = &#39;V (Voltage)&#39;, import_area=0.104, x_spin=0, data_spin=1):
+<pre><code class="python">def set_import_cofig(self, import_dir: str = &#39;jv.dat&#39;, x_data: str = &#39;J (A/cm^2)&#39;, y_data: str = &#39;V (Voltage)&#39;, import_area: float = 0.104, x_spin: int = 0, data_spin: int = 1) -&gt; None:
     &#34;&#34;&#34;
     Set the import configuration parameters.
     Args:
@@ -1736,14 +1736,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_output_vector_import_cofig.set_name"><code class="name flex">
-<span>def <span class="ident">set_name</span></span>(<span>self, file_name, sim_name)</span>
+<span>def <span class="ident">set_name</span></span>(<span>self, file_name: str, sim_name: str) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_name(self, file_name, sim_name):
+<pre><code class="python">def set_name(self, file_name: str, sim_name: str) -&gt; None:
     &#34;&#34;&#34;
     Set the name for the import configuration.
     Args:
@@ -1766,7 +1766,7 @@ ml</p>
 </dd>
 <dt id="PyOghma.ML.ml_sim_patch"><code class="flex name class">
 <span>class <span class="ident">ml_sim_patch</span></span>
-<span>(</span><span>dest_dir)</span>
+<span>(</span><span>dest_dir: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -1781,7 +1781,7 @@ ml</p>
         json_name (str): The name of the JSON configuration.
         data (dict): The patch configuration data.
     &#34;&#34;&#34;
-    def __init__(self, dest_dir):
+    def __init__(self, dest_dir: str) -&gt; None:
         &#34;&#34;&#34;
         Initialize the ml_sim_patch class.
         Args:
@@ -1791,7 +1791,7 @@ ml</p>
         self.json_name = &#39;ml_patch&#39;
         self.data = self.load_config(&#39;default&#39;)
 
-    def find_file(self, file):
+    def find_file(self, file: str) -&gt; str:
         &#34;&#34;&#34;
         Find a file in the directory structure.
         Args:
@@ -1804,7 +1804,7 @@ ml</p>
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file):
+    def load_config(self, file: str) -&gt; dict:
         &#34;&#34;&#34;
         Load a configuration file.
         Args:
@@ -1816,7 +1816,7 @@ ml</p>
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def set_patch(self, state, param, param_val):
+    def set_patch(self, state: bool, param: str, param_val: float) -&gt; None:
         &#34;&#34;&#34;
         Set the patch parameters.
         Args:
@@ -1853,14 +1853,14 @@ ml</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.ML.ml_sim_patch.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file):
+<pre><code class="python">def find_file(self, file: str) -&gt; str:
     &#34;&#34;&#34;
     Find a file in the directory structure.
     Args:
@@ -1886,14 +1886,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_patch.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file):
+<pre><code class="python">def load_config(self, file: str) -&gt; dict:
     &#34;&#34;&#34;
     Load a configuration file.
     Args:
@@ -1918,14 +1918,14 @@ ml</p>
 </dl></div>
 </dd>
 <dt id="PyOghma.ML.ml_sim_patch.set_patch"><code class="name flex">
-<span>def <span class="ident">set_patch</span></span>(<span>self, state, param, param_val)</span>
+<span>def <span class="ident">set_patch</span></span>(<span>self, state: bool, param: str, param_val: float) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_patch(self, state, param, param_val):
+<pre><code class="python">def set_patch(self, state: bool, param: str, param_val: float) -&gt; None:
     &#34;&#34;&#34;
     Set the patch parameters.
     Args:

@@ -52,7 +52,7 @@ data and performs numerical computations to derive key parameters for solar cell
 <dl>
 <dt id="PyOghma.Calculate.Ideality_Factor"><code class="flex name class">
 <span>class <span class="ident">Ideality_Factor</span></span>
-<span>(</span><span>exp)</span>
+<span>(</span><span>exp: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -70,7 +70,7 @@ data and performs numerical computations to derive key parameters for solar cell
         GenRate (list): List of generation rates extracted from the experimental data.
         result (float): The calculated ideality factor.
     &#34;&#34;&#34;
-    def __init__(self, exp):
+    def __init__(self, exp: str) -&gt; None:
         &#34;&#34;&#34;
         Initializes the Ideality_Factor class.
         Args:
@@ -95,7 +95,7 @@ data and performs numerical computations to derive key parameters for solar cell
             with gzip.open(self.exp, &#39;r&#39;) as f:
                 self.data = json.load(f)
 
-    def calculate(self, temp=300):
+    def calculate(self, temp: float = 300) -&gt; None:
         &#34;&#34;&#34;
         Calculates the ideality factor (Nid) based on the given data.
         This method computes the ideality factor using the relationship between 
@@ -174,14 +174,14 @@ This class calculates the ideality factor of a solar cell based on experimental 
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Calculate.Ideality_Factor.calculate"><code class="name flex">
-<span>def <span class="ident">calculate</span></span>(<span>self, temp=300)</span>
+<span>def <span class="ident">calculate</span></span>(<span>self, temp: float = 300) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def calculate(self, temp=300):
+<pre><code class="python">def calculate(self, temp: float = 300) -&gt; None:
     &#34;&#34;&#34;
     Calculates the ideality factor (Nid) based on the given data.
     This method computes the ideality factor using the relationship between 
@@ -257,7 +257,7 @@ the <code>scipy.constants.value</code> function.</li>
 </dd>
 <dt id="PyOghma.Calculate.Psudo_JV"><code class="flex name class">
 <span>class <span class="ident">Psudo_JV</span></span>
-<span>(</span><span>exp)</span>
+<span>(</span><span>exp: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -274,7 +274,7 @@ the <code>scipy.constants.value</code> function.</li>
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
     &#34;&#34;&#34;
-    def __init__(self, exp):
+    def __init__(self, exp: str) -&gt; None:
         &#34;&#34;&#34;
         Initializes the Psudo_JV class.
         Args:
@@ -298,7 +298,7 @@ the <code>scipy.constants.value</code> function.</li>
             with gzip.open(self.exp, &#39;r&#39;) as f:
                 self.data = json.load(f)
 
-    def calculate(self):
+    def calculate(self) -&gt; None:
         &#34;&#34;&#34;
         Calculate the pseudo JV of the diode.
         This method processes the experimental data to compute pseudo JV current density 
@@ -372,14 +372,14 @@ the <code>scipy.constants.value</code> function.</li>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Calculate.Psudo_JV.calculate"><code class="name flex">
-<span>def <span class="ident">calculate</span></span>(<span>self)</span>
+<span>def <span class="ident">calculate</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def calculate(self):
+<pre><code class="python">def calculate(self) -&gt; None:
     &#34;&#34;&#34;
     Calculate the pseudo JV of the diode.
     This method processes the experimental data to compute pseudo JV current density 
@@ -439,7 +439,7 @@ and voltage values for each experimental hash. The results are stored as numpy a
 </dd>
 <dt id="PyOghma.Calculate.Transport_Resistance"><code class="flex name class">
 <span>class <span class="ident">Transport_Resistance</span></span>
-<span>(</span><span>exp)</span>
+<span>(</span><span>exp: str)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -457,7 +457,7 @@ and voltage values for each experimental hash. The results are stored as numpy a
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
         TR_Voc (list): List of calculated transport resistance at open-circuit voltage.
     &#34;&#34;&#34;
-    def __init__(self, exp):
+    def __init__(self, exp: str) -&gt; None:
         &#34;&#34;&#34;
         Initializes the Transport_Resistance class.
         Args:
@@ -487,7 +487,7 @@ and voltage values for each experimental hash. The results are stored as numpy a
         self.pJV_j = PJV.pJV_j
         self.pJV_v = PJV.pJV_v
 
-    def calculate(self):
+    def calculate(self) -&gt; None:
         &#34;&#34;&#34;
         Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
         for experimental data.
@@ -601,14 +601,14 @@ and voltage values for each experimental hash. The results are stored as numpy a
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Calculate.Transport_Resistance.calculate"><code class="name flex">
-<span>def <span class="ident">calculate</span></span>(<span>self)</span>
+<span>def <span class="ident">calculate</span></span>(<span>self) ‑> None</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def calculate(self):
+<pre><code class="python">def calculate(self) -&gt; None:
     &#34;&#34;&#34;
     Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
     for experimental data.
