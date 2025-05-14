@@ -62,11 +62,6 @@ el.replaceWith(d);
         name (str): The name of the laser.
         icon (str): The icon representing the laser.
         data (dict): The laser configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -115,11 +110,6 @@ el.replaceWith(d);
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The laser configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.</p>
 <p>Initialize the Laser class.</p></div>
 <h3>Methods</h3>
 <dl>
@@ -274,9 +264,6 @@ Optical</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         light (dict): The light configuration data.
-    Methods:
-        set_light_Intensity(suns):
-            Set the light intensity.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -307,9 +294,6 @@ Optical</p>
 <dt><strong><code>light</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The light configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_light_Intensity(suns):
-Set the light intensity.</p>
 <p>Initialize the Light class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -372,9 +356,6 @@ Set the light intensity.</p>
         json_name (str): The name of the JSON configuration.
         json_sub_heading (str): The subheading for the JSON configuration.
         data (dict): The light intensity configuration data.
-    Methods:
-        set_light_Intensity(suns):
-            Set the light intensity.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -407,9 +388,6 @@ Optical</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The light intensity configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_light_Intensity(suns):
-Set the light intensity.</p>
 <p>Initialize the LightIntensity class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -469,13 +447,6 @@ Set the light intensity.</p>
         json_name (str): The name of the JSON configuration.
         json_sub_heading (str): The subheading for the JSON configuration.
         light (dict): The light source configuration data.
-    Methods:
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_light_spectra(spectra_name):
-            Set the light spectra for the light source.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -508,18 +479,7 @@ Set the light intensity.</p>
             str: The path to the found file.
         &#34;&#34;&#34;
         config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
-        #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         return config_dir
-    # def find_file(self, file):
-    #     config_dir = os.path.join(&#39;*&#39;, &#39;configs&#39;, self.json_name, file)
-    #     filename = glob(config_dir)[0]
-    #     self.loaded_filename = str(filename)
-    #     return str(filename)
-
-    # def load_config(self, file):
-    #     file = file + &#39;.json&#39;
-    #     with open(self.find_file(file)) as j:
-    #         return json.loads(j.read())
 
     def set_light_spectra(self, spectra_name):
         &#34;&#34;&#34;
@@ -540,13 +500,6 @@ Set the light intensity.</p>
 <dt><strong><code>light</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The light source configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>load_config(file):
-Load a configuration file.
-find_file(file):
-Find a file in the directory structure.
-set_light_spectra(spectra_name):
-Set the light spectra for the light source.</p>
 <p>Initialize the LightSource class.</p></div>
 <h3>Methods</h3>
 <dl>
@@ -567,7 +520,6 @@ Set the light spectra for the light source.</p>
         str: The path to the found file.
     &#34;&#34;&#34;
     config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
-    #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     return config_dir</code></pre>
 </details>
 <div class="desc"><p>Find a file in the directory structure.</p>
@@ -659,11 +611,6 @@ Set the light spectra for the light source.</p>
         json_sub_heading (str): The subheading for the JSON configuration.
         segments (int): The number of light sources.
         data (dict): The light sources configuration data.
-    Methods:
-        set_light_Intensity(suns):
-            Set the light intensity for all light sources.
-        add_light_source(*light_source):
-            Add one or more light sources.
     &#34;&#34;&#34;
     def __init__(self, *light_sources):
         &#34;&#34;&#34;
@@ -698,7 +645,7 @@ Set the light spectra for the light source.</p>
         self.segments = len(light_source)
         self.data[&#39;lights&#39;][&#39;segments&#39;] = self.segments
         for idx, light_source in enumerate(light_source):
-            self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light # {&#39;segment&#39; + str(idx): light_source.light})</code></pre>
+            self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light</code></pre>
 </details>
 <div class="desc"><p>Class to handle multiple light sources.
 Inherits from:
@@ -714,11 +661,6 @@ Optical</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The light sources configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_light_Intensity(suns):
-Set the light intensity for all light sources.
-add_light_source(*light_source):
-Add one or more light sources.</p>
 <p>Initialize the LightSources class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -748,7 +690,7 @@ Add one or more light sources.</p>
     self.segments = len(light_source)
     self.data[&#39;lights&#39;][&#39;segments&#39;] = self.segments
     for idx, light_source in enumerate(light_source):
-        self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light # {&#39;segment&#39; + str(idx): light_source.light})</code></pre>
+        self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light</code></pre>
 </details>
 <div class="desc"><p>Add one or more light sources.</p>
 <h2 id="args">Args</h2>
@@ -814,15 +756,6 @@ Add one or more light sources.</p>
         LightIntensity (LightIntensity): Instance of the LightIntensity class.
         Lasers (Lasers): Instance of the Lasers class.
         dest_dir (str): The destination directory for saving or loading data.
-    Methods:
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -859,7 +792,6 @@ Add one or more light sources.</p>
             str: The path to the found file.
         &#34;&#34;&#34;
         config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
-        #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         return config_dir
 
     def set_format(self):
@@ -912,15 +844,6 @@ Add one or more light sources.</p>
 <dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
 <dd>The destination directory for saving or loading data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>load_config(file):
-Load a configuration file.
-find_file(file):
-Find a file in the directory structure.
-set_format():
-Set the format of the JSON data.
-update():
-Update the JSON file with the current data.</p>
 <p>Initialize the Optical class and its subcomponents.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -948,7 +871,6 @@ Update the JSON file with the current data.</p>
         str: The path to the found file.
     &#34;&#34;&#34;
     config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
-    #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     return config_dir</code></pre>
 </details>
 <div class="desc"><p>Find a file in the directory structure.</p>

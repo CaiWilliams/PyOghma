@@ -62,13 +62,6 @@ el.replaceWith(d);
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_fit_params(**kwargs):
-            Set the fit parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir, fit_against=&#39;jv.dat&#39;):
         &#34;&#34;&#34;
@@ -127,13 +120,6 @@ el.replaceWith(d);
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_fit_params(**kwargs):
-Set the fit parameters.</p>
 <p>Initialize the Config class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -252,13 +238,6 @@ Set the fit parameters.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The dataset data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_local_duplicate():
-            Set the local duplicate parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir, config=&#39;&#39;, import_config=&#39;&#39;, *fitpathces):
         &#34;&#34;&#34;
@@ -326,13 +305,6 @@ Set the fit parameters.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The dataset data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_local_duplicate():
-Set the local duplicate parameters.</p>
 <p>Initialize the Dataset class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -448,13 +420,6 @@ Set the local duplicate parameters.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The duplication data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_duplication(src, dest, multiplier=&#39;x&#39;):
-            Set the duplication parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir, layer):
         &#34;&#34;&#34;
@@ -525,13 +490,6 @@ Set the local duplicate parameters.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The duplication data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_duplication(src, dest, multiplier='x'):
-Set the duplication parameters.</p>
 <p>Initialize the Dupe class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -660,9 +618,6 @@ Set the duplication parameters.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The duplication configuration data.
-    Methods:
-        set_duplications(*duplications):
-            Set the duplications for the configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -698,9 +653,6 @@ Fitting</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The duplication configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_duplications(*duplications):
-Set the duplications for the configuration.</p>
 <p>Initialize the Duplicate class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -764,13 +716,6 @@ Set the duplications for the configuration.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit patch data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_patch(param, val):
-            Set the patch parameters.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -823,13 +768,6 @@ Set the duplications for the configuration.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The fit patch data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_patch(param, val):
-Set the patch parameters.</p>
 <p>Initialize the FitPatch class.</p></div>
 <h3>Methods</h3>
 <dl>
@@ -944,11 +882,6 @@ Set the patch parameters.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit configuration data.
-    Methods:
-        set_simplexmul(multiplier):
-            Set the simplex multiplier.
-        set_simplex_reset(reset):
-            Set the simplex reset value.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -985,11 +918,6 @@ Fitting</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The fit configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_simplexmul(multiplier):
-Set the simplex multiplier.
-set_simplex_reset(reset):
-Set the simplex reset value.</p>
 <p>Initialize the Fit_Config class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1073,9 +1001,6 @@ Set the simplex reset value.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The fit configuration data.
-    Methods:
-        set_datasets(*datasets):
-            Set the datasets for the configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1109,9 +1034,6 @@ Fitting</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The fit configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_datasets(*datasets):
-Set the datasets for the configuration.</p>
 <p>Initialize the Fits class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1180,17 +1102,6 @@ Set the datasets for the configuration.</p>
         Vars (Vars): Instance of the Vars class.
         Rules (Rules): Instance of the Rules class.
         Fits (Fits): Instance of the Fits class.
-    Methods:
-        propegate_dest_dir(dest_dir):
-            Propagate the destination directory to all subcomponents.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1294,17 +1205,6 @@ Set the datasets for the configuration.</p>
 <dt><strong><code>Fits</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Fits" href="#PyOghma.Fitting.Fits">Fits</a></code></dt>
 <dd>Instance of the Fits class.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>propegate_dest_dir(dest_dir):
-Propagate the destination directory to all subcomponents.
-load_config(file):
-Load a configuration file.
-find_file(file):
-Find a file in the directory structure.
-set_format():
-Set the format of the JSON data.
-update():
-Update the JSON file with the current data.</p>
 <p>Initialize the Fitting class and its subcomponents.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -1478,17 +1378,6 @@ Update the JSON file with the current data.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The import configuration data.
-    Methods:
-        get_combo_pos(x):
-            Get the combo position for a given label.
-        create_inp():
-            Create the input file for import.
-        set_import_params(**kwargs):
-            Set the import parameters.
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
     &#34;&#34;&#34;
     def __init__(self, dest_dir, import_dir=&#39;jv.dat&#39;, x_data=&#39;J (A/cm^2)&#39;, y_data = &#39;V (Voltage)&#39;):
         &#34;&#34;&#34;
@@ -1601,17 +1490,6 @@ Update the JSON file with the current data.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The import configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>get_combo_pos(x):
-Get the combo position for a given label.
-create_inp():
-Create the input file for import.
-set_import_params(**kwargs):
-Set the import parameters.
-find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.</p>
 <p>Initialize the ImportConfig class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -1808,13 +1686,6 @@ Load a configuration file.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The rule data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_rule(state, param_x, param_y, funciton):
-            Set the rule parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -1910,13 +1781,6 @@ Load a configuration file.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The rule data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_rule(state, param_x, param_y, funciton):
-Set the rule parameters.</p>
 <p>Initialize the Rule class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -2101,9 +1965,6 @@ Set the rule parameters.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The rule configuration data.
-    Methods:
-        set_Rules(*fitrules):
-            Set the rules for the configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -2137,9 +1998,6 @@ Fitting</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The rule configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_Rules(*fitrules):
-Set the rules for the configuration.</p>
 <p>Initialize the Rules class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2204,13 +2062,6 @@ Set the rules for the configuration.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The variable data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_variable(state, param, min, max, log_fit):
-            Set the variable parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -2309,13 +2160,6 @@ Set the rules for the configuration.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The variable data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_variable(state, param, min, max, log_fit):
-Set the variable parameters.</p>
 <p>Initialize the Variable class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -2505,9 +2349,6 @@ Set the variable parameters.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The variable configuration data.
-    Methods:
-        set_variables(*variables):
-            Set the variables for the configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -2541,9 +2382,6 @@ Fitting</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The variable configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_variables(*variables):
-Set the variables for the configuration.</p>
 <p>Initialize the Vars class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">

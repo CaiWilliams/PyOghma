@@ -61,38 +61,6 @@ el.replaceWith(d);
     Attributes:
         dos_name (str): The name of the DOS configuration.
         data (dict): The DOS data for the layer.
-
-    Methods:
-        set_dos(layer_data: dict) -&gt; None:
-            Sets the DOS data for the layer.
-        enable() -&gt; None:
-            Enables the DOS.
-        disable() -&gt; None:
-            Disables the DOS.
-        type(type: str) -&gt; None:
-            Sets the type of DOS.
-        shape(band: str, function: str, a: float = 0, b: float = 0, c: float = 0) -&gt; None:
-            Sets the shape of the DOS.
-        apply_shape(dos: dict, func: str, a: float, b: float, c: float, state: str = &#39;True&#39;) -&gt; None:
-            Applies the shape function to the DOS data.
-        mobility(carriers: str, mobility: float) -&gt; None:
-            Sets the mobility for the specified carriers.
-        free_states_density(carriers: str, density: float) -&gt; None:
-            Sets the free states density for the specified carriers.
-        trap_density(carriers: str, density: float) -&gt; None:
-            Sets the trap density for the specified carriers.
-        urbach_energy(carriers: str, energy: float) -&gt; None:
-            Sets the Urbach energy for the specified carriers.
-        trapping_rate(carriers: str, direction: str, rate: float) -&gt; None:
-            Sets the trapping rate for the specified carriers and direction.
-        Xi(xi: float) -&gt; None:
-            Sets the electron affinity (Xi).
-        Eg(eg: float) -&gt; None:
-            Sets the bandgap energy (Eg).
-        relative_permittivity(er: float) -&gt; None:
-            Sets the relative permittivity.
-        shape_bands(bands: str) -&gt; None:
-            Sets the shape of the bands.
     &#34;&#34;&#34;
     def __ini__(self):
         &#34;&#34;&#34;
@@ -468,38 +436,7 @@ el.replaceWith(d);
 <dd>The name of the DOS configuration.</dd>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The DOS data for the layer.</dd>
-</dl>
-<h2 id="methods">Methods</h2>
-<p>set_dos(layer_data: dict) -&gt; None:
-Sets the DOS data for the layer.
-enable() -&gt; None:
-Enables the DOS.
-disable() -&gt; None:
-Disables the DOS.
-type(type: str) -&gt; None:
-Sets the type of DOS.
-shape(band: str, function: str, a: float = 0, b: float = 0, c: float = 0) -&gt; None:
-Sets the shape of the DOS.
-apply_shape(dos: dict, func: str, a: float, b: float, c: float, state: str = 'True') -&gt; None:
-Applies the shape function to the DOS data.
-mobility(carriers: str, mobility: float) -&gt; None:
-Sets the mobility for the specified carriers.
-free_states_density(carriers: str, density: float) -&gt; None:
-Sets the free states density for the specified carriers.
-trap_density(carriers: str, density: float) -&gt; None:
-Sets the trap density for the specified carriers.
-urbach_energy(carriers: str, energy: float) -&gt; None:
-Sets the Urbach energy for the specified carriers.
-trapping_rate(carriers: str, direction: str, rate: float) -&gt; None:
-Sets the trapping rate for the specified carriers and direction.
-Xi(xi: float) -&gt; None:
-Sets the electron affinity (Xi).
-Eg(eg: float) -&gt; None:
-Sets the bandgap energy (Eg).
-relative_permittivity(er: float) -&gt; None:
-Sets the relative permittivity.
-shape_bands(bands: str) -&gt; None:
-Sets the shape of the bands.</p></div>
+</dl></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Epitaxy.DOS.Eg"><code class="name flex">
@@ -1222,18 +1159,6 @@ and its parameters, and optionally enabling or disabling the function.</p>
         json_name (str): The name of the JSON configuration.
         name (str): The name of the epitaxy instance.
         dest_dir (str): The destination directory for saving or loading data.
-
-    Methods:
-        load_config(file: str) -&gt; dict:
-            Loads the configuration from a JSON file.
-        find_file(file: str) -&gt; str:
-            Finds the JSON file in the specified directory.
-        set_format() -&gt; None:
-            Sets the format of the JSON data based on the json_name.
-        update() -&gt; None:
-            Updates the JSON file with the current data.
-        load_existing() -&gt; None:
-            Loads the existing JSON data from the specified directory.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1330,17 +1255,6 @@ and its parameters, and optionally enabling or disabling the function.</p>
 <dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
 <dd>The destination directory for saving or loading data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>load_config(file: str) -&gt; dict:
-Loads the configuration from a JSON file.
-find_file(file: str) -&gt; str:
-Finds the JSON file in the specified directory.
-set_format() -&gt; None:
-Sets the format of the JSON data based on the json_name.
-update() -&gt; None:
-Updates the JSON file with the current data.
-load_existing() -&gt; None:
-Loads the existing JSON data from the specified directory.</p>
 <p>Initializes the Epitaxy class.</p>
 <h2 id="attributes_1">Attributes</h2>
 <dl>
@@ -1532,10 +1446,6 @@ Loads the existing JSON data from the specified directory.</p>
         layer_data (dict): The data for the specific layer.
         name (str): The name of the layer.
         dos (DOS): An instance of the DOS class for managing density of states.
-
-    Methods:
-        thickness(dx: float) -&gt; None:
-            Sets the thickness of the layer.
     &#34;&#34;&#34;
     def __init__(self, layer):
         &#34;&#34;&#34;
@@ -1581,9 +1491,6 @@ Loads the existing JSON data from the specified directory.</p>
 <dt><strong><code>dos</code></strong> :&ensp;<code><a title="PyOghma.Epitaxy.DOS" href="#PyOghma.Epitaxy.DOS">DOS</a></code></dt>
 <dd>An instance of the DOS class for managing density of states.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>thickness(dx: float) -&gt; None:
-Sets the thickness of the layer.</p>
 <p>Initializes the Layer class.</p>
 <h2 id="args">Args</h2>
 <dl>

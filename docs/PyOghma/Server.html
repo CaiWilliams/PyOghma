@@ -70,23 +70,6 @@ el.replaceWith(d);
         sim_dir (str): Directory for simulation files.
         operating_system (str): The operating system of the platform.
         dest_dir (str): The destination directory for job files.
-    Methods:
-        update_cpu_count():
-            Update the number of CPUs available for processing.
-        clear_jobs():
-            Clear the list of jobs.
-        add_job(dest_dir, hash=&#39;&#39;, args=&#39;&#39;):
-            Add a new job to the server.
-        run():
-            Execute all jobs on the server.
-        generate_job_command(job):
-            Generate the command to execute a job.
-        worker(job):
-            Execute a single job.
-        run_command(command):
-            Execute a custom command.
-        remove_files():
-            Remove all files in the simulation directory.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -144,24 +127,14 @@ el.replaceWith(d);
         self.start_time = time.time()
         self.stop_work = False
 
-        # with mp.Pool(processes=self.cpus) as p:
-        #     with tqdm.tqdm(total=len(self.jobs)) as pbar:
-        #         for _ in p.imap(self.generate_job_command, self.jobs):
-        #             pbar.update()
         for i in range(len(self.jobs)):
             self.generate_job_command(self.jobs[i])
-        # for job in self.jobs:
-        #     self.worker(job)
-        #self.worker(self.jobs[0])
         pbar = tqdm.tqdm(self.jobs)
         with mp.Pool(processes=self.cpus) as p:
             for _ in p.imap_unordered(self.worker, self.jobs):
                pbar.update()
-        #self.remove_lock_files()
-        #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
-            #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))
 
-    def generate_job_command(self,job):
+    def generate_job_command(self, job):
         &#34;&#34;&#34;
         Generate the command to execute a job.
         Args:
@@ -177,17 +150,12 @@ el.replaceWith(d);
                 command_sep = &#39;;&#39;
                 command0 = &#39;cd &#39; + job.path
 
-                job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;#+ &#39; --sim-root-path &#39; + job.sim_dir&#39;
+                job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
             case &#39;Windows&#39;:
                 lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
-                #command1 = os.path.join(&#34;C:&#34;, os.sep, &#39;Program Files (x86)&#39;, &#39;OghmaNano&#39;)
                 command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
                 command_sep = &#39; &amp; &#39;
                 command0 = &#39;cd &#39; + job.path
-               # command1 = os.path.join(os.getcwd(), &#39;standard_device&#39;) + &#39; &amp; &#34;oghma_core.exe&#34;&#39; #+ command1 + &#34;&#34;
-                #command1 = command1 + lock
-
-                #command1 = self.core_name + &#39;.exe&#39;
                 job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
             case _:
                 print(&#39;OS Not Currently Supported!&#39;)
@@ -249,23 +217,6 @@ el.replaceWith(d);
 <dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
 <dd>The destination directory for job files.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>update_cpu_count():
-Update the number of CPUs available for processing.
-clear_jobs():
-Clear the list of jobs.
-add_job(dest_dir, hash='', args=''):
-Add a new job to the server.
-run():
-Execute all jobs on the server.
-generate_job_command(job):
-Generate the command to execute a job.
-worker(job):
-Execute a single job.
-run_command(command):
-Execute a custom command.
-remove_files():
-Remove all files in the simulation directory.</p>
 <p>Initialize the Server class.</p></div>
 <h3>Static methods</h3>
 <dl>
@@ -364,7 +315,7 @@ def worker(job):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def generate_job_command(self,job):
+<pre><code class="python">def generate_job_command(self, job):
     &#34;&#34;&#34;
     Generate the command to execute a job.
     Args:
@@ -380,17 +331,12 @@ def worker(job):
             command_sep = &#39;;&#39;
             command0 = &#39;cd &#39; + job.path
 
-            job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;#+ &#39; --sim-root-path &#39; + job.sim_dir&#39;
+            job.full_command = command0 + command_sep + command1 +&#39; 2&gt;&amp;1 &gt;&#39; + &#39; /dev/null&#39;
         case &#39;Windows&#39;:
             lock = &#39; --lockfile &#39; + os.path.join(job.path, &#39;lock_#&#39; + job.key + &#39;.dat&#39;)
-            #command1 = os.path.join(&#34;C:&#34;, os.sep, &#39;Program Files (x86)&#39;, &#39;OghmaNano&#39;)
             command1 = os.path.join(self.core_name + &#39;.exe&#39; + lock)
             command_sep = &#39; &amp; &#39;
             command0 = &#39;cd &#39; + job.path
-           # command1 = os.path.join(os.getcwd(), &#39;standard_device&#39;) + &#39; &amp; &#34;oghma_core.exe&#34;&#39; #+ command1 + &#34;&#34;
-            #command1 = command1 + lock
-
-            #command1 = self.core_name + &#39;.exe&#39;
             job.full_command = command0 + command_sep + command1 + &#39; &gt; nul&#39;
         case _:
             print(&#39;OS Not Currently Supported!&#39;)
@@ -441,22 +387,12 @@ def worker(job):
     self.start_time = time.time()
     self.stop_work = False
 
-    # with mp.Pool(processes=self.cpus) as p:
-    #     with tqdm.tqdm(total=len(self.jobs)) as pbar:
-    #         for _ in p.imap(self.generate_job_command, self.jobs):
-    #             pbar.update()
     for i in range(len(self.jobs)):
         self.generate_job_command(self.jobs[i])
-    # for job in self.jobs:
-    #     self.worker(job)
-    #self.worker(self.jobs[0])
     pbar = tqdm.tqdm(self.jobs)
     with mp.Pool(processes=self.cpus) as p:
         for _ in p.imap_unordered(self.worker, self.jobs):
-           pbar.update()
-    #self.remove_lock_files()
-    #    tqdm.tqdm(p.imap(self.generate_job_command, self.jobs), total=len(self.jobs))
-        #tqdm.tqdm(p.imap(self.worker, self.jobs), total=len(self.jobs))</code></pre>
+           pbar.update()</code></pre>
 </details>
 <div class="desc"><p>Execute all jobs on the server.</p></div>
 </dd>

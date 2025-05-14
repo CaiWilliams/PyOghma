@@ -65,11 +65,6 @@ el.replaceWith(d);
         Voc (list): List of open-circuit voltages extracted from the experimental data.
         GenRate (list): List of generation rates extracted from the experimental data.
         result (float): The calculated ideality factor.
-    Methods:
-        __init__(exp):
-            Initializes the Ideality_Factor object by loading experimental data from the given file.
-        calculate(temp=300):
-            Calculates the ideality factor based on the experimental data.
     &#34;&#34;&#34;
     def __init__(self, exp):
         &#34;&#34;&#34;
@@ -85,7 +80,6 @@ el.replaceWith(d);
             FileNotFoundError: If the specified file does not exist.
             json.JSONDecodeError: If the file content is not valid JSON.
         &#34;&#34;&#34;
-        
         self.exp = exp
         self.system = platform.system()
         if self.system == &#39;Linux&#39;:
@@ -96,7 +90,6 @@ el.replaceWith(d);
             import gzip
             with gzip.open(self.exp, &#39;r&#39;) as f:
                 self.data = json.load(f)
-
 
     def calculate(self, temp=300):
         &#34;&#34;&#34;
@@ -120,7 +113,6 @@ el.replaceWith(d);
             - The Boltzmann constant and elementary charge are retrieved using 
               the `scipy.constants.value` function.
         &#34;&#34;&#34;
-
         kb = sc.value(&#39;Boltzmann constant in eV/K&#39;)
         e = sc.value(&#39;elementary charge&#39;)
         self.Voc = []
@@ -152,11 +144,6 @@ This class calculates the ideality factor of a solar cell based on experimental 
 <dt><strong><code>result</code></strong> :&ensp;<code>float</code></dt>
 <dd>The calculated ideality factor.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p><strong>init</strong>(exp):
-Initializes the Ideality_Factor object by loading experimental data from the given file.
-calculate(temp=300):
-Calculates the ideality factor based on the experimental data.</p>
 <p>Initializes the Ideality_Factor class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -212,7 +199,6 @@ Calculates the ideality factor based on the experimental data.</p>
         - The Boltzmann constant and elementary charge are retrieved using 
           the `scipy.constants.value` function.
     &#34;&#34;&#34;
-
     kb = sc.value(&#39;Boltzmann constant in eV/K&#39;)
     e = sc.value(&#39;elementary charge&#39;)
     self.Voc = []
@@ -283,13 +269,7 @@ the <code>scipy.constants.value</code> function.</li>
         data (dict): The experimental data loaded from the file.
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
-    Methods:
-        __init__(exp):
-            Initializes the Psudo_JV object and loads experimental data.
-        calculate():
-            Calculates the pseudo JV data for the diode.
     &#34;&#34;&#34;
-
     def __init__(self, exp):
         &#34;&#34;&#34;
         Initializes the Psudo_JV class.
@@ -313,7 +293,6 @@ the <code>scipy.constants.value</code> function.</li>
             import gzip
             with gzip.open(self.exp, &#39;r&#39;) as f:
                 self.data = json.load(f)
-
 
     def calculate(self):
         &#34;&#34;&#34;
@@ -364,11 +343,6 @@ the <code>scipy.constants.value</code> function.</li>
 <dt><strong><code>pJV_v</code></strong> :&ensp;<code>numpy.ndarray</code></dt>
 <dd>Pseudo JV voltage data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p><strong>init</strong>(exp):
-Initializes the Psudo_JV object and loads experimental data.
-calculate():
-Calculates the pseudo JV data for the diode.</p>
 <p>Initializes the Psudo_JV class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -478,15 +452,7 @@ and voltage values for each experimental hash. The results are stored as numpy a
         pJV_j (numpy.ndarray): Pseudo JV current density data.
         pJV_v (numpy.ndarray): Pseudo JV voltage data.
         TR_Voc (list): List of calculated transport resistance at open-circuit voltage.
-    Methods:
-        __init__(exp):
-            Initializes the Transport_Resistance object, loads experimental data,
-            and calculates pseudo JV data.
-        calculate():
-            Calculates the transport resistance at open-circuit voltage (TR_Voc)
-            for each experimental hash in the data.
     &#34;&#34;&#34;
-
     def __init__(self, exp):
         &#34;&#34;&#34;
         Initializes the Transport_Resistance class.
@@ -502,7 +468,6 @@ and voltage values for each experimental hash. The results are stored as numpy a
             OSError: If there is an issue opening or reading the file.
             JSONDecodeError: If the file content is not valid JSON.
         &#34;&#34;&#34;
-
         self.exp = exp
         self.system = platform.system()
         if self.system == &#39;Linux&#39;:
@@ -520,20 +485,13 @@ and voltage values for each experimental hash. The results are stored as numpy a
 
     def calculate(self):
         &#34;&#34;&#34;
-        Perform calculations to compute the transient recombination open-circuit voltage (TR_Voc) 
+        Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
         for experimental data.
         This method processes JV (current-voltage) data and pJV (perturbed JV) data for each 
         experimental hash, interpolates the data using PCHIP (Piecewise Cubic Hermite Interpolating 
         Polynomial), and calculates the derivative of the voltage difference (Vtr) with respect to 
         the perturbed current density (pj). The resulting derivative at zero current density is 
         appended to the TR_Voc list.
-        Steps:
-        1. Extract JV and pJV data for each experimental hash.
-        2. Ensure data consistency by removing duplicate values.
-        3. Interpolate JV and pJV data using PCHIP.
-        4. Compute the voltage difference (Vtr) between the interpolated JV and pJV data.
-        5. Calculate the derivative of Vtr with respect to pj.
-        6. Append the derivative value at zero current density to the TR_Voc list.
         Attributes:
             self.TR_Voc (list): A list to store the calculated TR_Voc values for each experimental hash.
         Raises:
@@ -543,7 +501,6 @@ and voltage values for each experimental hash. The results are stored as numpy a
               &#39;experiment&#39; and &#39;hashes&#39;, and that JV and pJV data are provided for each hash.
             - The interpolation and derivative calculations rely on numpy and scipy libraries.
         &#34;&#34;&#34;
-
         self.TR_Voc = []
         for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
 
@@ -611,13 +568,6 @@ and voltage values for each experimental hash. The results are stored as numpy a
 <dt><strong><code>TR_Voc</code></strong> :&ensp;<code>list</code></dt>
 <dd>List of calculated transport resistance at open-circuit voltage.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p><strong>init</strong>(exp):
-Initializes the Transport_Resistance object, loads experimental data,
-and calculates pseudo JV data.
-calculate():
-Calculates the transport resistance at open-circuit voltage (TR_Voc)
-for each experimental hash in the data.</p>
 <p>Initializes the Transport_Resistance class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -656,20 +606,13 @@ for each experimental hash in the data.</p>
 </summary>
 <pre><code class="python">def calculate(self):
     &#34;&#34;&#34;
-    Perform calculations to compute the transient recombination open-circuit voltage (TR_Voc) 
+    Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc) 
     for experimental data.
     This method processes JV (current-voltage) data and pJV (perturbed JV) data for each 
     experimental hash, interpolates the data using PCHIP (Piecewise Cubic Hermite Interpolating 
     Polynomial), and calculates the derivative of the voltage difference (Vtr) with respect to 
     the perturbed current density (pj). The resulting derivative at zero current density is 
     appended to the TR_Voc list.
-    Steps:
-    1. Extract JV and pJV data for each experimental hash.
-    2. Ensure data consistency by removing duplicate values.
-    3. Interpolate JV and pJV data using PCHIP.
-    4. Compute the voltage difference (Vtr) between the interpolated JV and pJV data.
-    5. Calculate the derivative of Vtr with respect to pj.
-    6. Append the derivative value at zero current density to the TR_Voc list.
     Attributes:
         self.TR_Voc (list): A list to store the calculated TR_Voc values for each experimental hash.
     Raises:
@@ -679,7 +622,6 @@ for each experimental hash in the data.</p>
           &#39;experiment&#39; and &#39;hashes&#39;, and that JV and pJV data are provided for each hash.
         - The interpolation and derivative calculations rely on numpy and scipy libraries.
     &#34;&#34;&#34;
-
     self.TR_Voc = []
     for idx,h in enumerate(self.data[&#39;experiment&#39;][&#39;hashes&#39;]):
 
@@ -731,20 +673,13 @@ for each experimental hash in the data.</p>
         x0 = np.argwhere(x == 0).ravel()
         self.TR_Voc.append(DVtr[x0[0]])</code></pre>
 </details>
-<div class="desc"><p>Perform calculations to compute the transient recombination open-circuit voltage (TR_Voc)
+<div class="desc"><p>Perform calculations to compute the conductivity at open-circuit voltage (TR_Voc)
 for experimental data.
 This method processes JV (current-voltage) data and pJV (perturbed JV) data for each
 experimental hash, interpolates the data using PCHIP (Piecewise Cubic Hermite Interpolating
 Polynomial), and calculates the derivative of the voltage difference (Vtr) with respect to
 the perturbed current density (pj). The resulting derivative at zero current density is
-appended to the TR_Voc list.
-Steps:
-1. Extract JV and pJV data for each experimental hash.
-2. Ensure data consistency by removing duplicate values.
-3. Interpolate JV and pJV data using PCHIP.
-4. Compute the voltage difference (Vtr) between the interpolated JV and pJV data.
-5. Calculate the derivative of Vtr with respect to pj.
-6. Append the derivative value at zero current density to the TR_Voc list.</p>
+appended to the TR_Voc list.</p>
 <h2 id="attributes">Attributes</h2>
 <p>self.TR_Voc (list): A list to store the calculated TR_Voc values for each experimental hash.</p>
 <h2 id="raises">Raises</h2>

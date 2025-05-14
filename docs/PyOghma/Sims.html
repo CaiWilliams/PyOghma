@@ -59,9 +59,6 @@ el.replaceWith(d);
     Class to handle CE simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_properties(start, stop, steps, on_time, off_time):
-            Set the sun properties for the CE simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -98,9 +95,6 @@ el.replaceWith(d);
 <div class="desc"><p>Class to handle CE simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_sun_properties(start, stop, steps, on_time, off_time):
-Set the sun properties for the CE simulation.</p>
 <p>Initialize the CE class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -175,9 +169,6 @@ Set the sun properties for the CE simulation.</p>
     Class to handle CELIV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the CELIV simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -215,9 +206,6 @@ Set the sun properties for the CE simulation.</p>
 <div class="desc"><p>Class to handle CELIV simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the CELIV simulation.</p>
 <p>Initialize the CELIV class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -277,9 +265,6 @@ Set dump properties for the CELIV simulation.</p>
     Class to handle CV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_voltage_range(start, stop, step, frequency):
-            Set the voltage range and frequency for the CV simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -314,9 +299,6 @@ Set dump properties for the CELIV simulation.</p>
 <div class="desc"><p>Class to handle CV simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_voltage_range(start, stop, step, frequency):
-Set the voltage range and frequency for the CV simulation.</p>
 <p>Initialize the CV class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -442,13 +424,6 @@ Sims</p>
         stop (float): The stopping frequency.
         steps (int): The number of steps in the frequency range.
         mesh (dict): The mesh configuration data.
-    Methods:
-        linear():
-            Generate a linear frequency mesh.
-        logarithmic():
-            Generate a logarithmic frequency mesh.
-        geometric():
-            Generate a geometric frequency mesh.
     &#34;&#34;&#34;
     def __init__(self, start, stop, steps, space):
         &#34;&#34;&#34;
@@ -510,13 +485,6 @@ Sims</p>
 <dt><strong><code>mesh</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The mesh configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>linear():
-Generate a linear frequency mesh.
-logarithmic():
-Generate a logarithmic frequency mesh.
-geometric():
-Generate a geometric frequency mesh.</p>
 <p>Initialize the FrequencyDomainMesh class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -604,13 +572,6 @@ Generate a geometric frequency mesh.</p>
     Class to handle individual frequency domain segment configurations.
     Attributes:
         segment (dict): The segment configuration data.
-    Methods:
-        set_frequency(frequency):
-            Set the frequency properties for the segment.
-        load_segment(file):
-            Load the segment configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
     &#34;&#34;&#34;
     def __init__(self, frequency):
         &#34;&#34;&#34;
@@ -662,13 +623,6 @@ Generate a geometric frequency mesh.</p>
 <dt><strong><code>segment</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The segment configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_frequency(frequency):
-Set the frequency properties for the segment.
-load_segment(file):
-Load the segment configuration from a file.
-find_file(file):
-Find a file in the directory structure.</p>
 <p>Initialize the FrequencyDomainSegment class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -777,9 +731,6 @@ Find a file in the directory structure.</p>
     Class to handle IMPS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IMPS simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -812,9 +763,6 @@ Find a file in the directory structure.</p>
 <div class="desc"><p>Class to handle IMPS simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the IMPS simulation.</p>
 <p>Initialize the IMPS class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -874,9 +822,6 @@ Set dump properties for the IMPS simulation.</p>
     Class to handle IMVS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IMVS simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -909,9 +854,6 @@ Set dump properties for the IMPS simulation.</p>
 <div class="desc"><p>Class to handle IMVS simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the IMVS simulation.</p>
 <p>Initialize the IMVS class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -971,9 +913,6 @@ Set dump properties for the IMVS simulation.</p>
     Class to handle IS simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the IS simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1006,9 +945,6 @@ Set dump properties for the IMVS simulation.</p>
 <div class="desc"><p>Class to handle IS simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the IS simulation.</p>
 <p>Initialize the IS class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1068,13 +1004,6 @@ Set dump properties for the IS simulation.</p>
     Class to handle JV curve simulations.
     Inherits from:
         Sims
-    Methods:
-        set_voltage_range(start, stop, step):
-            Set the voltage range for the JV simulation.
-        set_jv_properties(**kwargs):
-            Set additional JV properties.
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the JV simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1127,13 +1056,6 @@ Set dump properties for the IS simulation.</p>
 <div class="desc"><p>Class to handle JV curve simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_voltage_range(start, stop, step):
-Set the voltage range for the JV simulation.
-set_jv_properties(<strong>kwargs):
-Set additional JV properties.
-set_dump_proprperties(</strong>kwargs):
-Set dump properties for the JV simulation.</p>
 <p>Initialize the JV class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1300,9 +1222,6 @@ Sims</p>
     Class to handle PhotoCELIV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the PhotoCELIV simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1340,9 +1259,6 @@ Sims</p>
 <div class="desc"><p>Class to handle PhotoCELIV simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the PhotoCELIV simulation.</p>
 <p>Initialize the PhotoCELIV class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1422,17 +1338,6 @@ Set dump properties for the PhotoCELIV simulation.</p>
         CE (CE): Instance of the CE class.
         PL_SS (PL_SS): Instance of the PL_SS class.
         EQE (EQE): Instance of the EQE class.
-    Methods:
-        set_format():
-            Set the format of the JSON data.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        update():
-            Update the JSON file with the current data.
-        change_experiment(exp_name):
-            Change the experiment mode in the simulation configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1603,17 +1508,6 @@ Set dump properties for the PhotoCELIV simulation.</p>
 <dt><strong><code>EQE</code></strong> :&ensp;<code><a title="PyOghma.Sims.EQE" href="#PyOghma.Sims.EQE">EQE</a></code></dt>
 <dd>Instance of the EQE class.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_format():
-Set the format of the JSON data.
-load_config(file):
-Load a configuration file.
-find_file(file):
-Find a file in the directory structure.
-update():
-Update the JSON file with the current data.
-change_experiment(exp_name):
-Change the experiment mode in the simulation configuration.</p>
 <p>Initialize the Sims class and its subcomponents.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -1808,9 +1702,6 @@ Change the experiment mode in the simulation configuration.</p>
     Class to handle SunsJsc simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_range(start, stop, dp, dpmul):
-            Set the sun intensity range for the simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1845,9 +1736,6 @@ Change the experiment mode in the simulation configuration.</p>
 <div class="desc"><p>Class to handle SunsJsc simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_sun_range(start, stop, dp, dpmul):
-Set the sun intensity range for the simulation.</p>
 <p>Initialize the SunsJsc class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1918,13 +1806,6 @@ Set the sun intensity range for the simulation.</p>
     Class to handle SunsVoc simulations.
     Inherits from:
         Sims
-    Methods:
-        set_sun_range(start, stop, mul):
-            Set the sun intensity range for the simulation.
-        set_single_point(set):
-            Enable or disable single-point simulation.
-        set_dump_properties(**kwargs):
-            Set dump properties for the SunsVoc simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1977,13 +1858,6 @@ Set the sun intensity range for the simulation.</p>
 <div class="desc"><p>Class to handle SunsVoc simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_sun_range(start, stop, mul):
-Set the sun intensity range for the simulation.
-set_single_point(set):
-Enable or disable single-point simulation.
-set_dump_properties(**kwargs):
-Set dump properties for the SunsVoc simulation.</p>
 <p>Initialize the SunsVoc class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2100,9 +1974,6 @@ Set dump properties for the SunsVoc simulation.</p>
     Class to handle TPC simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the TPC simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -2138,9 +2009,6 @@ Set dump properties for the SunsVoc simulation.</p>
 <div class="desc"><p>Class to handle TPC simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the TPC simulation.</p>
 <p>Initialize the TPC class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2200,9 +2068,6 @@ Set dump properties for the TPC simulation.</p>
     Class to handle TPV simulations.
     Inherits from:
         Sims
-    Methods:
-        set_dump_proprperties(**kwargs):
-            Set dump properties for the TPV simulation.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -2237,9 +2102,6 @@ Set dump properties for the TPC simulation.</p>
 <div class="desc"><p>Class to handle TPV simulations.
 Inherits from:
 Sims</p>
-<h2 id="methods">Methods</h2>
-<p>set_dump_proprperties(**kwargs):
-Set dump properties for the TPV simulation.</p>
 <p>Initialize the TPV class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -2301,13 +2163,6 @@ Set dump properties for the TPV simulation.</p>
     Attributes:
         segments_number (int): The number of segments in the mesh.
         mesh (dict): The mesh configuration data.
-    Methods:
-        load_mesh(file):
-            Load the mesh configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_loop(loop, loop_times, loop_reset_time):
-            Set loop properties for the time domain mesh.
     &#34;&#34;&#34;
     def __init__(self, *segments):
         &#34;&#34;&#34;
@@ -2365,13 +2220,6 @@ Set dump properties for the TPV simulation.</p>
 <dt><strong><code>mesh</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The mesh configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>load_mesh(file):
-Load the mesh configuration from a file.
-find_file(file):
-Find a file in the directory structure.
-set_loop(loop, loop_times, loop_reset_time):
-Set loop properties for the time domain mesh.</p>
 <p>Initialize the TimeDomainMesh class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -2486,19 +2334,6 @@ Set loop properties for the time domain mesh.</p>
     Class to handle individual time domain segment configurations.
     Attributes:
         segment (dict): The segment configuration data.
-    Methods:
-        load_segment(file):
-            Load the segment configuration from a file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_time(length, dt):
-            Set the time properties for the segment.
-        set_volgate(start, stop, mul):
-            Set the voltage properties for the segment.
-        set_sun(start, stop):
-            Set the sun properties for the segment.
-        set_laser(start, stop):
-            Set the laser properties for the segment.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -2581,19 +2416,6 @@ Set loop properties for the time domain mesh.</p>
 <dt><strong><code>segment</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The segment configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>load_segment(file):
-Load the segment configuration from a file.
-find_file(file):
-Find a file in the directory structure.
-set_time(length, dt):
-Set the time properties for the segment.
-set_volgate(start, stop, mul):
-Set the voltage properties for the segment.
-set_sun(start, stop):
-Set the sun properties for the segment.
-set_laser(start, stop):
-Set the laser properties for the segment.</p>
 <p>Initialize the TimeDomainSegment class.</p></div>
 <h3>Methods</h3>
 <dl>

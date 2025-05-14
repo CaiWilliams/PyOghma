@@ -122,17 +122,6 @@ ml</p>
         ml_sim (ml_sim): Instance of the ml_sim class.
         ml_config (ml_config): Instance of the ml_config class.
         ml_networks (ml_networks): Instance of the ml_networks class.
-    Methods:
-        propegate_dest_dir(dest_dir):
-            Propagate the destination directory to all subcomponents.
-        load_config(file):
-            Load a configuration file.
-        find_file(file):
-            Find a file in the directory structure.
-        set_format():
-            Set the format of the JSON data.
-        update():
-            Update the JSON file with the current data.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -239,17 +228,6 @@ ml</p>
 <dt><strong><code>ml_networks</code></strong> :&ensp;<code><a title="PyOghma.ML.ml_networks" href="#PyOghma.ML.ml_networks">ml_networks</a></code></dt>
 <dd>Instance of the ml_networks class.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>propegate_dest_dir(dest_dir):
-Propagate the destination directory to all subcomponents.
-load_config(file):
-Load a configuration file.
-find_file(file):
-Find a file in the directory structure.
-set_format():
-Set the format of the JSON data.
-update():
-Update the JSON file with the current data.</p>
 <p>Initialize the ml class and its subcomponents.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -426,11 +404,6 @@ Update the JSON file with the current data.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The configuration data.
-    Methods:
-        set_config(num_archives, sim_per_archive):
-            Set the configuration parameters.
-        find_file(file):
-            Find a file in the directory structure.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -474,11 +447,6 @@ ml</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_config(num_archives, sim_per_archive):
-Set the configuration parameters.
-find_file(file):
-Find a file in the directory structure.</p>
 <p>Initialize the ml_config class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -543,13 +511,6 @@ Find a file in the directory structure.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The input configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_input(state, param, param_min, param_max):
-            Set the input parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -621,13 +582,6 @@ Find a file in the directory structure.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The input configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_input(state, param, param_min, param_max):
-Set the input parameters.</p>
 <p>Initialize the ml_input class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -827,7 +781,7 @@ Set the input parameters.</p>
         self.data = {}
         self.data[&#34;none&#34;] = &#34;none&#34;
         self.segments = len(ml_output_vectors)
-        for idx,vector in enumerate():
+        for idx,vector in enumerate(ml_output_vectors):
             segment_data = {}
             segment_data[&#34;ml_input_vector&#34;] = vector.data[&#34;file_name&#34;]
             self.data[&#39;segment&#39;+str(idx)] = segment_data</code></pre>
@@ -1017,9 +971,6 @@ ml</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The random input configuration data.
-    Methods:
-        set_inputs(*inputs):
-            Set the random inputs for the configuration.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1054,9 +1005,6 @@ ml</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The random input configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_inputs(*inputs):
-Set the random inputs for the configuration.</p>
 <p>Initialize the ml_random class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1122,9 +1070,6 @@ Set the random inputs for the configuration.</p>
     Attributes:
         json_name (str): The name of the JSON configuration.
         data (dict): The simulation configuration data.
-    Methods:
-        set_sim(Sims):
-            Set the simulation configurations.
     &#34;&#34;&#34;
     def __init__(self):
         &#34;&#34;&#34;
@@ -1183,9 +1128,6 @@ ml</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The simulation configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>set_sim(Sims):
-Set the simulation configurations.</p>
 <p>Initialize the ml_sim class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -1274,15 +1216,6 @@ Set the simulation configurations.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The output vector configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_output_vector(state, file_name, vector_start, vector_end, vector_step, import_config):
-            Set the output vector parameters.
-        set_name(name):
-            Set the name for the output vector configuration.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -1368,15 +1301,6 @@ Set the simulation configurations.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The output vector configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_output_vector(state, file_name, vector_start, vector_end, vector_step, import_config):
-Set the output vector parameters.
-set_name(name):
-Set the name for the output vector configuration.</p>
 <p>Initialize the ml_sim_output_vector class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -1547,17 +1471,6 @@ Set the name for the output vector configuration.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The import configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_import_cofig(import_dir, x_data, y_data, import_area, x_spin, data_spin):
-            Set the import configuration parameters.
-        set_name(file_name, sim_name):
-            Set the name for the import configuration.
-        get_combo_pos(x):
-            Get the position of a combo box item.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -1657,17 +1570,6 @@ Set the name for the output vector configuration.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The import configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_import_cofig(import_dir, x_data, y_data, import_area, x_spin, data_spin):
-Set the import configuration parameters.
-set_name(file_name, sim_name):
-Set the name for the import configuration.
-get_combo_pos(x):
-Get the position of a combo box item.</p>
 <p>Initialize the ml_sim_output_vector_import_cofig class.</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -1874,13 +1776,6 @@ Get the position of a combo box item.</p>
         dest_dir (str): The destination directory.
         json_name (str): The name of the JSON configuration.
         data (dict): The patch configuration data.
-    Methods:
-        find_file(file):
-            Find a file in the directory structure.
-        load_config(file):
-            Load a configuration file.
-        set_patch(state, param, param_val):
-            Set the patch parameters.
     &#34;&#34;&#34;
     def __init__(self, dest_dir):
         &#34;&#34;&#34;
@@ -1945,13 +1840,6 @@ Get the position of a combo box item.</p>
 <dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
 <dd>The patch configuration data.</dd>
 </dl>
-<h2 id="methods">Methods</h2>
-<p>find_file(file):
-Find a file in the directory structure.
-load_config(file):
-Load a configuration file.
-set_patch(state, param, param_val):
-Set the patch parameters.</p>
 <p>Initialize the ml_sim_patch class.</p>
 <h2 id="args">Args</h2>
 <dl>
