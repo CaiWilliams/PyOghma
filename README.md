@@ -1,6 +1,6 @@
 # PyOghma
 
-A Python API for OghmaNano, enabling programmatic description and execution of drift-diffusion simulations.
+PyOghma is a Python API designed to interface with OghmaNano, a powerful tool for drift-diffusion simulations. It provides a programmatic way to configure, execute, and analyze simulations, enabling researchers and engineers to streamline their workflows and automate complex tasks. With PyOghma, you can easily modify optical, thermal, epitaxy, and simulation parameters, run simulations, and analyze results—all within Python.
 
 ## Features
 
