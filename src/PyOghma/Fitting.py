@@ -7,8 +7,33 @@ import pandas as pd
 
 
 class Fitting:
-
+    """
+    Main class to handle fitting configurations and operations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        name (str): The name of the fitting instance.
+        dest_dir (str): The destination directory for saving or loading data.
+        Fit_Config (Fit_Config): Instance of the Fit_Config class.
+        Duplitate (Duplicate): Instance of the Duplicate class.
+        Vars (Vars): Instance of the Vars class.
+        Rules (Rules): Instance of the Rules class.
+        Fits (Fits): Instance of the Fits class.
+    Methods:
+        propegate_dest_dir(dest_dir):
+            Propagate the destination directory to all subcomponents.
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_format():
+            Set the format of the JSON data.
+        update():
+            Update the JSON file with the current data.
+    """
     def __init__(self):
+        """
+        Initialize the Fitting class and its subcomponents.
+        """
         self.json_name = ''
         self.name = ''
         self.dest_dir = ''
@@ -19,6 +44,11 @@ class Fitting:
         self.Fits = Fits()
     
     def propegate_dest_dir(self, dest_dir):
+        """
+        Propagate the destination directory to all subcomponents.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.Fit_Config.dest_dir = dest_dir
         self.Duplitate.dest_dir = dest_dir
@@ -27,17 +57,34 @@ class Fitting:
         self.Fits.dest_dir = dest_dir
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def set_format(self):
+        """
+        Set the format of the JSON data based on the json_name.
+        """
         match self.json_name:
             case 'fit_config':
                 self.json_format = {self.json_name: self.data}
@@ -51,6 +98,9 @@ class Fitting:
                 self.json_format = {self.json_name: self.data}
 
     def update(self):
+        """
+        Update the JSON file with the current data.
+        """
         with open(os.path.join(self.dest_dir,'sim.json'), "r") as j:
             data = json.load(j)
 
@@ -63,22 +113,60 @@ class Fitting:
         return
 
 class Fit_Config(Fitting):
-    
+    """
+    Class to handle the fit configuration.
+    Inherits from:
+        Fitting
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The fit configuration data.
+    Methods:
+        set_simplexmul(multiplier):
+            Set the simplex multiplier.
+        set_simplex_reset(reset):
+            Set the simplex reset value.
+    """
     def __init__(self):
+        """
+        Initialize the Fit_Config class.
+        """
         super(Fitting, self).__init__()
         self.json_name = 'fit_config'
         self.data = self.load_config('default')
         self.set_format()
     
     def set_simplexmul(self, multiplier):
+        """
+        Set the simplex multiplier.
+        Args:
+            multiplier (float): The simplex multiplier value.
+        """
         self.data['fit_simplexmul'] = multiplier
     
     def set_simplex_reset(self, reset):
+        """
+        Set the simplex reset value.
+        Args:
+            reset (bool): Whether to reset the simplex.
+        """
         self.data['fit_simplex_reset'] = reset
 
 class Duplicate(Fitting):
-    
+    """
+    Class to handle duplication configurations.
+    Inherits from:
+        Fitting
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The duplication configuration data.
+    Methods:
+        set_duplications(*duplications):
+            Set the duplications for the configuration.
+    """
     def __init__(self):
+        """
+        Initialize the Duplicate class.
+        """
         super(Fitting, self).__init__()
         self.json_name = 'duplicate'
         self.data = {}
@@ -87,6 +175,11 @@ class Duplicate(Fitting):
         self.set_format()
     
     def set_duplications(self, *duplications):
+        """
+        Set the duplications for the configuration.
+        Args:
+            *duplications: Variable-length list of duplication objects.
+        """
         self.segments = len(duplications)
         self.data['id'] = 'id' + str(secrets.token_hex(8))
         self.data = {'segments': self.segments}
@@ -96,8 +189,28 @@ class Duplicate(Fitting):
    
 
 class Dupe:
-
+    """
+    Class to handle individual duplication operations.
+    Attributes:
+        layer (str): The layer to duplicate.
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The duplication data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_duplication(src, dest, multiplier='x'):
+            Set the duplication parameters.
+    """
     def __init__(self, dest_dir, layer):
+        """
+        Initialize the Dupe class.
+        Args:
+            dest_dir (str): The destination directory.
+            layer (str): The layer to duplicate.
+        """
         self.layer = layer
         self.dest_dir = dest_dir
         self.json_name = 'duplicate'
@@ -106,23 +219,42 @@ class Dupe:
         with open(os.path.join(self.dest_dir,'sim.json'), "r") as j:
             self.ob = json.load(j)
     
-    def find_file(self, file):#pyOghma/Sim_Defaults/Fits/dulicate/default.json
+    def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','Sim_Defaults','Fits', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
         
     def set_duplication(self, src, dest, multiplier='x'):
+        """
+        Set the duplication parameters.
+        Args:
+            src (str): The source path.
+            dest (str): The destination path.
+            multiplier (str): The duplication multiplier.
+        """
         json_src = src
         json_dest = dest
-        #json_src = self.get_path_from_dict(self.ob, base_name=src)
-        #json_dest = self.get_path_from_dict(self.ob, base_name=dest)
         self.data['human_src'] = json_src
         self.data['human_dest'] = json_dest
         self.data['multiplier'] = multiplier
@@ -132,8 +264,21 @@ class Dupe:
 
 
 class Vars(Fitting):
-
+    """
+    Class to handle variable configurations.
+    Inherits from:
+        Fitting
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The variable configuration data.
+    Methods:
+        set_variables(*variables):
+            Set the variables for the configuration.
+    """
     def __init__(self):
+        """
+        Initialize the Vars class.
+        """
         super(Fitting, self).__init__()
         self.json_name = 'vars'
         self.data = {}
@@ -141,6 +286,11 @@ class Vars(Fitting):
         self.set_format()
     
     def set_variables(self, *variables):
+        """
+        Set the variables for the configuration.
+        Args:
+            *variables: Variable-length list of variable objects.
+        """
         self.segments = len(variables)
         self.data = {'segments': self.segments}
         for idx, var in enumerate(variables): 
@@ -150,8 +300,26 @@ class Vars(Fitting):
     
 
 class Variable:
-
+    """
+    Class to handle individual variable operations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The variable data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_variable(state, param, min, max, log_fit):
+            Set the variable parameters.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the Variable class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'vars'
         self.data = self.load_config('default')
@@ -160,17 +328,41 @@ class Variable:
             self.ob = json.load(j)
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','Sim_Defaults','Fits', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
         
     def get_path_from_dict(self, ob, base_path='', base_name='', path=''):
+        """
+        Get the path from a dictionary based on the base name.
+        Args:
+            ob (dict): The dictionary object.
+            base_path (str): The base path.
+            base_name (str): The base name to search for.
+            path (str): The current path.
+        Returns:
+            str: The constructed path.
+        """
         if ob and base_name in list(ob.keys()):
             path = f"{base_path}{path}/{base_name}"
             return path
@@ -181,7 +373,15 @@ class Variable:
                 return self.get_path_from_dict(base_path, base_name, value, f'{path}/{key}')
     
     def set_variable(self, state=True, param='', min=0, max=100, log_fit=False):
-
+        """
+        Set the variable parameters.
+        Args:
+            state (bool): Whether the variable is enabled.
+            param (str): The parameter name.
+            min (float): The minimum value.
+            max (float): The maximum value.
+            log_fit (bool): Whether to use logarithmic fitting.
+        """
         if state:
             self.data['fit_var_enabled'] = 'True'
         else:
@@ -203,8 +403,21 @@ class Variable:
         
 
 class Rules(Fitting):
-
+    """
+    Class to handle rule configurations.
+    Inherits from:
+        Fitting
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The rule configuration data.
+    Methods:
+        set_Rules(*fitrules):
+            Set the rules for the configuration.
+    """
     def __init__(self):
+        """
+        Initialize the Rules class.
+        """
         super(Fitting, self).__init__()
         self.json_name = 'rules'
         self.data = {}
@@ -212,6 +425,11 @@ class Rules(Fitting):
         self.set_format()
     
     def set_Rules(self, *fitrules):
+        """
+        Set the rules for the configuration.
+        Args:
+            *fitrules: Variable-length list of rule objects.
+        """
         self.segments = len(fitrules)
         self.data = {'segments': self.segments}
         for idx, fitrule in enumerate(fitrules): 
@@ -219,8 +437,26 @@ class Rules(Fitting):
         self.set_format()
 
 class Rule:
-
+    """
+    Class to handle individual rule operations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The rule data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_rule(state, param_x, param_y, funciton):
+            Set the rule parameters.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the Rule class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'rules'
         self.data = self.load_config('default')
@@ -229,17 +465,41 @@ class Rule:
             self.ob = json.load(j)
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
         
     def get_path_from_dict(self, ob, base_path='', base_name='', path=''):
+        """
+        Get the path from a dictionary based on the base name.
+        Args:
+            ob (dict): The dictionary object.
+            base_path (str): The base path.
+            base_name (str): The base name to search for.
+            path (str): The current path.
+        Returns:
+            str: The constructed path.
+        """
         if ob and base_name in list(ob.keys()):
             path = f"{base_path}{path}/{base_name}"
             return path
@@ -250,7 +510,14 @@ class Rule:
                 return self.get_path_from_dict(base_path, base_name, value, f'{path}/{key}')
     
     def set_rule(self, state=True, param_x = '', param_y = '', funciton = ''):
-
+        """
+        Set the rule parameters.
+        Args:
+            state (bool): Whether the rule is enabled.
+            param_x (str): The x parameter name.
+            param_y (str): The y parameter name.
+            funciton (str): The function to apply.
+        """
         if state:
             self.data['fit_rule_enabled'] = 'True'
         else:
@@ -270,8 +537,21 @@ class Rule:
         
 
 class Fits(Fitting):
-
+    """
+    Class to handle fit configurations.
+    Inherits from:
+        Fitting
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The fit configuration data.
+    Methods:
+        set_datasets(*datasets):
+            Set the datasets for the configuration.
+    """
     def __init__(self):
+        """
+        Initialize the Fits class.
+        """
         super(Fitting, self).__init__()
         self.json_name = 'fits'
         self.data = {}
@@ -279,6 +559,11 @@ class Fits(Fitting):
         self.set_format()
     
     def set_datasets(self, *datasets):
+        """
+        Set the datasets for the configuration.
+        Args:
+            *datasets: Variable-length list of dataset objects.
+        """
         self.segments = len(datasets)
         self.data = {'data_sets': self.segments}
         for idx, dataset in enumerate(datasets): 
@@ -286,8 +571,29 @@ class Fits(Fitting):
         self.set_format()
 
 class Dataset:
-
+    """
+    Class to handle individual dataset operations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The dataset data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_local_duplicate():
+            Set the local duplicate parameters.
+    """
     def __init__(self, dest_dir, config='', import_config='', *fitpathces):
+        """
+        Initialize the Dataset class.
+        Args:
+            dest_dir (str): The destination directory.
+            config (str): The configuration data.
+            import_config (str): The import configuration data.
+            *fitpathces: Variable-length list of fit patches.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'fits'
         self.data = {}
@@ -304,71 +610,185 @@ class Dataset:
             self.ob = json.load(j)
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*','*', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
     def set_local_duplicate(self):
+        """
+        Set the local duplicate parameters.
+        """
         self.data['duplicate']['id'] = 'id' + str(secrets.token_hex(8))
         self.data['duplicate']['segments'] = 0
 
 
 class FitPatch:
-
+    """
+    Class to handle individual fit patch operations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The fit patch data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_patch(param, val):
+            Set the patch parameters.
+    """
     def __init__(self):
+        """
+        Initialize the FitPatch class.
+        """
         self.json_name = 'fit_patch'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*','fits', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
     def set_patch(self, param, val):
-        #param = self.get_path_from_dict(base_name=param)
+        """
+        Set the patch parameters.
+        Args:
+            param (str): The parameter name.
+            val (str): The value to set.
+        """
         self.data['json_path'] = param
         self.data['human_path'] = param
         self.data['val'] = val
 
 class Config:
-
+    """
+    Class to handle configuration operations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_fit_params(**kwargs):
+            Set the fit parameters.
+    """
     def __init__(self, dest_dir, fit_against='jv.dat'):
+        """
+        Initialize the Config class.
+        Args:
+            dest_dir (str): The destination directory.
+            fit_against (str): The file to fit against.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'config'
         self.data = self.load_config('default')
         self.data['sim_data'] = fit_against
     
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*','*', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
     def set_fit_params(self, **kwargs):
+        """
+        Set the fit parameters.
+        Args:
+            **kwargs: Keyword arguments for fit parameters.
+        """
         for kwarg in kwargs:
             if kwarg in self.data:
                 self.data[kwarg.key()] = kwarg.value()
 
 class ImportConfig:
-
+    """
+    Class to handle import configuration operations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The import configuration data.
+    Methods:
+        get_combo_pos(x):
+            Get the combo position for a given label.
+        create_inp():
+            Create the input file for import.
+        set_import_params(**kwargs):
+            Set the import parameters.
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+    """
     def __init__(self, dest_dir, import_dir='jv.dat', x_data='J (A/cm^2)', y_data = 'V (Voltage)'):
+        """
+        Initialize the ImportConfig class.
+        Args:
+            dest_dir (str): The destination directory.
+            import_dir (str): The import directory.
+            x_data (str): The x data label.
+            y_data (str): The y data label.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'import_config'
         self.data = self.load_config('default')
@@ -383,6 +803,13 @@ class ImportConfig:
         self.create_inp()
 
     def get_combo_pos(self, x):
+        """
+        Get the combo position for a given label.
+        Args:
+            x (str): The label to search for.
+        Returns:
+            tuple: The index and label.
+        """
         x = x.lower().strip().replace(' ','')
         list_o = ['Wavelength (nm)', 'Wavelength (um)', 'Wavelength (cm)', 'Wavelenght (m)', 'Photonenergy (eV)', 'J (mA/cm2)', 'J (A/cm2)', 'J (A/m2)', 'IMPS Re(Z) (Am2/W)', 
                 'IMPS Im(Z) (Am2/W)', 'IMVS Re(Z) (Vm2/W)', 'IMVS Im(Z) (Vm2/W)', 'Amps (A)', 'Amps - no convert (A)', 'Voltage (V)', '-Voltage (V)', 'Voltage (mV)', 'Frequency (Hz)',
@@ -393,9 +820,10 @@ class ImportConfig:
         idx = list.index(match)
         return idx, list_o[idx]
     
-    #oghma_csv {"title":"Voltage - J","type":"xy","y_label":"Voltage","data_label":"J","y_units":"V","data_units":"A/m2","time ":nan,"Vexternal":nan,"x_len":1,"y_len":7,"z_len":1,"cols":"yd"}*
     def create_inp(self):
-        #header = "#oghma_csv{\"title\":" +"\""+ self.data['import_title'] + "\",\"type\":\"xy\"" + ",\"y_label\":"  + "\"" + self.data['import_xlabel'] + "\",\"data_lable\":" + "\""+self.data['import_ylable']
+        """
+        Create the input file for import.
+        """
         oghma_csv = {}
         oghma_csv["title"] = self.data['import_title']
         oghma_csv["type"] = "xy"
@@ -419,17 +847,36 @@ class ImportConfig:
             data.to_csv(f, sep='\t', header=False, index=False)
     
     def set_import_params(self, **kwargs):
+        """
+        Set the import parameters.
+        Args:
+            **kwargs: Keyword arguments for import parameters.
+        """
         for kwarg in kwargs:
             if kwarg in self.data:
                 self.data[kwarg.key()] = kwarg.value()
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*','*','*','*', self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
@@ -437,7 +884,9 @@ class ImportConfig:
 
     
 if __name__ == "__main__":
-
+    """
+    Main execution block for testing the Fitting class and its subcomponents.
+    """
     B = Fitting('pm6_y6_default copy')
     B.Fit_Config.set_simplexmul(240)
     B.Fit_Config.update()

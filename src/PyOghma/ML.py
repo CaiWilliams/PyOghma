@@ -1,5 +1,3 @@
-
-
 from glob import glob
 import ujson as json
 import numpy as np
@@ -12,7 +10,33 @@ from importlib import resources
 
 
 class ml:
+    """
+    Main class to handle machine learning configurations and operations.
+    Attributes:
+        name (str): The name of the ML instance.
+        icon (str): The icon representing the ML instance.
+        ml_random (ml_random): Instance of the ml_random class.
+        ml_patch (ml_patch): Instance of the ml_patch class.
+        duplicate (duplicate): Instance of the duplicate class.
+        ml_sim (ml_sim): Instance of the ml_sim class.
+        ml_config (ml_config): Instance of the ml_config class.
+        ml_networks (ml_networks): Instance of the ml_networks class.
+    Methods:
+        propegate_dest_dir(dest_dir):
+            Propagate the destination directory to all subcomponents.
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_format():
+            Set the format of the JSON data.
+        update():
+            Update the JSON file with the current data.
+    """
     def __init__(self):
+        """
+        Initialize the ml class and its subcomponents.
+        """
         self.name = ""
         self.icon = "ml"
         self.ml_random = ml_random()
@@ -24,6 +48,11 @@ class ml:
         return
 
     def propegate_dest_dir(self, dest_dir):
+        """
+        Propagate the destination directory to all subcomponents.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.ml_random.dest_dir = dest_dir
         self.ml_patch.dest_dir = dest_dir
@@ -32,16 +61,33 @@ class ml:
         self.ml_sim.dest_dir = dest_dir
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = resources.as_file(
             resources.files("PyOghma.Sim_Defaults.Ml.configs" + self.json_name).joinpath(file)).args[0]
         return config_dir
 
     def set_format(self):
+        """
+        Set the format of the JSON data based on the json_name.
+        """
         match self.json_name:
             case 'ml_random':
                 self.json_format = {self.json_name: self.data}
@@ -59,6 +105,9 @@ class ml:
                 self.json_format = {self.json_name: self.data}
 
     def update(self):
+        """
+        Update the JSON file with the current data.
+        """
         with open(os.path.join(self.dest_dir, 'sim.json'), "r") as j:
             data = json.load(j)
 
@@ -71,7 +120,21 @@ class ml:
 
 
 class ml_random(ml):
+    """
+    Class to handle random input configurations for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The random input configuration data.
+    Methods:
+        set_inputs(*inputs):
+            Set the random inputs for the configuration.
+    """
     def __init__(self):
+        """
+        Initialize the ml_random class.
+        """
         super(ml, self).__init__()
         self.json_name = 'ml_random'
         self.data = {}
@@ -79,6 +142,11 @@ class ml_random(ml):
         self.set_format()
 
     def set_inputs(self, *inputs):
+        """
+        Set the random inputs for the configuration.
+        Args:
+            *inputs: Variable-length list of input objects.
+        """
         self.segments = len(inputs)
         self.data['id'] = 'id' + str(secrets.token_hex(8))
         self.data = {'segments': self.segments}
@@ -88,23 +156,64 @@ class ml_random(ml):
 
 
 class ml_input:
+    """
+    Class to handle individual random input configurations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The input configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_input(state, param, param_min, param_max):
+            Set the input parameters.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the ml_input class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'ml_random'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join(os.getcwd(), 'pyOghma','Sim_Defaults', 'Ml', self.json_name, file)
         filename = glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def set_input(self, state=True, param='', param_min=-1, param_max=1):
+        """
+        Set the input parameters.
+        Args:
+            state (bool): Whether the input is enabled.
+            param (str): The parameter name.
+            param_min (float): The minimum value.
+            param_max (float): The maximum value.
+        """
         if state:
             self.data['random_var_enabled'] = "True"
         else:
@@ -123,7 +232,18 @@ class ml_input:
 
 
 class ml_patch(ml):
+    """
+    Class to handle patch configurations for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The patch configuration data.
+    """
     def __init__(self):
+        """
+        Initialize the ml_patch class.
+        """
         super(ml, self).__init__()
         self.json_name = 'ml_patch'
         self.data = {}
@@ -132,7 +252,18 @@ class ml_patch(ml):
 
 
 class duplicate(ml):
+    """
+    Class to handle duplication configurations for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The duplication configuration data.
+    """
     def __init__(self):
+        """
+        Initialize the duplicate class.
+        """
         super(ml, self).__init__()
         self.json_name = 'duplicate'
         self.data = {}
@@ -142,7 +273,21 @@ class duplicate(ml):
 
 
 class ml_sim(ml):
+    """
+    Class to handle simulation configurations for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The simulation configuration data.
+    Methods:
+        set_sim(Sims):
+            Set the simulation configurations.
+    """
     def __init__(self):
+        """
+        Initialize the ml_sim class.
+        """
         super(ml, self).__init__()
         self.json_name = 'ml_sims'
         self.data = {}
@@ -151,6 +296,11 @@ class ml_sim(ml):
         self.set_format()
 
     def set_sim(self, Sims):
+        """
+        Set the simulation configurations.
+        Args:
+            Sims (list): A list of simulation configurations.
+        """
         self.data['id'] = 'id' + str(secrets.token_hex(8))
         self.data = {'segments': len(Sims)}
         sim_names = [str(secrets.token_hex(8)) for i in range(len(Sims))]
@@ -183,23 +333,63 @@ class ml_sim(ml):
 
 
 class ml_sim_patch:
+    """
+    Class to handle individual simulation patch configurations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The patch configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_patch(state, param, param_val):
+            Set the patch parameters.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the ml_sim_patch class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'ml_patch'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*', 'Sim_Defaults', 'Ml','ml_sims', self.json_name, file)
         filename = glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def set_patch(self, state, param, param_val):
+        """
+        Set the patch parameters.
+        Args:
+            state (bool): Whether the patch is enabled.
+            param (str): The parameter name.
+            param_val (float): The parameter value.
+        """
         if state:
             self.data['ml_patch_enabled'] = "True"
         else:
@@ -212,23 +402,68 @@ class ml_sim_patch:
 
 
 class ml_sim_output_vector:
+    """
+    Class to handle individual simulation output vector configurations.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The output vector configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_output_vector(state, file_name, vector_start, vector_end, vector_step, import_config):
+            Set the output vector parameters.
+        set_name(name):
+            Set the name for the output vector configuration.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the ml_sim_output_vector class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'ml_output_vectors'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*', 'Sim_Defaults', 'Ml','ml_sims', self.json_name, file)
         filename = glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def set_output_vector(self, state, file_name, vector_start, vector_end, vector_step, import_config):
+        """
+        Set the output vector parameters.
+        Args:
+            state (bool): Whether the output vector is enabled.
+            file_name (str): The name of the file.
+            vector_start (float): The start value of the vector.
+            vector_end (float): The end value of the vector.
+            vector_step (float): The step value of the vector.
+            import_config (ml_sim_output_vector_import_cofig): The import configuration.
+        """
         import_config = copy.deepcopy(import_config)
         if state:
             self.data["ml_output_vector_item_enabled"] = "True"
@@ -245,35 +480,84 @@ class ml_sim_output_vector:
         vector_string = vector_string[:-1]
         self.data["vectors"] = vector_string
 
-        #self.import_config = import_config
         self.data["import_config"] = import_config.data
         self.data["id"] = "id" + str(secrets.token_hex(8))
 
     def set_name(self, name):
+        """
+        Set the name for the output vector configuration.
+        Args:
+            name (str): The name to set.
+        """
         self.data["import_config"]['import_file_path'] = os.path.join(self.dest_dir, 'train',name,self.data['file_name'])
         self.data["import_config"]['data_file'] = name + '_' + self.data['ml_token_name']+'.csv'
-        #self.import_config.set_name(self.data['file_name'],name)
-        #self.data["import_config"]["data_file"] = name +'_'+  self.data['ml_token_name'] + '.csv'#self.import_cofig.data
 
 
 class ml_sim_output_vector_import_cofig:
+    """
+    Class to handle import configurations for simulation output vectors.
+    Attributes:
+        dest_dir (str): The destination directory.
+        json_name (str): The name of the JSON configuration.
+        data (dict): The import configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+        set_import_cofig(import_dir, x_data, y_data, import_area, x_spin, data_spin):
+            Set the import configuration parameters.
+        set_name(file_name, sim_name):
+            Set the name for the import configuration.
+        get_combo_pos(x):
+            Get the position of a combo box item.
+    """
     def __init__(self, dest_dir):
+        """
+        Initialize the ml_sim_output_vector_import_cofig class.
+        Args:
+            dest_dir (str): The destination directory.
+        """
         self.dest_dir = dest_dir
         self.json_name = 'import_config'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*', 'Sim_Defaults', 'Ml', 'ml_sims','ml_output_vectors',self.json_name, file)
         filename = glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def set_import_cofig(self, import_dir='jv.dat', x_data='J (A/cm^2)', y_data = 'V (Voltage)', import_area=0.104, x_spin=0, data_spin=1):
+        """
+        Set the import configuration parameters.
+        Args:
+            import_dir (str): The import directory.
+            x_data (str): The x-axis data.
+            y_data (str): The y-axis data.
+            import_area (float): The import area.
+            x_spin (int): The x-axis spin value.
+            data_spin (int): The data spin value.
+        """
         self.data['import_file_path'] = ''
         self.data['import_x_combo_pos'] = self.get_combo_pos(x_data)[0]
         self.data['import_data_combo_pos'] = self.get_combo_pos(y_data)[0]
@@ -289,10 +573,23 @@ class ml_sim_output_vector_import_cofig:
         self.data['id'] = 'id' + str(secrets.token_hex(8))
 
     def set_name(self, file_name, sim_name):
+        """
+        Set the name for the import configuration.
+        Args:
+            file_name (str): The name of the file.
+            sim_name (str): The name of the simulation.
+        """
         self.data['import_file_path'] = self.dest_dir + '/' + file_name
         self.data['data_file'] = sim_name + '_vec.csv'
 
     def get_combo_pos(self, x):
+        """
+        Get the position of a combo box item.
+        Args:
+            x (str): The name of the combo box item.
+        Returns:
+            tuple: The position and name of the combo box item.
+        """
         x = x.lower().strip().replace(' ','')
         list_o = ['Wavelength (nm)', 'Wavelength (um)', 'Wavelength (cm)', 'Wavelenght (m)', 'Photonenergy (eV)', 'J (mA/cm2)', 'J (A/cm2)', 'J (A/m2)', 'IMPS Re(Z) (Am2/W)',
                 'IMPS Im(Z) (Am2/W)', 'IMVS Re(Z) (Vm2/W)', 'IMVS Im(Z) (Vm2/W)', 'Amps (A)', 'Amps - no convert (A)', 'Voltage (V)', '-Voltage (V)', 'Voltage (mV)', 'Frequency (Hz)',
@@ -305,7 +602,23 @@ class ml_sim_output_vector_import_cofig:
 
 
 class ml_config(ml):
+    """
+    Class to handle configuration settings for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The configuration data.
+    Methods:
+        set_config(num_archives, sim_per_archive):
+            Set the configuration parameters.
+        find_file(file):
+            Find a file in the directory structure.
+    """
     def __init__(self):
+        """
+        Initialize the ml_config class.
+        """
         super(ml, self).__init__()
         self.json_name = 'ml_config'
         self.data = {}
@@ -313,17 +626,41 @@ class ml_config(ml):
         self.set_format()
 
     def set_config(self, num_archives, sim_per_archive):
+        """
+        Set the configuration parameters.
+        Args:
+            num_archives (int): The number of archives.
+            sim_per_archive (int): The number of simulations per archive.
+        """
         self.data['ml_number_of_archives'] = num_archives
         self.data['ml_sims_per_archive'] = sim_per_archive
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = resources.as_file(
             resources.files("PyOghma.Sim_Defaults.Ml." + self.json_name).joinpath(file)).args[0]
         return config_dir
 
 
 class ml_networks(ml):
+    """
+    Class to handle network configurations for machine learning.
+    Inherits from:
+        ml
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        data (dict): The network configuration data.
+    """
     def __init__(self):
+        """
+        Initialize the ml_networks class.
+        """
         super(ml, self).__init__()
         self.json_name = 'ml_sim'
         self.data = {}
@@ -333,7 +670,20 @@ class ml_networks(ml):
 
 
 class ml_network:
+    """
+    Class to handle individual network configurations for machine learning.
+    Attributes:
+        data (dict): The network configuration data.
+    """
     def __init__(self, name, state, inputs, outputs):
+        """
+        Initialize the ml_network class.
+        Args:
+            name (str): The name of the network.
+            state (bool): Whether the network is enabled.
+            inputs (ml_network_input): The input configuration.
+            outputs (ml_network_output): The output configuration.
+        """
         self.data = {}
         self.data["icon"] = "neural_network"
         self.data["name"] = name
@@ -347,7 +697,17 @@ class ml_network:
 
 
 class ml_network_input:
+    """
+    Class to handle input configurations for machine learning networks.
+    Attributes:
+        data (dict): The input configuration data.
+    """
     def __init__(self, *ml_output_vectors):
+        """
+        Initialize the ml_network_input class.
+        Args:
+            *ml_output_vectors: Variable-length list of output vector objects.
+        """
         self.data = {}
         self.data["none"] = "none"
         self.segments = len(ml_output_vectors)
@@ -358,7 +718,18 @@ class ml_network_input:
 
 
 class ml_network_output:
+    """
+    Class to handle output configurations for machine learning networks.
+    Attributes:
+        data (dict): The output configuration data.
+    """
     def __init__(self, ml_output_vectors, params):
+        """
+        Initialize the ml_network_output class.
+        Args:
+            ml_output_vectors (list): A list of output vector objects.
+            params (list): A list of parameters for the output vectors.
+        """
         self.data = {}
         self.data["none"] = "none"
         self.segments = len(ml_output_vectors)
@@ -369,6 +740,9 @@ class ml_network_output:
 
 
 if __name__ == '__main__':
+    """
+    Main function to demonstrate the usage of the classes.
+    """
     A = ml()
     dest = '/home/cai/PycharmProjects/PyOghma/ml_example2/'
     A.propegate_dest_dir(dest)

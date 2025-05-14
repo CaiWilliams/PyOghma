@@ -55,7 +55,50 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class OghmaNano:
+    &#34;&#34;&#34;
+    Main class to manage simulations and configurations for OghmaNano.
+    Attributes:
+        results_dir (str): Directory to store simulation results.
+        Optical (Optical): Instance of the Optical class.
+        Sims (Sims): Instance of the Sims class.
+        Thermal (Thermal): Instance of the Thermal class.
+        Server (Server): Instance of the Server class.
+        Epitaxy (Epitaxy): Instance of the Epitaxy class.
+        ML (ml): Instance of the ml class.
+        dimensions (int): Number of dimensions for variable configurations.
+        variables (dict): Dictionary of variables for simulations.
+        points (int): Number of points in the variable space.
+        hashes (list): List of unique hashes for simulations.
+    Methods:
+        check_results():
+            Check and create the results directory based on the operating system.
+        set_experiment_name(experiment_name):
+            Set the name of the experiment.
+        set_source_simulation(source_simulation):
+            Set the source directory for the simulation.
+        set_dest_dir(dest_dir):
+            Set the destination directory for the simulation.
+        propagate_dest_dir():
+            Propagate the destination directory to all subcomponents.
+        set_variables(iter_used=&#39;product&#39;, **kwargs):
+            Set the variables for the simulation.
+        gen_hashes(points):
+            Generate unique hashes for the given number of points.
+        clone(dest_dir):
+            Clone the source simulation to the destination directory.
+        load(dest_dir):
+            Load an existing simulation from the destination directory.
+        add_job(hash=&#39;&#39;):
+            Add a job to the server for execution.
+        clean_up():
+            Remove the results directory and its contents.
+        run_jobs():
+            Execute all jobs on the server.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the OghmaNano class and its subcomponents.
+        &#34;&#34;&#34;
         self.results_dir = self.check_results()
         self.Optical = Optical()
         self.Sims = Sims()
@@ -70,6 +113,11 @@ el.replaceWith(d);
 
 
     def check_results(self):
+        &#34;&#34;&#34;
+        Check and create the results directory based on the operating system.
+        Returns:
+            str: Path to the results directory.
+        &#34;&#34;&#34;
         match platform.system():
             case &#39;Linux&#39;:
                 results_dir = os.path.join(os.sep,&#39;dev&#39;,&#39;shm&#39;,&#39;OghmaSims&#39;)
@@ -85,17 +133,35 @@ el.replaceWith(d);
             return results_dir
         
     def set_experiment_name(self, experiment_name):
+        &#34;&#34;&#34;
+        Set the name of the experiment.
+        Args:
+            experiment_name (str): The name of the experiment.
+        &#34;&#34;&#34;
         self.experiment_name = experiment_name
 
     def set_source_simulation(self, source_simulation):
+        &#34;&#34;&#34;
+        Set the source directory for the simulation.
+        Args:
+            source_simulation (str): The name of the source simulation directory.
+        &#34;&#34;&#34;
         self.src_dir = os.path.join(os.getcwd(),source_simulation)
         return
     
     def set_dest_dir(self, dest_dir):
+        &#34;&#34;&#34;
+        Set the destination directory for the simulation.
+        Args:
+            dest_dir (str): The destination directory.
+        &#34;&#34;&#34;
         self.dest_dir = dest_dir
         self.propagate_dest_dir()
 
     def propagate_dest_dir(self):
+        &#34;&#34;&#34;
+        Propagate the destination directory to all subcomponents.
+        &#34;&#34;&#34;
         self.Epitaxy.dest_dir = self.dest_dir
         self.Optical.dest_dir = self.dest_dir
         self.Optical.Light.dest_dir = self.dest_dir
@@ -116,6 +182,12 @@ el.replaceWith(d);
         # self.Fitting.Fits.dest_dir = self.dest_dir
     
     def set_variables(self, iter_used=&#39;product&#39;, **kwargs):
+        &#34;&#34;&#34;
+        Set the variables for the simulation.
+        Args:
+            iter_used (str): The iterator type (&#39;product&#39; or &#39;zip&#39;).
+            **kwargs: Variable-length keyword arguments representing variables.
+        &#34;&#34;&#34;
         self.dimensions = len(kwargs)
         self.variables = kwargs
         for key, value in self.variables.items():
@@ -134,9 +206,19 @@ el.replaceWith(d);
                 print(&#39;Iterator has not been implemented&#39;)
 
     def gen_hashes(self, points):
+        &#34;&#34;&#34;
+        Generate unique hashes for the given number of points.
+        Args:
+            points (int): The number of points to generate hashes for.
+        &#34;&#34;&#34;
         self.hashes = [secrets.token_urlsafe(8) for i in range(points)]
     
     def clone(self, dest_dir):
+        &#34;&#34;&#34;
+        Clone the source simulation to the destination directory.
+        Args:
+            dest_dir (str): The name of the destination directory.
+        &#34;&#34;&#34;
         dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
         self.dest_dir = dest
         self.propagate_dest_dir()
@@ -144,22 +226,89 @@ el.replaceWith(d);
         return
 
     def load(self, dest_dir):
+        &#34;&#34;&#34;
+        Load an existing simulation from the destination directory.
+        Args:
+            dest_dir (str): The name of the destination directory.
+        &#34;&#34;&#34;
         dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
         self.dest_dir = dest
         self.propagate_dest_dir()
 
     def add_job(self, hash=&#39;&#39;):
+        &#34;&#34;&#34;
+        Add a job to the server for execution.
+        Args:
+            hash (str): The unique hash for the job. Defaults to an empty string.
+        &#34;&#34;&#34;
         self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir,&#39;sim.json&#39;), hash, args=&#34;&#34;)
         return
     
     def clean_up(self):
+        &#34;&#34;&#34;
+        Remove the results directory and its contents.
+        &#34;&#34;&#34;
         shutil.rmtree(os.path.join(os.getcwd(),self.results_dir))
 
     def run_jobs(self):
+        &#34;&#34;&#34;
+        Execute all jobs on the server.
+        &#34;&#34;&#34;
         self.Server.run()
         return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Main class to manage simulations and configurations for OghmaNano.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>results_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>Directory to store simulation results.</dd>
+<dt><strong><code>Optical</code></strong> :&ensp;<code>Optical</code></dt>
+<dd>Instance of the Optical class.</dd>
+<dt><strong><code>Sims</code></strong> :&ensp;<code>Sims</code></dt>
+<dd>Instance of the Sims class.</dd>
+<dt><strong><code>Thermal</code></strong> :&ensp;<code>Thermal</code></dt>
+<dd>Instance of the Thermal class.</dd>
+<dt><strong><code>Server</code></strong> :&ensp;<code>Server</code></dt>
+<dd>Instance of the Server class.</dd>
+<dt><strong><code>Epitaxy</code></strong> :&ensp;<code>Epitaxy</code></dt>
+<dd>Instance of the Epitaxy class.</dd>
+<dt><strong><code>ML</code></strong> :&ensp;<code>ml</code></dt>
+<dd>Instance of the ml class.</dd>
+<dt><strong><code>dimensions</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of dimensions for variable configurations.</dd>
+<dt><strong><code>variables</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Dictionary of variables for simulations.</dd>
+<dt><strong><code>points</code></strong> :&ensp;<code>int</code></dt>
+<dd>Number of points in the variable space.</dd>
+<dt><strong><code>hashes</code></strong> :&ensp;<code>list</code></dt>
+<dd>List of unique hashes for simulations.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>check_results():
+Check and create the results directory based on the operating system.
+set_experiment_name(experiment_name):
+Set the name of the experiment.
+set_source_simulation(source_simulation):
+Set the source directory for the simulation.
+set_dest_dir(dest_dir):
+Set the destination directory for the simulation.
+propagate_dest_dir():
+Propagate the destination directory to all subcomponents.
+set_variables(iter_used='product', **kwargs):
+Set the variables for the simulation.
+gen_hashes(points):
+Generate unique hashes for the given number of points.
+clone(dest_dir):
+Clone the source simulation to the destination directory.
+load(dest_dir):
+Load an existing simulation from the destination directory.
+add_job(hash=''):
+Add a job to the server for execution.
+clean_up():
+Remove the results directory and its contents.
+run_jobs():
+Execute all jobs on the server.</p>
+<p>Initialize the OghmaNano class and its subcomponents.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.OghmaNano.OghmaNano.add_job"><code class="name flex">
@@ -171,10 +320,20 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def add_job(self, hash=&#39;&#39;):
+    &#34;&#34;&#34;
+    Add a job to the server for execution.
+    Args:
+        hash (str): The unique hash for the job. Defaults to an empty string.
+    &#34;&#34;&#34;
     self.Server.add_job(os.path.join(os.getcwd(), self.results_dir, self.dest_dir,&#39;sim.json&#39;), hash, args=&#34;&#34;)
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Add a job to the server for execution.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>hash</code></strong> :&ensp;<code>str</code></dt>
+<dd>The unique hash for the job. Defaults to an empty string.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.check_results"><code class="name flex">
 <span>def <span class="ident">check_results</span></span>(<span>self)</span>
@@ -185,6 +344,11 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def check_results(self):
+    &#34;&#34;&#34;
+    Check and create the results directory based on the operating system.
+    Returns:
+        str: Path to the results directory.
+    &#34;&#34;&#34;
     match platform.system():
         case &#39;Linux&#39;:
             results_dir = os.path.join(os.sep,&#39;dev&#39;,&#39;shm&#39;,&#39;OghmaSims&#39;)
@@ -199,7 +363,12 @@ el.replaceWith(d);
     except:
         return results_dir</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Check and create the results directory based on the operating system.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>Path to the results directory.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.clean_up"><code class="name flex">
 <span>def <span class="ident">clean_up</span></span>(<span>self)</span>
@@ -210,9 +379,12 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def clean_up(self):
+    &#34;&#34;&#34;
+    Remove the results directory and its contents.
+    &#34;&#34;&#34;
     shutil.rmtree(os.path.join(os.getcwd(),self.results_dir))</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Remove the results directory and its contents.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.clone"><code class="name flex">
 <span>def <span class="ident">clone</span></span>(<span>self, dest_dir)</span>
@@ -223,13 +395,23 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def clone(self, dest_dir):
+    &#34;&#34;&#34;
+    Clone the source simulation to the destination directory.
+    Args:
+        dest_dir (str): The name of the destination directory.
+    &#34;&#34;&#34;
     dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
     self.dest_dir = dest
     self.propagate_dest_dir()
     shutil.copytree(self.src_dir, dest)
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Clone the source simulation to the destination directory.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the destination directory.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.gen_hashes"><code class="name flex">
 <span>def <span class="ident">gen_hashes</span></span>(<span>self, points)</span>
@@ -240,9 +422,19 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def gen_hashes(self, points):
+    &#34;&#34;&#34;
+    Generate unique hashes for the given number of points.
+    Args:
+        points (int): The number of points to generate hashes for.
+    &#34;&#34;&#34;
     self.hashes = [secrets.token_urlsafe(8) for i in range(points)]</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Generate unique hashes for the given number of points.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>points</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of points to generate hashes for.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.load"><code class="name flex">
 <span>def <span class="ident">load</span></span>(<span>self, dest_dir)</span>
@@ -253,11 +445,21 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load(self, dest_dir):
+    &#34;&#34;&#34;
+    Load an existing simulation from the destination directory.
+    Args:
+        dest_dir (str): The name of the destination directory.
+    &#34;&#34;&#34;
     dest = os.path.join(os.getcwd(),self.results_dir,dest_dir)
     self.dest_dir = dest
     self.propagate_dest_dir()</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Load an existing simulation from the destination directory.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the destination directory.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.propagate_dest_dir"><code class="name flex">
 <span>def <span class="ident">propagate_dest_dir</span></span>(<span>self)</span>
@@ -268,6 +470,9 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def propagate_dest_dir(self):
+    &#34;&#34;&#34;
+    Propagate the destination directory to all subcomponents.
+    &#34;&#34;&#34;
     self.Epitaxy.dest_dir = self.dest_dir
     self.Optical.dest_dir = self.dest_dir
     self.Optical.Light.dest_dir = self.dest_dir
@@ -287,7 +492,7 @@ el.replaceWith(d);
     # self.Fitting.Rules.dest_dir = self.dest_dir
     # self.Fitting.Fits.dest_dir = self.dest_dir</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Propagate the destination directory to all subcomponents.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.run_jobs"><code class="name flex">
 <span>def <span class="ident">run_jobs</span></span>(<span>self)</span>
@@ -298,10 +503,13 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def run_jobs(self):
+    &#34;&#34;&#34;
+    Execute all jobs on the server.
+    &#34;&#34;&#34;
     self.Server.run()
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Execute all jobs on the server.</p></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_dest_dir"><code class="name flex">
 <span>def <span class="ident">set_dest_dir</span></span>(<span>self, dest_dir)</span>
@@ -312,10 +520,20 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_dest_dir(self, dest_dir):
+    &#34;&#34;&#34;
+    Set the destination directory for the simulation.
+    Args:
+        dest_dir (str): The destination directory.
+    &#34;&#34;&#34;
     self.dest_dir = dest_dir
     self.propagate_dest_dir()</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the destination directory for the simulation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The destination directory.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_experiment_name"><code class="name flex">
 <span>def <span class="ident">set_experiment_name</span></span>(<span>self, experiment_name)</span>
@@ -326,9 +544,19 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_experiment_name(self, experiment_name):
+    &#34;&#34;&#34;
+    Set the name of the experiment.
+    Args:
+        experiment_name (str): The name of the experiment.
+    &#34;&#34;&#34;
     self.experiment_name = experiment_name</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the name of the experiment.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>experiment_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the experiment.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_source_simulation"><code class="name flex">
 <span>def <span class="ident">set_source_simulation</span></span>(<span>self, source_simulation)</span>
@@ -339,10 +567,20 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_source_simulation(self, source_simulation):
+    &#34;&#34;&#34;
+    Set the source directory for the simulation.
+    Args:
+        source_simulation (str): The name of the source simulation directory.
+    &#34;&#34;&#34;
     self.src_dir = os.path.join(os.getcwd(),source_simulation)
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the source directory for the simulation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>source_simulation</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the source simulation directory.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.OghmaNano.OghmaNano.set_variables"><code class="name flex">
 <span>def <span class="ident">set_variables</span></span>(<span>self, iter_used='product', **kwargs)</span>
@@ -353,6 +591,12 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_variables(self, iter_used=&#39;product&#39;, **kwargs):
+    &#34;&#34;&#34;
+    Set the variables for the simulation.
+    Args:
+        iter_used (str): The iterator type (&#39;product&#39; or &#39;zip&#39;).
+        **kwargs: Variable-length keyword arguments representing variables.
+    &#34;&#34;&#34;
     self.dimensions = len(kwargs)
     self.variables = kwargs
     for key, value in self.variables.items():
@@ -370,7 +614,14 @@ el.replaceWith(d);
         case _:
             print(&#39;Iterator has not been implemented&#39;)</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the variables for the simulation.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>iter_used</code></strong> :&ensp;<code>str</code></dt>
+<dd>The iterator type ('product' or 'zip').</dd>
+<dt><strong><code>**kwargs</code></strong></dt>
+<dd>Variable-length keyword arguments representing variables.</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>

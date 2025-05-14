@@ -55,13 +55,36 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Laser:
+    &#34;&#34;&#34;
+    Class to handle individual laser configurations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        name (str): The name of the laser.
+        icon (str): The icon representing the laser.
+        data (dict): The laser configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the Laser class.
+        &#34;&#34;&#34;
         self.json_name = &#39;lasers&#39;
         self.name = &#39;Green&#39;
         self.icon = &#39;laser&#39;
         self.data = self.load_config(&#39;default&#39;)
 
     def find_file(self, file):
+        &#34;&#34;&#34;
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        &#34;&#34;&#34;
         config_dir = os.path.join(&#39;*&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         print(config_dir)
         filename = glob(config_dir)[0]
@@ -69,11 +92,35 @@ el.replaceWith(d);
         return str(filename)
 
     def load_config(self, file):
+        &#34;&#34;&#34;
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        &#34;&#34;&#34;
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle individual laser configurations.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the laser.</dd>
+<dt><strong><code>icon</code></strong> :&ensp;<code>str</code></dt>
+<dd>The icon representing the laser.</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The laser configuration data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>find_file(file):
+Find a file in the directory structure.
+load_config(file):
+Load a configuration file.</p>
+<p>Initialize the Laser class.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Optical.Laser.find_file"><code class="name flex">
@@ -85,13 +132,30 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def find_file(self, file):
+    &#34;&#34;&#34;
+    Find a file in the directory structure.
+    Args:
+        file (str): The name of the file to find.
+    Returns:
+        str: The path to the found file.
+    &#34;&#34;&#34;
     config_dir = os.path.join(&#39;*&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     print(config_dir)
     filename = glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Find a file in the directory structure.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the file to find.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The path to the found file.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.Laser.load_config"><code class="name flex">
 <span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
@@ -102,11 +166,28 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_config(self, file):
+    &#34;&#34;&#34;
+    Load a configuration file.
+    Args:
+        file (str): The name of the configuration file.
+    Returns:
+        dict: The loaded JSON data.
+    &#34;&#34;&#34;
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Load a configuration file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the configuration file.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>The loaded JSON data.</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -120,7 +201,21 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Lasers(Optical):
+    &#34;&#34;&#34;
+    Class to handle laser configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        segments (int): The number of lasers.
+        data (dict): The laser configuration data.
+    &#34;&#34;&#34;
     def __init__(self, *lasers):
+        &#34;&#34;&#34;
+        Initialize the Lasers class.
+        Args:
+            *lasers: Variable-length list of laser objects.
+        &#34;&#34;&#34;
         super(Optical, self).__init__()
         self.json_name = &#39;lasers&#39;
         self.segments = len(lasers)
@@ -129,10 +224,38 @@ el.replaceWith(d);
             self.data.update({&#39;segment&#39; + str(idx): {&#39;name&#39;: laser.name, &#39;icon&#39;: laser.icon, &#39;config&#39;: laser.data}})
         self.set_format()</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle laser configurations.
+Inherits from:
+Optical</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>segments</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of lasers.</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The laser configuration data.</dd>
+</dl>
+<p>Initialize the Lasers class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>*lasers</code></strong></dt>
+<dd>Variable-length list of laser objects.</dd>
+</dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></b></code>:
+<ul class="hlist">
+<li><code><a title="PyOghma.Optical.Optical.find_file" href="#PyOghma.Optical.Optical.find_file">find_file</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.load_config" href="#PyOghma.Optical.Optical.load_config">load_config</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.set_format" href="#PyOghma.Optical.Optical.set_format">set_format</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.update" href="#PyOghma.Optical.Optical.update">update</a></code></li>
+</ul>
+</li>
 </ul>
 </dd>
 <dt id="PyOghma.Optical.Light"><code class="flex name class">
@@ -144,18 +267,50 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Light(Optical):
+    &#34;&#34;&#34;
+    Class to handle light configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        light (dict): The light configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the Light class.
+        &#34;&#34;&#34;
         super(Optical, self).__init__()
         self.json_name = &#39;light&#39;
         self.light = self.load_config(&#39;default&#39;)
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        &#34;&#34;&#34;
+        Set the light intensity.
+        Args:
+            suns (float): The light intensity in suns.
+        &#34;&#34;&#34;
         print(&#39;Setting light intensity to: &#39;, suns)
         self.light[&#39;Psun&#39;] = suns
         return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle light configurations.
+Inherits from:
+Optical</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>light</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The light configuration data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>set_light_Intensity(suns):
+Set the light intensity.</p>
+<p>Initialize the Light class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></li>
@@ -171,13 +326,34 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_light_Intensity(self, suns):
+    &#34;&#34;&#34;
+    Set the light intensity.
+    Args:
+        suns (float): The light intensity in suns.
+    &#34;&#34;&#34;
     print(&#39;Setting light intensity to: &#39;, suns)
     self.light[&#39;Psun&#39;] = suns
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the light intensity.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>suns</code></strong> :&ensp;<code>float</code></dt>
+<dd>The light intensity in suns.</dd>
+</dl></div>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></b></code>:
+<ul class="hlist">
+<li><code><a title="PyOghma.Optical.Optical.find_file" href="#PyOghma.Optical.Optical.find_file">find_file</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.load_config" href="#PyOghma.Optical.Optical.load_config">load_config</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.set_format" href="#PyOghma.Optical.Optical.set_format">set_format</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.update" href="#PyOghma.Optical.Optical.update">update</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 <dt id="PyOghma.Optical.LightIntensity"><code class="flex name class">
 <span>class <span class="ident">LightIntensity</span></span>
@@ -188,7 +364,22 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LightIntensity(Optical):
+    &#34;&#34;&#34;
+    Class to handle light intensity configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        data (dict): The light intensity configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the LightIntensity class.
+        &#34;&#34;&#34;
         super(Optical, self).__init__()
         self.json_name = &#39;light_sources&#39;
         self.json_sub_heading = &#39;0&#39;
@@ -196,10 +387,30 @@ el.replaceWith(d);
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        &#34;&#34;&#34;
+        Set the light intensity.
+        Args:
+            suns (float): The light intensity in suns.
+        &#34;&#34;&#34;
         self.data[&#39;Psun&#39;] = suns
         return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle light intensity configurations.
+Inherits from:
+Optical</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>json_sub_heading</code></strong> :&ensp;<code>str</code></dt>
+<dd>The subheading for the JSON configuration.</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The light intensity configuration data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>set_light_Intensity(suns):
+Set the light intensity.</p>
+<p>Initialize the LightIntensity class.</p></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></li>
@@ -215,12 +426,33 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_light_Intensity(self, suns):
+    &#34;&#34;&#34;
+    Set the light intensity.
+    Args:
+        suns (float): The light intensity in suns.
+    &#34;&#34;&#34;
     self.data[&#39;Psun&#39;] = suns
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the light intensity.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>suns</code></strong> :&ensp;<code>float</code></dt>
+<dd>The light intensity in suns.</dd>
+</dl></div>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></b></code>:
+<ul class="hlist">
+<li><code><a title="PyOghma.Optical.Optical.find_file" href="#PyOghma.Optical.Optical.find_file">find_file</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.load_config" href="#PyOghma.Optical.Optical.load_config">load_config</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.set_format" href="#PyOghma.Optical.Optical.set_format">set_format</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.update" href="#PyOghma.Optical.Optical.update">update</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 <dt id="PyOghma.Optical.LightSource"><code class="flex name class">
 <span>class <span class="ident">LightSource</span></span>
@@ -231,8 +463,24 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LightSource:
-
+    &#34;&#34;&#34;
+    Class to handle individual light source configurations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        light (dict): The light source configuration data.
+    Methods:
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_light_spectra(spectra_name):
+            Set the light spectra for the light source.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the LightSource class.
+        &#34;&#34;&#34;
         self.json_name = &#39;light_sources&#39;
         self.json_sub_heading = &#39;lights&#39;
         self.light = self.load_config(&#39;default&#39;)
@@ -240,11 +488,25 @@ el.replaceWith(d);
         self.light[&#39;virtual_spectra&#39;][&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
 
     def load_config(self, file):
+        &#34;&#34;&#34;
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        &#34;&#34;&#34;
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        &#34;&#34;&#34;
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        &#34;&#34;&#34;
         config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
         #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         return config_dir
@@ -260,10 +522,32 @@ el.replaceWith(d);
     #         return json.loads(j.read())
 
     def set_light_spectra(self, spectra_name):
+        &#34;&#34;&#34;
+        Set the light spectra for the light source.
+        Args:
+            spectra_name (str): The name of the light spectra.
+        &#34;&#34;&#34;
         self.light[&#39;virtual_spectra&#39;][&#39;light_spectra&#39;][&#39;segment0&#39;][&#39;light_spectrum&#39;] = spectra_name
         return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle individual light source configurations.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>json_sub_heading</code></strong> :&ensp;<code>str</code></dt>
+<dd>The subheading for the JSON configuration.</dd>
+<dt><strong><code>light</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The light source configuration data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>load_config(file):
+Load a configuration file.
+find_file(file):
+Find a file in the directory structure.
+set_light_spectra(spectra_name):
+Set the light spectra for the light source.</p>
+<p>Initialize the LightSource class.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Optical.LightSource.find_file"><code class="name flex">
@@ -275,11 +559,28 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def find_file(self, file):
+    &#34;&#34;&#34;
+    Find a file in the directory structure.
+    Args:
+        file (str): The name of the file to find.
+    Returns:
+        str: The path to the found file.
+    &#34;&#34;&#34;
     config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
     #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     return config_dir</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Find a file in the directory structure.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the file to find.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The path to the found file.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.LightSource.load_config"><code class="name flex">
 <span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
@@ -290,11 +591,28 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_config(self, file):
+    &#34;&#34;&#34;
+    Load a configuration file.
+    Args:
+        file (str): The name of the configuration file.
+    Returns:
+        dict: The loaded JSON data.
+    &#34;&#34;&#34;
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Load a configuration file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the configuration file.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>The loaded JSON data.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.LightSource.set_light_spectra"><code class="name flex">
 <span>def <span class="ident">set_light_spectra</span></span>(<span>self, spectra_name)</span>
@@ -305,10 +623,20 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_light_spectra(self, spectra_name):
+    &#34;&#34;&#34;
+    Set the light spectra for the light source.
+    Args:
+        spectra_name (str): The name of the light spectra.
+    &#34;&#34;&#34;
     self.light[&#39;virtual_spectra&#39;][&#39;light_spectra&#39;][&#39;segment0&#39;][&#39;light_spectrum&#39;] = spectra_name
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the light spectra for the light source.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>spectra_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the light spectra.</dd>
+</dl></div>
 </dd>
 </dl>
 </dd>
@@ -322,8 +650,27 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class LightSources(Optical):
-
+    &#34;&#34;&#34;
+    Class to handle multiple light sources.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        segments (int): The number of light sources.
+        data (dict): The light sources configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity for all light sources.
+        add_light_source(*light_source):
+            Add one or more light sources.
+    &#34;&#34;&#34;
     def __init__(self, *light_sources):
+        &#34;&#34;&#34;
+        Initialize the LightSources class.
+        Args:
+            *light_sources: Variable-length list of light source objects.
+        &#34;&#34;&#34;
         super(Optical, self).__init__()
         self.json_name = &#39;light_sources&#39;
         self.json_sub_heading = &#39;lights&#39;
@@ -334,16 +681,50 @@ el.replaceWith(d);
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        &#34;&#34;&#34;
+        Set the light intensity for all light sources.
+        Args:
+            suns (float): The light intensity in suns.
+        &#34;&#34;&#34;
         self.data[&#39;Psun&#39;] = suns
         return
 
     def add_light_source(self, *light_source):
+        &#34;&#34;&#34;
+        Add one or more light sources.
+        Args:
+            *light_source: Variable-length list of light source objects.
+        &#34;&#34;&#34;
         self.segments = len(light_source)
         self.data[&#39;lights&#39;][&#39;segments&#39;] = self.segments
         for idx, light_source in enumerate(light_source):
             self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light # {&#39;segment&#39; + str(idx): light_source.light})</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Class to handle multiple light sources.
+Inherits from:
+Optical</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>json_sub_heading</code></strong> :&ensp;<code>str</code></dt>
+<dd>The subheading for the JSON configuration.</dd>
+<dt><strong><code>segments</code></strong> :&ensp;<code>int</code></dt>
+<dd>The number of light sources.</dd>
+<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
+<dd>The light sources configuration data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>set_light_Intensity(suns):
+Set the light intensity for all light sources.
+add_light_source(*light_source):
+Add one or more light sources.</p>
+<p>Initialize the LightSources class.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>*light_sources</code></strong></dt>
+<dd>Variable-length list of light source objects.</dd>
+</dl></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></li>
@@ -359,12 +740,22 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def add_light_source(self, *light_source):
+    &#34;&#34;&#34;
+    Add one or more light sources.
+    Args:
+        *light_source: Variable-length list of light source objects.
+    &#34;&#34;&#34;
     self.segments = len(light_source)
     self.data[&#39;lights&#39;][&#39;segments&#39;] = self.segments
     for idx, light_source in enumerate(light_source):
         self.data[&#39;lights&#39;][&#39;segment&#39;+str(idx)] = light_source.light # {&#39;segment&#39; + str(idx): light_source.light})</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Add one or more light sources.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>*light_source</code></strong></dt>
+<dd>Variable-length list of light source objects.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.LightSources.set_light_Intensity"><code class="name flex">
 <span>def <span class="ident">set_light_Intensity</span></span>(<span>self, suns)</span>
@@ -375,12 +766,33 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_light_Intensity(self, suns):
+    &#34;&#34;&#34;
+    Set the light intensity for all light sources.
+    Args:
+        suns (float): The light intensity in suns.
+    &#34;&#34;&#34;
     self.data[&#39;Psun&#39;] = suns
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the light intensity for all light sources.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>suns</code></strong> :&ensp;<code>float</code></dt>
+<dd>The light intensity in suns.</dd>
+</dl></div>
 </dd>
 </dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="PyOghma.Optical.Optical" href="#PyOghma.Optical.Optical">Optical</a></b></code>:
+<ul class="hlist">
+<li><code><a title="PyOghma.Optical.Optical.find_file" href="#PyOghma.Optical.Optical.find_file">find_file</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.load_config" href="#PyOghma.Optical.Optical.load_config">load_config</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.set_format" href="#PyOghma.Optical.Optical.set_format">set_format</a></code></li>
+<li><code><a title="PyOghma.Optical.Optical.update" href="#PyOghma.Optical.Optical.update">update</a></code></li>
+</ul>
+</li>
+</ul>
 </dd>
 <dt id="PyOghma.Optical.Optical"><code class="flex name class">
 <span>class <span class="ident">Optical</span></span>
@@ -391,7 +803,31 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Optical:
+    &#34;&#34;&#34;
+    Main class to handle optical configurations and operations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        name (str): The name of the optical instance.
+        Light (Light): Instance of the Light class.
+        LightSources (LightSources): Instance of the LightSources class.
+        LightSource (LightSource): Instance of the LightSource class.
+        LightIntensity (LightIntensity): Instance of the LightIntensity class.
+        Lasers (Lasers): Instance of the Lasers class.
+        dest_dir (str): The destination directory for saving or loading data.
+    Methods:
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_format():
+            Set the format of the JSON data.
+        update():
+            Update the JSON file with the current data.
+    &#34;&#34;&#34;
     def __init__(self):
+        &#34;&#34;&#34;
+        Initialize the Optical class and its subcomponents.
+        &#34;&#34;&#34;
         self.json_name = &#39;&#39;
         self.name = &#39;&#39;
 
@@ -403,16 +839,33 @@ el.replaceWith(d);
         self.dest_dir = &#39;&#39;
 
     def load_config(self, file):
+        &#34;&#34;&#34;
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        &#34;&#34;&#34;
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        &#34;&#34;&#34;
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        &#34;&#34;&#34;
         config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
         #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         return config_dir
 
     def set_format(self):
+        &#34;&#34;&#34;
+        Set the format of the JSON data based on the json_name.
+        &#34;&#34;&#34;
         match self.json_name:
             case &#39;light&#39;:
                 self.json_format = {self.json_name: self.light}
@@ -426,6 +879,9 @@ el.replaceWith(d);
                 self.json_format = {self.json_name: self.data}
 
     def update(self):
+        &#34;&#34;&#34;
+        Update the JSON file with the current data.
+        &#34;&#34;&#34;
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
             data = json.load(j)
 
@@ -436,7 +892,36 @@ el.replaceWith(d);
 
         return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Main class to handle optical configurations and operations.</p>
+<h2 id="attributes">Attributes</h2>
+<dl>
+<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the JSON configuration.</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the optical instance.</dd>
+<dt><strong><code>Light</code></strong> :&ensp;<code><a title="PyOghma.Optical.Light" href="#PyOghma.Optical.Light">Light</a></code></dt>
+<dd>Instance of the Light class.</dd>
+<dt><strong><code>LightSources</code></strong> :&ensp;<code><a title="PyOghma.Optical.LightSources" href="#PyOghma.Optical.LightSources">LightSources</a></code></dt>
+<dd>Instance of the LightSources class.</dd>
+<dt><strong><code>LightSource</code></strong> :&ensp;<code><a title="PyOghma.Optical.LightSource" href="#PyOghma.Optical.LightSource">LightSource</a></code></dt>
+<dd>Instance of the LightSource class.</dd>
+<dt><strong><code>LightIntensity</code></strong> :&ensp;<code><a title="PyOghma.Optical.LightIntensity" href="#PyOghma.Optical.LightIntensity">LightIntensity</a></code></dt>
+<dd>Instance of the LightIntensity class.</dd>
+<dt><strong><code>Lasers</code></strong> :&ensp;<code><a title="PyOghma.Optical.Lasers" href="#PyOghma.Optical.Lasers">Lasers</a></code></dt>
+<dd>Instance of the Lasers class.</dd>
+<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>The destination directory for saving or loading data.</dd>
+</dl>
+<h2 id="methods">Methods</h2>
+<p>load_config(file):
+Load a configuration file.
+find_file(file):
+Find a file in the directory structure.
+set_format():
+Set the format of the JSON data.
+update():
+Update the JSON file with the current data.</p>
+<p>Initialize the Optical class and its subcomponents.</p></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Optical.Lasers" href="#PyOghma.Optical.Lasers">Lasers</a></li>
@@ -455,11 +940,28 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def find_file(self, file):
+    &#34;&#34;&#34;
+    Find a file in the directory structure.
+    Args:
+        file (str): The name of the file to find.
+    Returns:
+        str: The path to the found file.
+    &#34;&#34;&#34;
     config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Optical.configs.&#34;+self.json_name).joinpath(file)).args[0]
     #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     return config_dir</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Find a file in the directory structure.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the file to find.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>The path to the found file.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.Optical.load_config"><code class="name flex">
 <span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
@@ -470,11 +972,28 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load_config(self, file):
+    &#34;&#34;&#34;
+    Load a configuration file.
+    Args:
+        file (str): The name of the configuration file.
+    Returns:
+        dict: The loaded JSON data.
+    &#34;&#34;&#34;
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Load a configuration file.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
+<dd>The name of the configuration file.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>dict</code></dt>
+<dd>The loaded JSON data.</dd>
+</dl></div>
 </dd>
 <dt id="PyOghma.Optical.Optical.set_format"><code class="name flex">
 <span>def <span class="ident">set_format</span></span>(<span>self)</span>
@@ -485,6 +1004,9 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_format(self):
+    &#34;&#34;&#34;
+    Set the format of the JSON data based on the json_name.
+    &#34;&#34;&#34;
     match self.json_name:
         case &#39;light&#39;:
             self.json_format = {self.json_name: self.light}
@@ -497,7 +1019,7 @@ el.replaceWith(d);
         case &#39;lasers&#39;:
             self.json_format = {self.json_name: self.data}</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Set the format of the JSON data based on the json_name.</p></div>
 </dd>
 <dt id="PyOghma.Optical.Optical.update"><code class="name flex">
 <span>def <span class="ident">update</span></span>(<span>self)</span>
@@ -508,6 +1030,9 @@ el.replaceWith(d);
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def update(self):
+    &#34;&#34;&#34;
+    Update the JSON file with the current data.
+    &#34;&#34;&#34;
     with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
         data = json.load(j)
 
@@ -518,7 +1043,7 @@ el.replaceWith(d);
 
     return</code></pre>
 </details>
-<div class="desc"></div>
+<div class="desc"><p>Update the JSON file with the current data.</p></div>
 </dd>
 </dl>
 </dd>

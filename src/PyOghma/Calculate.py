@@ -1,10 +1,5 @@
 import platform
 import numpy as np
-match platform.system():
-    case 'Linux':   
-        import mgzip as mg
-    case 'Windows':
-        import gzip
 import ujson as json
 import scipy.constants as sc
 import scipy.interpolate as spi
@@ -12,21 +7,70 @@ import matplotlib.pyplot as plt
 
 class Ideality_Factor:
     """
-    Class to calculate the ideality factor of a diode.
+    Class: Ideality_Factor
+    This class calculates the ideality factor of a solar cell based on experimental data.
+    Attributes:
+        system (str): The operating system of the machine ('Linux' or 'Windows').
+        data (dict): Parsed experimental data from the input file.
+        Voc (list): List of open-circuit voltages extracted from the experimental data.
+        GenRate (list): List of generation rates extracted from the experimental data.
+        result (float): The calculated ideality factor.
+    Methods:
+        __init__(exp):
+            Initializes the Ideality_Factor object by loading experimental data from the given file.
+        calculate(temp=300):
+            Calculates the ideality factor based on the experimental data.
     """
-
     def __init__(self, exp):
+        """
+        Initializes the Ideality_Factor class.
+        Args:
+            exp (str): The file path to the input data file.
+        Attributes:
+            exp (str): Stores the file path to the input data file.
+            system (str): The name of the operating system ('Linux' or 'Windows').
+            data (dict): The data loaded from the input file. The file is read using 
+                         `mg.open` on Linux and `gzip.open` on Windows.
+        Raises:
+            FileNotFoundError: If the specified file does not exist.
+            json.JSONDecodeError: If the file content is not valid JSON.
+        """
+        
         self.exp = exp
         self.system = platform.system()
         if self.system == 'Linux':
+            import mgzip as mg
             with mg.open(self.exp, 'r') as f:
                 self.data = json.load(f)
         elif self.system == 'Windows':
+            import gzip
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
 
 
     def calculate(self, temp=300):
+        """
+        Calculates the ideality factor (Nid) based on the given data.
+        This method computes the ideality factor using the relationship between 
+        the logarithm of the generation rate and the open-circuit voltage (Voc). 
+        The calculation involves the Boltzmann constant, temperature, and the 
+        gradient of the logarithmic generation rate with respect to Voc.
+        Args:
+            temp (float, optional): The temperature in Kelvin. Defaults to 300 K.
+        Attributes:
+            Voc (list): A list of open-circuit voltage values extracted from the data.
+            GenRate (list): A list of generation rate values extracted from the data.
+            result (float): The calculated ideality factor (Nid).
+        Raises:
+            KeyError: If required keys are missing in the input data structure.
+            ValueError: If the data contains invalid or non-numeric values.
+        Notes:
+            - The method assumes that the input data structure (`self.data`) is 
+              properly formatted and contains the necessary keys and values.
+            - The Boltzmann constant and elementary charge are retrieved using 
+              the `scipy.constants.value` function.
+        """
+
         kb = sc.value('Boltzmann constant in eV/K')
         e = sc.value('elementary charge')
         self.Voc = []
@@ -45,15 +89,47 @@ class Ideality_Factor:
 
 class Transport_Resistance:
     """
-    Class to calculate the transport resistance of a diode.
+    A class to calculate transport resistance based on experimental data.
+    Attributes:
+        exp (str): The path to the experimental data file.
+        system (str): The operating system of the platform ('Linux' or 'Windows').
+        data (dict): The experimental data loaded from the file.
+        pJV_j (numpy.ndarray): Pseudo JV current density data.
+        pJV_v (numpy.ndarray): Pseudo JV voltage data.
+        TR_Voc (list): List of calculated transport resistance at open-circuit voltage.
+    Methods:
+        __init__(exp):
+            Initializes the Transport_Resistance object, loads experimental data,
+            and calculates pseudo JV data.
+        calculate():
+            Calculates the transport resistance at open-circuit voltage (TR_Voc)
+            for each experimental hash in the data.
     """
+
     def __init__(self, exp):
+        """
+        Initializes the Transport_Resistance class.
+        Args:
+            exp (str): The file path to the experiment data.
+        Attributes:
+            exp (str): Stores the provided file path to the experiment data.
+            system (str): The operating system of the current platform ('Linux' or 'Windows').
+            data (dict): The loaded experiment data from the specified file.
+            pJV_j (list): The pseudo-JV current density values calculated by the Psudo_JV class.
+            pJV_v (list): The pseudo-JV voltage values calculated by the Psudo_JV class.
+        Raises:
+            OSError: If there is an issue opening or reading the file.
+            JSONDecodeError: If the file content is not valid JSON.
+        """
+
         self.exp = exp
         self.system = platform.system()
         if self.system == 'Linux':
+            import mgzip as mg
             with mg.open(self.exp, 'r') as f:
                 self.data = json.load(f)
         elif self.system == 'Windows':
+            import gzip
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
         PJV = Psudo_JV(self.exp)
@@ -62,6 +138,31 @@ class Transport_Resistance:
         self.pJV_v = PJV.pJV_v
 
     def calculate(self):
+        """
+        Perform calculations to compute the transient recombination open-circuit voltage (TR_Voc) 
+        for experimental data.
+        This method processes JV (current-voltage) data and pJV (perturbed JV) data for each 
+        experimental hash, interpolates the data using PCHIP (Piecewise Cubic Hermite Interpolating 
+        Polynomial), and calculates the derivative of the voltage difference (Vtr) with respect to 
+        the perturbed current density (pj). The resulting derivative at zero current density is 
+        appended to the TR_Voc list.
+        Steps:
+        1. Extract JV and pJV data for each experimental hash.
+        2. Ensure data consistency by removing duplicate values.
+        3. Interpolate JV and pJV data using PCHIP.
+        4. Compute the voltage difference (Vtr) between the interpolated JV and pJV data.
+        5. Calculate the derivative of Vtr with respect to pj.
+        6. Append the derivative value at zero current density to the TR_Voc list.
+        Attributes:
+            self.TR_Voc (list): A list to store the calculated TR_Voc values for each experimental hash.
+        Raises:
+            ValueError: If the input data is not properly formatted or contains inconsistencies.
+        Notes:
+            - The method assumes that the input data is structured as a dictionary with keys 
+              'experiment' and 'hashes', and that JV and pJV data are provided for each hash.
+            - The interpolation and derivative calculations rely on numpy and scipy libraries.
+        """
+
         self.TR_Voc = []
         for idx,h in enumerate(self.data['experiment']['hashes']):
 
@@ -117,31 +218,65 @@ class Transport_Resistance:
 class Psudo_JV:
     """
     Class to calculate the pseudo JV of a diode.
+    Attributes:
+        exp (str): The path to the experimental data file.
+        system (str): The operating system of the platform ('Linux' or 'Windows').
+        data (dict): The experimental data loaded from the file.
+        pJV_j (numpy.ndarray): Pseudo JV current density data.
+        pJV_v (numpy.ndarray): Pseudo JV voltage data.
+    Methods:
+        __init__(exp):
+            Initializes the Psudo_JV object and loads experimental data.
+        calculate():
+            Calculates the pseudo JV data for the diode.
     """
 
     def __init__(self, exp):
+        """
+        Initializes the Psudo_JV class.
+        Args:
+            exp (str): Path to the experiment file.
+        Attributes:
+            exp (str): Stores the provided file path to the experiment data.
+            system (str): The operating system of the current platform ('Linux' or 'Windows').
+            data (dict): The loaded experiment data from the specified file.
+        Raises:
+            OSError: If there is an issue opening or reading the file.
+            JSONDecodeError: If the file content is not valid JSON.
+        """
         self.exp = exp
         self.system = platform.system()
         if self.system == 'Linux':
+            import mgzip as mg
             with mg.open(self.exp, 'r') as f:
                 self.data = json.load(f)
         elif self.system == 'Windows':
+            import gzip
             with gzip.open(self.exp, 'r') as f:
                 self.data = json.load(f)
 
 
     def calculate(self):
+        """
+        Calculate the pseudo JV of the diode.
+        This method processes the experimental data to compute pseudo JV current density 
+        and voltage values for each experimental hash. The results are stored as numpy arrays.
+        Attributes:
+            pJV_j (numpy.ndarray): Pseudo JV current density data.
+            pJV_v (numpy.ndarray): Pseudo JV voltage data.
+        Raises:
+            ValueError: If the input data is not properly formatted or contains inconsistencies.
+        Notes:
+            - The method assumes that the input data is structured as a dictionary with keys 
+              'experiment' and 'hashes', and that JV data is provided for each hash.
+        """
         self.pJV_j = []
         self.pJV_v = []
         pj = []
         pv = []
         for jv in self.data['experiment']['hashes']:
-            #try:
             self.pJV_j.append(np.abs(self.data[jv]['jv']['j'][0]))
             self.pJV_v.append(float(self.data[jv]['sim_info']['voc']))
-            # except:
-            #     self.pJV_j.append(np.nan)
-            #     self.pJV_v.append(np.nan)
         
         idx = np.argwhere(np.isnan(self.pJV_j))
         self.pJV_j = np.delete(self.pJV_j, idx)
@@ -155,7 +290,3 @@ class Psudo_JV:
 
         for idx, jv in enumerate(self.data['experiment']['hashes']):
             self.pJV_j[idx,:] = self.pJV_j[idx,:] + self.data[jv]['jv']['j'][0]
-        
-        # self.pJV_j = self.pJV_j.T
-        # self.pJV_v = self.pJV_v.T
-            

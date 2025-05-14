@@ -6,7 +6,31 @@ from importlib import resources
 
 
 class Optical:
+    """
+    Main class to handle optical configurations and operations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        name (str): The name of the optical instance.
+        Light (Light): Instance of the Light class.
+        LightSources (LightSources): Instance of the LightSources class.
+        LightSource (LightSource): Instance of the LightSource class.
+        LightIntensity (LightIntensity): Instance of the LightIntensity class.
+        Lasers (Lasers): Instance of the Lasers class.
+        dest_dir (str): The destination directory for saving or loading data.
+    Methods:
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_format():
+            Set the format of the JSON data.
+        update():
+            Update the JSON file with the current data.
+    """
     def __init__(self):
+        """
+        Initialize the Optical class and its subcomponents.
+        """
         self.json_name = ''
         self.name = ''
 
@@ -18,16 +42,33 @@ class Optical:
         self.dest_dir = ''
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = resources.as_file(resources.files("PyOghma.Sim_Defaults.Optical.configs."+self.json_name).joinpath(file)).args[0]
         #config_dir = os.path.join('PyOghma','Sim_Defaults', 'Optical', 'configs', self.json_name, file)
         return config_dir
 
     def set_format(self):
+        """
+        Set the format of the JSON data based on the json_name.
+        """
         match self.json_name:
             case 'light':
                 self.json_format = {self.json_name: self.light}
@@ -41,6 +82,9 @@ class Optical:
                 self.json_format = {self.json_name: self.data}
 
     def update(self):
+        """
+        Update the JSON file with the current data.
+        """
         with open(os.path.join(self.dest_dir,'sim.json'), 'r') as j:
             data = json.load(j)
 
@@ -53,20 +97,54 @@ class Optical:
 
 
 class Light(Optical):
+    """
+    Class to handle light configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        light (dict): The light configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity.
+    """
     def __init__(self):
+        """
+        Initialize the Light class.
+        """
         super(Optical, self).__init__()
         self.json_name = 'light'
         self.light = self.load_config('default')
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        """
+        Set the light intensity.
+        Args:
+            suns (float): The light intensity in suns.
+        """
         print('Setting light intensity to: ', suns)
         self.light['Psun'] = suns
         return
 
 
 class LightIntensity(Optical):
+    """
+    Class to handle light intensity configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        data (dict): The light intensity configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity.
+    """
     def __init__(self):
+        """
+        Initialize the LightIntensity class.
+        """
         super(Optical, self).__init__()
         self.json_name = 'light_sources'
         self.json_sub_heading = '0'
@@ -74,12 +152,36 @@ class LightIntensity(Optical):
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        """
+        Set the light intensity.
+        Args:
+            suns (float): The light intensity in suns.
+        """
         self.data['Psun'] = suns
         return
 
 class LightSources(Optical):
-
+    """
+    Class to handle multiple light sources.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        segments (int): The number of light sources.
+        data (dict): The light sources configuration data.
+    Methods:
+        set_light_Intensity(suns):
+            Set the light intensity for all light sources.
+        add_light_source(*light_source):
+            Add one or more light sources.
+    """
     def __init__(self, *light_sources):
+        """
+        Initialize the LightSources class.
+        Args:
+            *light_sources: Variable-length list of light source objects.
+        """
         super(Optical, self).__init__()
         self.json_name = 'light_sources'
         self.json_sub_heading = 'lights'
@@ -90,20 +192,45 @@ class LightSources(Optical):
         self.set_format()
 
     def set_light_Intensity(self, suns):
+        """
+        Set the light intensity for all light sources.
+        Args:
+            suns (float): The light intensity in suns.
+        """
         self.data['Psun'] = suns
         return
 
     def add_light_source(self, *light_source):
+        """
+        Add one or more light sources.
+        Args:
+            *light_source: Variable-length list of light source objects.
+        """
         self.segments = len(light_source)
         self.data['lights']['segments'] = self.segments
         for idx, light_source in enumerate(light_source):
             self.data['lights']['segment'+str(idx)] = light_source.light # {'segment' + str(idx): light_source.light})
 
 
-
 class LightSource:
-
+    """
+    Class to handle individual light source configurations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        json_sub_heading (str): The subheading for the JSON configuration.
+        light (dict): The light source configuration data.
+    Methods:
+        load_config(file):
+            Load a configuration file.
+        find_file(file):
+            Find a file in the directory structure.
+        set_light_spectra(spectra_name):
+            Set the light spectra for the light source.
+    """
     def __init__(self):
+        """
+        Initialize the LightSource class.
+        """
         self.json_name = 'light_sources'
         self.json_sub_heading = 'lights'
         self.light = self.load_config('default')
@@ -111,11 +238,25 @@ class LightSource:
         self.light['virtual_spectra']['id'] = 'id' + str(secrets.token_hex(8))
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = resources.as_file(resources.files("PyOghma.Sim_Defaults.Optical.configs."+self.json_name).joinpath(file)).args[0]
         #config_dir = os.path.join('PyOghma','Sim_Defaults', 'Optical', 'configs', self.json_name, file)
         return config_dir
@@ -131,12 +272,31 @@ class LightSource:
     #         return json.loads(j.read())
 
     def set_light_spectra(self, spectra_name):
+        """
+        Set the light spectra for the light source.
+        Args:
+            spectra_name (str): The name of the light spectra.
+        """
         self.light['virtual_spectra']['light_spectra']['segment0']['light_spectrum'] = spectra_name
         return
 
 
 class Lasers(Optical):
+    """
+    Class to handle laser configurations.
+    Inherits from:
+        Optical
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        segments (int): The number of lasers.
+        data (dict): The laser configuration data.
+    """
     def __init__(self, *lasers):
+        """
+        Initialize the Lasers class.
+        Args:
+            *lasers: Variable-length list of laser objects.
+        """
         super(Optical, self).__init__()
         self.json_name = 'lasers'
         self.segments = len(lasers)
@@ -147,13 +307,36 @@ class Lasers(Optical):
 
 
 class Laser:
+    """
+    Class to handle individual laser configurations.
+    Attributes:
+        json_name (str): The name of the JSON configuration.
+        name (str): The name of the laser.
+        icon (str): The icon representing the laser.
+        data (dict): The laser configuration data.
+    Methods:
+        find_file(file):
+            Find a file in the directory structure.
+        load_config(file):
+            Load a configuration file.
+    """
     def __init__(self):
+        """
+        Initialize the Laser class.
+        """
         self.json_name = 'lasers'
         self.name = 'Green'
         self.icon = 'laser'
         self.data = self.load_config('default')
 
     def find_file(self, file):
+        """
+        Find a file in the directory structure.
+        Args:
+            file (str): The name of the file to find.
+        Returns:
+            str: The path to the found file.
+        """
         config_dir = os.path.join('*', 'Optical', 'configs', self.json_name, file)
         print(config_dir)
         filename = glob(config_dir)[0]
@@ -161,6 +344,13 @@ class Laser:
         return str(filename)
 
     def load_config(self, file):
+        """
+        Load a configuration file.
+        Args:
+            file (str): The name of the configuration file.
+        Returns:
+            dict: The loaded JSON data.
+        """
         file = file + '.json'
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
