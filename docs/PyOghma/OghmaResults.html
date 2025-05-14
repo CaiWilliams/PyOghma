@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <meta name="generator" content="pdoc3 0.11.6">
 <title>PyOghma.OghmaResults API documentation</title>
-<meta name="description" content="This module provides functionality for managing and processing simulation and experiment results.
-It includes methods for loading experiments, …">
+<meta name="description" content="">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
@@ -37,10 +36,6 @@ el.replaceWith(d);
 <h1 class="title">Module <code>PyOghma.OghmaResults</code></h1>
 </header>
 <section id="section-intro">
-<p>This module provides functionality for managing and processing simulation and experiment results.
-It includes methods for loading experiments, finding and saving results, handling job data, and
-converting results into various formats such as IGOR files. The module also supports creating
-experiment dictionaries and extracting specific parameters from simulation data.</p>
 </section>
 <section>
 </section>
@@ -59,43 +54,18 @@ experiment dictionaries and extracting specific parameters from simulation data.
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Results:
-    &#34;&#34;&#34;
-    Class to handle the results of simulations and experiments.
-    Attributes:
-        dest_dir (str): The destination directory for results.
-        system (str): The operating system of the platform.
-        experiment (object): The experiment object containing simulation details.
-        src_dir (str): The source directory of the experiment.
-        src_json (dict): The JSON data of the source simulation.
-        jobs (list): List of jobs associated with the experiment.
-        exp_dict (dict): Dictionary to store experiment results.
-        rjl (list): List of indices of jobs to be removed.
-        product (list): Cartesian product of variable values.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Results class.
-        &#34;&#34;&#34;
+<pre><code class="python">class Results():
+    def __init__(self):
         self.dest_dir = &#34;&#34;
-        self.system = platform.system()
-        
-    def load_experiment(self, A: object) -&gt; None:
-        &#34;&#34;&#34;
-        Load the experiment details.
-        Args:
-            A (object): The experiment object.
-        &#34;&#34;&#34;
+    
+    def load_experiment(self, A):
         self.experiment = A
         self.src_dir = A.src_dir
         with open(os.path.join(self.src_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
             self.src_json = json.load(j)
         self.jobs = A.Server.jobs
 
-    def find_results(self) -&gt; None:
-        &#34;&#34;&#34;
-        Find all result files for the jobs.
-        &#34;&#34;&#34;
+    def find_results(self):
         for j in self.jobs:
             self.find_sim_info(j)
             self.find_snapshot(j)
@@ -103,61 +73,34 @@ experiment dictionaries and extracting specific parameters from simulation data.
             self.find_jv(j)
     
 
-    def find_snapshot(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Check if snapshots exist for a job.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def find_snapshot(self, j):
         j.snapshots = False
         test = os.path.join(j.path,&#39;snapshots&#39;)
         if os.path.isdir(test):
             j.snapshots = True
 
 
-    def find_sim_info(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Check if simulation info exists for a job.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def find_sim_info(self, j):
         j.sim_info = False
         test = os.path.join(j.path,&#39;sim_info.dat&#39;)
         if os.path.isfile(test):
             j.sim_info = True
     
 
-    def find_sim(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Check if simulation JSON exists for a job.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def find_sim(self, j):
         j.sim = False
         test = os.path.join(j.path, &#39;sim.json&#39;)
         if os.path.isfile(test):
             j.sim = True
 
-    def find_jv(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Check if JV data exists for a job.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def find_jv(self, j):
         j.jv = False
         test = os.path.join(j.path,&#39;jv.csv&#39;)
         if os.path.isfile(test):
             j.jv = True
 
 
-    def save_results_ml(self, light: object) -&gt; str:
-        &#34;&#34;&#34;
-        Save results for machine learning experiments.
-        Args:
-            light (object): The light configuration for the experiment.
-        Returns:
-            str: The name of the saved experiment file.
-        &#34;&#34;&#34;
+    def save_results_ml(self, light):
         self.exp_dict = {}
         self.exp_dict[&#39;light&#39;] = list(light.values)
         self.exp_dict[&#39;experiment&#39;] = {}
@@ -178,14 +121,11 @@ experiment dictionaries and extracting specific parameters from simulation data.
             json.dump(self.exp_dict, j, indent=4)
             j.close()
         return experiment_name
-    
-    def create_dict(self) -&gt; None:
-        &#34;&#34;&#34;
-        Create a dictionary of experiment results.
-        &#34;&#34;&#34;
+    def create_dict(self):
         self.exp_dict = {}
         self.exp_dict[&#39;experiment&#39;] = {}
         exp = self.exp_dict[&#39;experiment&#39;]
+        #self.write_exp_data(exp)
         self.find_results()
         self.rjl = []
         for j in self.jobs:
@@ -197,93 +137,45 @@ experiment dictionaries and extracting specific parameters from simulation data.
         self.write_exp_data(exp)
         return
     
-    def save_dict(self) -&gt; None:
-        &#34;&#34;&#34;
-        Save the experiment dictionary to a file.
-        &#34;&#34;&#34;
-        match self.system:
-            case &#39;Linux&#39;:
-                with mgzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
-                    json.dump(self.exp_dict, j, indent=4)
-                    j.close()
-            case &#39;Windows&#39;:
-                with gzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
-                    json.dump(self.exp_dict, j, indent=4)
-                    j.close()
+    def save_dict(self):
+        with mgzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
+            json.dump(self.exp_dict, j, indent=4)
+            j.close()
         return
     
-    def load_dict(self, dict_name: str) -&gt; None:
-        &#34;&#34;&#34;
-        Load an experiment dictionary from a file.
-        Args:
-            dict_name (str): The name of the dictionary file.
-        &#34;&#34;&#34;
-        match self.system:
-            case &#39;Linux&#39;:
-                with mgzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
-                    data = json.load(j)
-            case &#39;Windows&#39;:
-                with gzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
-                    data = json.load(j)
+    def load_dict(self, dict_name):
+        with mgzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
+            data = json.load(j)
         self.exp_dict = data
 
-    def write_exp_data(self, exp: dict) -&gt; None:
-        &#34;&#34;&#34;
-        Write experiment metadata to the dictionary.
-        Args:
-            exp (dict): The experiment dictionary.
-        &#34;&#34;&#34;
+    def write_exp_data(self, exp):
         exp[&#39;name&#39;] = self.experiment.experiment_name
-        if self.experiment.dimensions != None:
-            exp[&#39;dimensions&#39;] = self.experiment.dimensions
-        
-        if self.experiment.variables != None:
-            exp[&#39;variable&#39;] = self.experiment.variables
-        
-        if self.experiment.points != None:
-            exp[&#39;points&#39;] = self.experiment.points
-
-        if self.experiment.hashes != None:
-            exp[&#39;hashes&#39;] = self.experiment.hashes
+        exp[&#39;dimensions&#39;] = self.experiment.dimensions
+        exp[&#39;variable&#39;] = self.experiment.variables
+        exp[&#39;points&#39;] = self.experiment.points
+        exp[&#39;hashes&#39;] = self.experiment.hashes
     
-    def variables(self) -&gt; dict:
-        &#34;&#34;&#34;
-        Get the variables from the experiment dictionary.
-        Returns:
-            dict: The variables of the experiment.
-        &#34;&#34;&#34;
+    def variables(self):
         return self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;]
     
-    def hashes(self) -&gt; list:
-        &#34;&#34;&#34;
-        Get the hashes from the experiment dictionary.
-        Returns:
-            list: The hashes of the experiment.
-        &#34;&#34;&#34;
+    def hashes(self):
         return self.exp_dict[&#39;experiment&#39;][&#39;hashes&#39;]
 
-    def remove_job_list(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Mark a job for removal.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def remove_job_list(self,j):
         idx = self.experiment.hashes.index(j.hash)
         self.rjl.append(idx)
 
-    def remove_jobs(self) -&gt; None:
-        &#34;&#34;&#34;
-        Remove marked jobs from the experiment.
-        &#34;&#34;&#34;
-        shutil.rmtree(self.experiment.dest_dir)
+    def remove_jobs(self):
+        #self.experiment.experiment_name = np.delete(self.experiment.experiment_name, self.rjl)
+        #self.experiment.dimensions = np.delete(self.experiment.dimensions, self.rjl)
+        #self.experiment.variables = np.delete(self.experiment.variables, self.rjl)
+        for v in self.experiment.variables:
+            self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
+        #self.experiment.points = np.delete(self.experiment.points, self.rjl)
+        self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))
 
 
-    def write_job(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Write job results to the experiment dictionary.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def write_job(self, j):
         self.exp_dict[j.hash] = {}
         job = self.exp_dict[j.hash]
 
@@ -302,35 +194,20 @@ experiment dictionaries and extracting specific parameters from simulation data.
         else:
             pass
         
-    def write_sim_to_job(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Write simulation JSON to the job dictionary.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def write_sim_to_job(self, j):
         with open(os.path.join(j.path,&#39;sim.json&#39;), &#39;r&#39;) as r:
             sim = json.load(r)
         results = sim
         self.exp_dict[j.hash][&#39;sim&#39;] = results
 
-    def write_sim_info_to_job(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Write simulation info to the job dictionary.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def write_sim_info_to_job(self, j):
         with open(os.path.join(j.path,&#39;sim_info.dat&#39;), &#39;r&#39;) as r:
             sim = json.load(r)
         self.exp_dict[j.hash][&#39;sim_info&#39;] = sim
 
-    def write_jv_to_job(self, j: object) -&gt; None:
-        &#34;&#34;&#34;
-        Write JV data to the job dictionary.
-        Args:
-            j (object): The job object.
-        &#34;&#34;&#34;
+    def write_jv_to_job(self, j):
         with open(os.path.join(j.path,&#39;jv.csv&#39;), &#39;r&#39;) as r:
-            jv = pd.read_csv(r, comment=&#39;#&#39;, delimiter=&#39; &#39;, header=None)
+            jv = pd.read_csv(r, comment=&#39;#&#39;, delimiter=&#39;\t&#39;, header=None)
             v_jv = list(jv[0].to_numpy())
             j_jv = list(jv[1].to_numpy())
         self.exp_dict[j.hash][&#39;jv&#39;] = {}
@@ -339,13 +216,8 @@ experiment dictionaries and extracting specific parameters from simulation data.
 
 
     
-    def convert_exp_file_to_igor(self, exp_dict_dir: str = &#39;&#39;, param: str = &#39;&#39;) -&gt; None:
-        &#34;&#34;&#34;
-        Convert experiment results to IGOR format.
-        Args:
-            exp_dict_dir (str): The directory of the experiment dictionary.
-            param (str): The parameter to convert.
-        &#34;&#34;&#34;
+    def convert_exp_file_to_igor(self, exp_dict_dir=&#39;&#39;, param=&#39;&#39;):
+        #exp = self.exp_dict[&#39;experiment&#39;]
         keys = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].keys()
         values = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].values()
         Zeroth_key = list(keys)[0]
@@ -361,30 +233,13 @@ experiment dictionaries and extracting specific parameters from simulation data.
             self.save_as_igor_file(list(keys), param, product[idx[-1]], x, y)
     
     @staticmethod
-    def match_conditions(prod: tuple, product: tuple) -&gt; bool:
-        &#34;&#34;&#34;
-        Check if the conditions of two products match.
-        Args:
-            prod (tuple): The first product.
-            product (tuple): The second product.
-        Returns:
-            bool: True if the conditions match, False otherwise.
-        &#34;&#34;&#34;
+    def match_conditions(prod, product):
         if prod[:] == product[1:]:
             return True
         return False
     
     @staticmethod
-    def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list) -&gt; None:
-        &#34;&#34;&#34;
-        Save experiment results as an IGOR file.
-        Args:
-            keys (list): The variable keys.
-            param (str): The parameter name.
-            last_prod (tuple): The last product values.
-            x (list): The x-axis values.
-            y (list): The y-axis values.
-        &#34;&#34;&#34;
+    def save_as_igor_file(keys, param, last_prod, x, y):
         header = &#39;##columns=&#39;+str(keys[0])+&#39; &#39;+ str(param) + &#39;;\n&#39; 
         data = pd.DataFrame()
         data[0] = x
@@ -399,22 +254,12 @@ experiment dictionaries and extracting specific parameters from simulation data.
             fp.write(header)
             data.to_csv(fp, sep=&#39; &#39;,index=False, header=None, lineterminator=&#39;\n&#39;)
 
-    def read_sim_info(self, param: str) -&gt; object:
-        &#34;&#34;&#34;
-        Read a specific parameter from the simulation info.
-        Args:
-            param (str): The parameter name.
-        Returns:
-            object: The value of the parameter.
-        &#34;&#34;&#34;
+    def read_sim_info(self, param):
         with open(os.path.join(self.dest_dir,&#39;sim_info.dat&#39;), &#39;r&#39;) as r:
             data = json.load()
         return data[param]
     
-    def create_product(self) -&gt; None:
-        &#34;&#34;&#34;
-        Create a Cartesian product of variable values.
-        &#34;&#34;&#34;
+    def create_product(self):
         keys = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].keys()
         values = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].values()
         Zeroth_key = list(keys)[0]
@@ -423,48 +268,17 @@ experiment dictionaries and extracting specific parameters from simulation data.
         list_values = list(values)[1:]
         self.product = list(itertools.product(*values))
     
-    def load_results(self, file: str, param: str, idx: int) -&gt; object:
-        &#34;&#34;&#34;
-        Load specific results from the experiment dictionary.
-        Args:
-            file (str): The file type (&#39;sim_info&#39;, etc.).
-            param (str): The parameter name.
-            idx (int): The index of the result.
-        Returns:
-            object: The value of the parameter.
-        &#34;&#34;&#34;
+    def load_results(self, file, param, idx):
         hash = self.exp_dict[&#39;experiment&#39;][&#39;hashes&#39;][idx]
         match file.lower():
             case &#39;sim_info&#39;:
                 return self.exp_dict[hash][&#39;sim_info&#39;][param]</code></pre>
 </details>
-<div class="desc"><p>Class to handle the results of simulations and experiments.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory for results.</dd>
-<dt><strong><code>system</code></strong> :&ensp;<code>str</code></dt>
-<dd>The operating system of the platform.</dd>
-<dt><strong><code>experiment</code></strong> :&ensp;<code>object</code></dt>
-<dd>The experiment object containing simulation details.</dd>
-<dt><strong><code>src_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The source directory of the experiment.</dd>
-<dt><strong><code>src_json</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The JSON data of the source simulation.</dd>
-<dt><strong><code>jobs</code></strong> :&ensp;<code>list</code></dt>
-<dd>List of jobs associated with the experiment.</dd>
-<dt><strong><code>exp_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>Dictionary to store experiment results.</dd>
-<dt><strong><code>rjl</code></strong> :&ensp;<code>list</code></dt>
-<dd>List of indices of jobs to be removed.</dd>
-<dt><strong><code>product</code></strong> :&ensp;<code>list</code></dt>
-<dd>Cartesian product of variable values.</dd>
-</dl>
-<p>Initialize the Results class.</p></div>
+<div class="desc"></div>
 <h3>Static methods</h3>
 <dl>
 <dt id="PyOghma.OghmaResults.Results.match_conditions"><code class="name flex">
-<span>def <span class="ident">match_conditions</span></span>(<span>prod: tuple, product: tuple) ‑> bool</span>
+<span>def <span class="ident">match_conditions</span></span>(<span>prod, product)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -472,35 +286,15 @@ experiment dictionaries and extracting specific parameters from simulation data.
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def match_conditions(prod: tuple, product: tuple) -&gt; bool:
-    &#34;&#34;&#34;
-    Check if the conditions of two products match.
-    Args:
-        prod (tuple): The first product.
-        product (tuple): The second product.
-    Returns:
-        bool: True if the conditions match, False otherwise.
-    &#34;&#34;&#34;
+def match_conditions(prod, product):
     if prod[:] == product[1:]:
         return True
     return False</code></pre>
 </details>
-<div class="desc"><p>Check if the conditions of two products match.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>prod</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>The first product.</dd>
-<dt><strong><code>product</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>The second product.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>bool</code></dt>
-<dd>True if the conditions match, False otherwise.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.save_as_igor_file"><code class="name flex">
-<span>def <span class="ident">save_as_igor_file</span></span>(<span>keys: list, param: str, last_prod: tuple, x: list, y: list) ‑> None</span>
+<span>def <span class="ident">save_as_igor_file</span></span>(<span>keys, param, last_prod, x, y)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -508,16 +302,7 @@ def match_conditions(prod: tuple, product: tuple) -&gt; bool:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">@staticmethod
-def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list) -&gt; None:
-    &#34;&#34;&#34;
-    Save experiment results as an IGOR file.
-    Args:
-        keys (list): The variable keys.
-        param (str): The parameter name.
-        last_prod (tuple): The last product values.
-        x (list): The x-axis values.
-        y (list): The y-axis values.
-    &#34;&#34;&#34;
+def save_as_igor_file(keys, param, last_prod, x, y):
     header = &#39;##columns=&#39;+str(keys[0])+&#39; &#39;+ str(param) + &#39;;\n&#39; 
     data = pd.DataFrame()
     data[0] = x
@@ -532,39 +317,21 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
         fp.write(header)
         data.to_csv(fp, sep=&#39; &#39;,index=False, header=None, lineterminator=&#39;\n&#39;)</code></pre>
 </details>
-<div class="desc"><p>Save experiment results as an IGOR file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>keys</code></strong> :&ensp;<code>list</code></dt>
-<dd>The variable keys.</dd>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter name.</dd>
-<dt><strong><code>last_prod</code></strong> :&ensp;<code>tuple</code></dt>
-<dd>The last product values.</dd>
-<dt><strong><code>x</code></strong> :&ensp;<code>list</code></dt>
-<dd>The x-axis values.</dd>
-<dt><strong><code>y</code></strong> :&ensp;<code>list</code></dt>
-<dd>The y-axis values.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.OghmaResults.Results.convert_exp_file_to_igor"><code class="name flex">
-<span>def <span class="ident">convert_exp_file_to_igor</span></span>(<span>self, exp_dict_dir: str = '', param: str = '') ‑> None</span>
+<span>def <span class="ident">convert_exp_file_to_igor</span></span>(<span>self, exp_dict_dir='', param='')</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def convert_exp_file_to_igor(self, exp_dict_dir: str = &#39;&#39;, param: str = &#39;&#39;) -&gt; None:
-    &#34;&#34;&#34;
-    Convert experiment results to IGOR format.
-    Args:
-        exp_dict_dir (str): The directory of the experiment dictionary.
-        param (str): The parameter to convert.
-    &#34;&#34;&#34;
+<pre><code class="python">def convert_exp_file_to_igor(self, exp_dict_dir=&#39;&#39;, param=&#39;&#39;):
+    #exp = self.exp_dict[&#39;experiment&#39;]
     keys = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].keys()
     values = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].values()
     Zeroth_key = list(keys)[0]
@@ -579,30 +346,21 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
         y = [self.exp_dict[self.exp_dict[&#39;experiment&#39;][&#39;hashes&#39;][i]][&#39;sim_info&#39;][param] for i in idx]
         self.save_as_igor_file(list(keys), param, product[idx[-1]], x, y)</code></pre>
 </details>
-<div class="desc"><p>Convert experiment results to IGOR format.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>exp_dict_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The directory of the experiment dictionary.</dd>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter to convert.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.create_dict"><code class="name flex">
-<span>def <span class="ident">create_dict</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">create_dict</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_dict(self) -&gt; None:
-    &#34;&#34;&#34;
-    Create a dictionary of experiment results.
-    &#34;&#34;&#34;
+<pre><code class="python">def create_dict(self):
     self.exp_dict = {}
     self.exp_dict[&#39;experiment&#39;] = {}
     exp = self.exp_dict[&#39;experiment&#39;]
+    #self.write_exp_data(exp)
     self.find_results()
     self.rjl = []
     for j in self.jobs:
@@ -614,20 +372,17 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
     self.write_exp_data(exp)
     return</code></pre>
 </details>
-<div class="desc"><p>Create a dictionary of experiment results.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.create_product"><code class="name flex">
-<span>def <span class="ident">create_product</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">create_product</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_product(self) -&gt; None:
-    &#34;&#34;&#34;
-    Create a Cartesian product of variable values.
-    &#34;&#34;&#34;
+<pre><code class="python">def create_product(self):
     keys = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].keys()
     values = self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;].values()
     Zeroth_key = list(keys)[0]
@@ -636,364 +391,223 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
     list_values = list(values)[1:]
     self.product = list(itertools.product(*values))</code></pre>
 </details>
-<div class="desc"><p>Create a Cartesian product of variable values.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.find_jv"><code class="name flex">
-<span>def <span class="ident">find_jv</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">find_jv</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_jv(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Check if JV data exists for a job.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_jv(self, j):
     j.jv = False
     test = os.path.join(j.path,&#39;jv.csv&#39;)
     if os.path.isfile(test):
         j.jv = True</code></pre>
 </details>
-<div class="desc"><p>Check if JV data exists for a job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.find_results"><code class="name flex">
-<span>def <span class="ident">find_results</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">find_results</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_results(self) -&gt; None:
-    &#34;&#34;&#34;
-    Find all result files for the jobs.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_results(self):
     for j in self.jobs:
         self.find_sim_info(j)
         self.find_snapshot(j)
         self.find_sim(j)
         self.find_jv(j)</code></pre>
 </details>
-<div class="desc"><p>Find all result files for the jobs.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.find_sim"><code class="name flex">
-<span>def <span class="ident">find_sim</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">find_sim</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_sim(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Check if simulation JSON exists for a job.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_sim(self, j):
     j.sim = False
     test = os.path.join(j.path, &#39;sim.json&#39;)
     if os.path.isfile(test):
         j.sim = True</code></pre>
 </details>
-<div class="desc"><p>Check if simulation JSON exists for a job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.find_sim_info"><code class="name flex">
-<span>def <span class="ident">find_sim_info</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">find_sim_info</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_sim_info(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Check if simulation info exists for a job.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_sim_info(self, j):
     j.sim_info = False
     test = os.path.join(j.path,&#39;sim_info.dat&#39;)
     if os.path.isfile(test):
         j.sim_info = True</code></pre>
 </details>
-<div class="desc"><p>Check if simulation info exists for a job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.find_snapshot"><code class="name flex">
-<span>def <span class="ident">find_snapshot</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">find_snapshot</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_snapshot(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Check if snapshots exist for a job.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_snapshot(self, j):
     j.snapshots = False
     test = os.path.join(j.path,&#39;snapshots&#39;)
     if os.path.isdir(test):
         j.snapshots = True</code></pre>
 </details>
-<div class="desc"><p>Check if snapshots exist for a job.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.hashes"><code class="name flex">
-<span>def <span class="ident">hashes</span></span>(<span>self) ‑> list</span>
+<span>def <span class="ident">hashes</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def hashes(self) -&gt; list:
-    &#34;&#34;&#34;
-    Get the hashes from the experiment dictionary.
-    Returns:
-        list: The hashes of the experiment.
-    &#34;&#34;&#34;
+<pre><code class="python">def hashes(self):
     return self.exp_dict[&#39;experiment&#39;][&#39;hashes&#39;]</code></pre>
 </details>
-<div class="desc"><p>Get the hashes from the experiment dictionary.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>list</code></dt>
-<dd>The hashes of the experiment.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.load_dict"><code class="name flex">
-<span>def <span class="ident">load_dict</span></span>(<span>self, dict_name: str) ‑> None</span>
+<span>def <span class="ident">load_dict</span></span>(<span>self, dict_name)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_dict(self, dict_name: str) -&gt; None:
-    &#34;&#34;&#34;
-    Load an experiment dictionary from a file.
-    Args:
-        dict_name (str): The name of the dictionary file.
-    &#34;&#34;&#34;
-    match self.system:
-        case &#39;Linux&#39;:
-            with mgzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
-                data = json.load(j)
-        case &#39;Windows&#39;:
-            with gzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
-                data = json.load(j)
+<pre><code class="python">def load_dict(self, dict_name):
+    with mgzip.open(os.path.join(os.getcwd(), dict_name), &#34;r&#34;) as j:
+        data = json.load(j)
     self.exp_dict = data</code></pre>
 </details>
-<div class="desc"><p>Load an experiment dictionary from a file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dict_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the dictionary file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.load_experiment"><code class="name flex">
-<span>def <span class="ident">load_experiment</span></span>(<span>self, A: object) ‑> None</span>
+<span>def <span class="ident">load_experiment</span></span>(<span>self, A)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_experiment(self, A: object) -&gt; None:
-    &#34;&#34;&#34;
-    Load the experiment details.
-    Args:
-        A (object): The experiment object.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_experiment(self, A):
     self.experiment = A
     self.src_dir = A.src_dir
     with open(os.path.join(self.src_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
         self.src_json = json.load(j)
     self.jobs = A.Server.jobs</code></pre>
 </details>
-<div class="desc"><p>Load the experiment details.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>A</code></strong> :&ensp;<code>object</code></dt>
-<dd>The experiment object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.load_results"><code class="name flex">
-<span>def <span class="ident">load_results</span></span>(<span>self, file: str, param: str, idx: int) ‑> object</span>
+<span>def <span class="ident">load_results</span></span>(<span>self, file, param, idx)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_results(self, file: str, param: str, idx: int) -&gt; object:
-    &#34;&#34;&#34;
-    Load specific results from the experiment dictionary.
-    Args:
-        file (str): The file type (&#39;sim_info&#39;, etc.).
-        param (str): The parameter name.
-        idx (int): The index of the result.
-    Returns:
-        object: The value of the parameter.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_results(self, file, param, idx):
     hash = self.exp_dict[&#39;experiment&#39;][&#39;hashes&#39;][idx]
     match file.lower():
         case &#39;sim_info&#39;:
             return self.exp_dict[hash][&#39;sim_info&#39;][param]</code></pre>
 </details>
-<div class="desc"><p>Load specific results from the experiment dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The file type ('sim_info', etc.).</dd>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter name.</dd>
-<dt><strong><code>idx</code></strong> :&ensp;<code>int</code></dt>
-<dd>The index of the result.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>object</code></dt>
-<dd>The value of the parameter.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.read_sim_info"><code class="name flex">
-<span>def <span class="ident">read_sim_info</span></span>(<span>self, param: str) ‑> object</span>
+<span>def <span class="ident">read_sim_info</span></span>(<span>self, param)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def read_sim_info(self, param: str) -&gt; object:
-    &#34;&#34;&#34;
-    Read a specific parameter from the simulation info.
-    Args:
-        param (str): The parameter name.
-    Returns:
-        object: The value of the parameter.
-    &#34;&#34;&#34;
+<pre><code class="python">def read_sim_info(self, param):
     with open(os.path.join(self.dest_dir,&#39;sim_info.dat&#39;), &#39;r&#39;) as r:
         data = json.load()
     return data[param]</code></pre>
 </details>
-<div class="desc"><p>Read a specific parameter from the simulation info.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter name.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>object</code></dt>
-<dd>The value of the parameter.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.remove_job_list"><code class="name flex">
-<span>def <span class="ident">remove_job_list</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">remove_job_list</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def remove_job_list(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Mark a job for removal.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def remove_job_list(self,j):
     idx = self.experiment.hashes.index(j.hash)
     self.rjl.append(idx)</code></pre>
 </details>
-<div class="desc"><p>Mark a job for removal.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.remove_jobs"><code class="name flex">
-<span>def <span class="ident">remove_jobs</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">remove_jobs</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def remove_jobs(self) -&gt; None:
-    &#34;&#34;&#34;
-    Remove marked jobs from the experiment.
-    &#34;&#34;&#34;
-    shutil.rmtree(self.experiment.dest_dir)</code></pre>
+<pre><code class="python">def remove_jobs(self):
+    #self.experiment.experiment_name = np.delete(self.experiment.experiment_name, self.rjl)
+    #self.experiment.dimensions = np.delete(self.experiment.dimensions, self.rjl)
+    #self.experiment.variables = np.delete(self.experiment.variables, self.rjl)
+    for v in self.experiment.variables:
+        self.experiment.variables[v] = list(np.delete(self.experiment.variables[v], self.rjl))
+    #self.experiment.points = np.delete(self.experiment.points, self.rjl)
+    self.experiment.hashes = list(np.delete(self.experiment.hashes, self.rjl))</code></pre>
 </details>
-<div class="desc"><p>Remove marked jobs from the experiment.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.save_dict"><code class="name flex">
-<span>def <span class="ident">save_dict</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">save_dict</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def save_dict(self) -&gt; None:
-    &#34;&#34;&#34;
-    Save the experiment dictionary to a file.
-    &#34;&#34;&#34;
-    match self.system:
-        case &#39;Linux&#39;:
-            with mgzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
-                json.dump(self.exp_dict, j, indent=4)
-                j.close()
-        case &#39;Windows&#39;:
-            with gzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
-                json.dump(self.exp_dict, j, indent=4)
-                j.close()
+<pre><code class="python">def save_dict(self):
+    with mgzip.open(self.exp_dict[&#39;experiment&#39;][&#39;name&#39;] + &#39;.exp&#39;, &#39;wt+&#39;) as j:
+        json.dump(self.exp_dict, j, indent=4)
+        j.close()
     return</code></pre>
 </details>
-<div class="desc"><p>Save the experiment dictionary to a file.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.save_results_ml"><code class="name flex">
-<span>def <span class="ident">save_results_ml</span></span>(<span>self, light: object) ‑> str</span>
+<span>def <span class="ident">save_results_ml</span></span>(<span>self, light)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def save_results_ml(self, light: object) -&gt; str:
-    &#34;&#34;&#34;
-    Save results for machine learning experiments.
-    Args:
-        light (object): The light configuration for the experiment.
-    Returns:
-        str: The name of the saved experiment file.
-    &#34;&#34;&#34;
+<pre><code class="python">def save_results_ml(self, light):
     self.exp_dict = {}
     self.exp_dict[&#39;light&#39;] = list(light.values)
     self.exp_dict[&#39;experiment&#39;] = {}
@@ -1015,89 +629,47 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
         j.close()
     return experiment_name</code></pre>
 </details>
-<div class="desc"><p>Save results for machine learning experiments.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>light</code></strong> :&ensp;<code>object</code></dt>
-<dd>The light configuration for the experiment.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The name of the saved experiment file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.variables"><code class="name flex">
-<span>def <span class="ident">variables</span></span>(<span>self) ‑> dict</span>
+<span>def <span class="ident">variables</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def variables(self) -&gt; dict:
-    &#34;&#34;&#34;
-    Get the variables from the experiment dictionary.
-    Returns:
-        dict: The variables of the experiment.
-    &#34;&#34;&#34;
+<pre><code class="python">def variables(self):
     return self.exp_dict[&#39;experiment&#39;][&#39;variable&#39;]</code></pre>
 </details>
-<div class="desc"><p>Get the variables from the experiment dictionary.</p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The variables of the experiment.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.write_exp_data"><code class="name flex">
-<span>def <span class="ident">write_exp_data</span></span>(<span>self, exp: dict) ‑> None</span>
+<span>def <span class="ident">write_exp_data</span></span>(<span>self, exp)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_exp_data(self, exp: dict) -&gt; None:
-    &#34;&#34;&#34;
-    Write experiment metadata to the dictionary.
-    Args:
-        exp (dict): The experiment dictionary.
-    &#34;&#34;&#34;
+<pre><code class="python">def write_exp_data(self, exp):
     exp[&#39;name&#39;] = self.experiment.experiment_name
-    if self.experiment.dimensions != None:
-        exp[&#39;dimensions&#39;] = self.experiment.dimensions
-    
-    if self.experiment.variables != None:
-        exp[&#39;variable&#39;] = self.experiment.variables
-    
-    if self.experiment.points != None:
-        exp[&#39;points&#39;] = self.experiment.points
-
-    if self.experiment.hashes != None:
-        exp[&#39;hashes&#39;] = self.experiment.hashes</code></pre>
+    exp[&#39;dimensions&#39;] = self.experiment.dimensions
+    exp[&#39;variable&#39;] = self.experiment.variables
+    exp[&#39;points&#39;] = self.experiment.points
+    exp[&#39;hashes&#39;] = self.experiment.hashes</code></pre>
 </details>
-<div class="desc"><p>Write experiment metadata to the dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>exp</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The experiment dictionary.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.write_job"><code class="name flex">
-<span>def <span class="ident">write_job</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">write_job</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_job(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Write job results to the experiment dictionary.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def write_job(self, j):
     self.exp_dict[j.hash] = {}
     job = self.exp_dict[j.hash]
 
@@ -1116,92 +688,57 @@ def save_as_igor_file(keys: list, param: str, last_prod: tuple, x: list, y: list
     else:
         pass</code></pre>
 </details>
-<div class="desc"><p>Write job results to the experiment dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.write_jv_to_job"><code class="name flex">
-<span>def <span class="ident">write_jv_to_job</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">write_jv_to_job</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_jv_to_job(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Write JV data to the job dictionary.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def write_jv_to_job(self, j):
     with open(os.path.join(j.path,&#39;jv.csv&#39;), &#39;r&#39;) as r:
-        jv = pd.read_csv(r, comment=&#39;#&#39;, delimiter=&#39; &#39;, header=None)
+        jv = pd.read_csv(r, comment=&#39;#&#39;, delimiter=&#39;\t&#39;, header=None)
         v_jv = list(jv[0].to_numpy())
         j_jv = list(jv[1].to_numpy())
     self.exp_dict[j.hash][&#39;jv&#39;] = {}
     self.exp_dict[j.hash][&#39;jv&#39;][&#39;j&#39;] = j_jv
     self.exp_dict[j.hash][&#39;jv&#39;][&#39;v&#39;] = v_jv</code></pre>
 </details>
-<div class="desc"><p>Write JV data to the job dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.write_sim_info_to_job"><code class="name flex">
-<span>def <span class="ident">write_sim_info_to_job</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">write_sim_info_to_job</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_sim_info_to_job(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Write simulation info to the job dictionary.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def write_sim_info_to_job(self, j):
     with open(os.path.join(j.path,&#39;sim_info.dat&#39;), &#39;r&#39;) as r:
         sim = json.load(r)
     self.exp_dict[j.hash][&#39;sim_info&#39;] = sim</code></pre>
 </details>
-<div class="desc"><p>Write simulation info to the job dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.OghmaResults.Results.write_sim_to_job"><code class="name flex">
-<span>def <span class="ident">write_sim_to_job</span></span>(<span>self, j: object) ‑> None</span>
+<span>def <span class="ident">write_sim_to_job</span></span>(<span>self, j)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def write_sim_to_job(self, j: object) -&gt; None:
-    &#34;&#34;&#34;
-    Write simulation JSON to the job dictionary.
-    Args:
-        j (object): The job object.
-    &#34;&#34;&#34;
+<pre><code class="python">def write_sim_to_job(self, j):
     with open(os.path.join(j.path,&#39;sim.json&#39;), &#39;r&#39;) as r:
         sim = json.load(r)
     results = sim
     self.exp_dict[j.hash][&#39;sim&#39;] = results</code></pre>
 </details>
-<div class="desc"><p>Write simulation JSON to the job dictionary.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>j</code></strong> :&ensp;<code>object</code></dt>
-<dd>The job object.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>

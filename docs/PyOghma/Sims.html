@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <meta name="generator" content="pdoc3 0.11.6">
 <title>PyOghma.Sims API documentation</title>
-<meta name="description" content="This module provides functionality for managing simulation configurations and operations.
-It supports various simulation types, including …">
+<meta name="description" content="">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
@@ -37,10 +36,6 @@ el.replaceWith(d);
 <h1 class="title">Module <code>PyOghma.Sims</code></h1>
 </header>
 <section id="section-intro">
-<p>This module provides functionality for managing simulation configurations and operations.
-It supports various simulation types, including steady-state, time-domain, and frequency-domain
-simulations. The module allows for configuring simulation parameters, updating JSON configurations,
-and handling specific simulation modes such as JV curves, SunsVoc, CELIV, and more.</p>
 </section>
 <section>
 </section>
@@ -60,15 +55,7 @@ and handling specific simulation modes such as JV curves, SunsVoc, CELIV, and mo
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CE(Sims):
-    &#34;&#34;&#34;
-    Class to handle CE simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the CE class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;Charge\nExtraction&#34;
         self.icon = &#34;ce&#34;
@@ -80,16 +67,7 @@ and handling specific simulation modes such as JV curves, SunsVoc, CELIV, and mo
         self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_sun_properties(self, start: float, stop: float, steps: int, on_time: float, off_time: float) -&gt; &#39;CE&#39;:
-        &#34;&#34;&#34;
-        Set the sun properties for the CE simulation.
-        Args:
-            start (float): The starting sun intensity.
-            stop (float): The stopping sun intensity.
-            steps (int): The number of simulation steps.
-            on_time (float): The sun on time.
-            off_time (float): The sun off time.
-        &#34;&#34;&#34;
+    def set_sun_properties(self, start, stop, steps, on_time, off_time):
         self.config[&#39;config&#39;][&#39;ce_start_sun&#39;] = start
         self.config[&#39;config&#39;][&#39;ce_stop_sun&#39;] = stop
         self.config[&#39;config&#39;][&#39;ce_number_of_simulations&#39;] = steps
@@ -97,10 +75,7 @@ and handling specific simulation modes such as JV curves, SunsVoc, CELIV, and mo
         self.config[&#39;config&#39;][&#39;ce_off_time&#39;] = off_time
         return</code></pre>
 </details>
-<div class="desc"><p>Class to handle CE simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the CE class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -108,23 +83,14 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.CE.set_sun_properties"><code class="name flex">
-<span>def <span class="ident">set_sun_properties</span></span>(<span>self, start: float, stop: float, steps: int, on_time: float, off_time: float) ‑> <a title="PyOghma.Sims.CE" href="#PyOghma.Sims.CE">CE</a></span>
+<span>def <span class="ident">set_sun_properties</span></span>(<span>self, start, stop, steps, on_time, off_time)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_sun_properties(self, start: float, stop: float, steps: int, on_time: float, off_time: float) -&gt; &#39;CE&#39;:
-    &#34;&#34;&#34;
-    Set the sun properties for the CE simulation.
-    Args:
-        start (float): The starting sun intensity.
-        stop (float): The stopping sun intensity.
-        steps (int): The number of simulation steps.
-        on_time (float): The sun on time.
-        off_time (float): The sun off time.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_sun_properties(self, start, stop, steps, on_time, off_time):
     self.config[&#39;config&#39;][&#39;ce_start_sun&#39;] = start
     self.config[&#39;config&#39;][&#39;ce_stop_sun&#39;] = stop
     self.config[&#39;config&#39;][&#39;ce_number_of_simulations&#39;] = steps
@@ -132,34 +98,9 @@ Sims</p>
     self.config[&#39;config&#39;][&#39;ce_off_time&#39;] = off_time
     return</code></pre>
 </details>
-<div class="desc"><p>Set the sun properties for the CE simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting sun intensity.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping sun intensity.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of simulation steps.</dd>
-<dt><strong><code>on_time</code></strong> :&ensp;<code>float</code></dt>
-<dd>The sun on time.</dd>
-<dt><strong><code>off_time</code></strong> :&ensp;<code>float</code></dt>
-<dd>The sun off time.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.CELIV"><code class="flex name class">
 <span>class <span class="ident">CELIV</span></span>
@@ -170,15 +111,8 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CELIV(Sims):
-    &#34;&#34;&#34;
-    Class to handle CELIV simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the CELIV class.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;celiv&#34;
         self.icon = &#34;celiv&#34;
@@ -198,20 +132,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;CELIV&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the CELIV simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle CELIV simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the CELIV class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -219,43 +145,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.CELIV.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.CELIV" href="#PyOghma.Sims.CELIV">CELIV</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;CELIV&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the CELIV simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the CELIV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.CV"><code class="flex name class">
 <span>class <span class="ident">CV</span></span>
@@ -266,15 +170,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class CV(Sims):
-    &#34;&#34;&#34;
-    Class to handle CV simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the CV class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;Capacitance\nVoltage&#34;
         self.icon = &#34;cv&#34;
@@ -286,25 +182,14 @@ Sims</p>
         self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_voltage_range(self, start: float, stop: float, step: float, frequency: float) -&gt; &#39;CV&#39;:
-        &#34;&#34;&#34;
-        Set the voltage range and frequency for the CV simulation.
-        Args:
-            start (float): The starting voltage.
-            stop (float): The stopping voltage.
-            step (float): The voltage step size.
-            frequency (float): The frequency for the simulation.
-        &#34;&#34;&#34;
+    def set_voltage_range(self, start, stop, step, frequency):
         self.config[&#39;config&#39;][&#39;cv_start_voltage&#39;] = start
         self.config[&#39;config&#39;][&#39;cv_stop_voltage&#39;] = stop
         self.config[&#39;config&#39;][&#39;cv_dv_step&#39;] = step
         self.config[&#39;config&#39;][&#39;cv_fx&#39;] = frequency
         return</code></pre>
 </details>
-<div class="desc"><p>Class to handle CV simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the CV class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -312,54 +197,23 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.CV.set_voltage_range"><code class="name flex">
-<span>def <span class="ident">set_voltage_range</span></span>(<span>self, start: float, stop: float, step: float, frequency: float) ‑> <a title="PyOghma.Sims.CV" href="#PyOghma.Sims.CV">CV</a></span>
+<span>def <span class="ident">set_voltage_range</span></span>(<span>self, start, stop, step, frequency)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_voltage_range(self, start: float, stop: float, step: float, frequency: float) -&gt; &#39;CV&#39;:
-    &#34;&#34;&#34;
-    Set the voltage range and frequency for the CV simulation.
-    Args:
-        start (float): The starting voltage.
-        stop (float): The stopping voltage.
-        step (float): The voltage step size.
-        frequency (float): The frequency for the simulation.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_voltage_range(self, start, stop, step, frequency):
     self.config[&#39;config&#39;][&#39;cv_start_voltage&#39;] = start
     self.config[&#39;config&#39;][&#39;cv_stop_voltage&#39;] = stop
     self.config[&#39;config&#39;][&#39;cv_dv_step&#39;] = step
     self.config[&#39;config&#39;][&#39;cv_fx&#39;] = frequency
     return</code></pre>
 </details>
-<div class="desc"><p>Set the voltage range and frequency for the CV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting voltage.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping voltage.</dd>
-<dt><strong><code>step</code></strong> :&ensp;<code>float</code></dt>
-<dd>The voltage step size.</dd>
-<dt><strong><code>frequency</code></strong> :&ensp;<code>float</code></dt>
-<dd>The frequency for the simulation.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.EQE"><code class="flex name class">
 <span>class <span class="ident">EQE</span></span>
@@ -370,15 +224,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class EQE(Sims):
-    &#34;&#34;&#34;
-    Class to handle EQE simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the EQE class.
-        &#34;&#34;&#34;
+    def __init__(self):
         self.name = &#34;EQE&#34;
         self.icon = &#34;qe&#34;
         self.json_name = &#34;eqe&#34;
@@ -391,30 +237,15 @@ Sims</p>
         self.eqe_voltage = self.config[&#39;config&#39;][&#39;ce_eqe_voltage&#39;]
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle EQE simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the EQE class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
 </ul>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainMesh"><code class="flex name class">
 <span>class <span class="ident">FrequencyDomainMesh</span></span>
-<span>(</span><span>start: float, stop: float, steps: int, space: str)</span>
+<span>(</span><span>start, stop, steps, space)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -422,23 +253,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FrequencyDomainMesh:
-    &#34;&#34;&#34;
-    Class to handle frequency domain mesh configurations.
-    Attributes:
-        start (float): The starting frequency.
-        stop (float): The stopping frequency.
-        steps (int): The number of steps in the frequency range.
-        mesh (dict): The mesh configuration data.
-    &#34;&#34;&#34;
-    def __init__(self, start: float, stop: float, steps: int, space: str) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the FrequencyDomainMesh class.
-        Args:
-            start (float): The starting frequency.
-            stop (float): The stopping frequency.
-            steps (int): The number of steps in the frequency range.
-            space (str): The type of frequency spacing (&#39;lin&#39;, &#39;log&#39;, &#39;geo&#39;).
-        &#34;&#34;&#34;
+    def __init__(self, start, stop, steps, space):
         self.start = start
         self.stop = stop
         self.steps = steps
@@ -451,121 +266,80 @@ Sims</p>
             case &#39;geo&#39;:
                 self.geometric()
 
-    def linear(self) -&gt; None:
-        &#34;&#34;&#34;
-        Generate a linear frequency mesh.
-        &#34;&#34;&#34;
+    def linear(self):
         frequecies = np.linspace(self.start, self.stop, self.steps)
         for idx, freq in enumerate(frequecies):
             self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
         return
 
-    def logarithmic(self) -&gt; None:
-        &#34;&#34;&#34;
-        Generate a logarithmic frequency mesh.
-        &#34;&#34;&#34;
+    def logarithmic(self):
         frequecies = np.logspace(self.start, self.stop, self.steps)
         for idx, freq in enumerate(frequecies):
             self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
         return
 
-    def geometric(self) -&gt; None:
-        &#34;&#34;&#34;
-        Generate a geometric frequency mesh.
-        &#34;&#34;&#34;
+    def geometric(self):
         frequecies = np.geomspace(self.start, self.stop, self.steps)
         for idx, freq in enumerate(frequecies):
             self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
         return</code></pre>
 </details>
-<div class="desc"><p>Class to handle frequency domain mesh configurations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting frequency.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping frequency.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of steps in the frequency range.</dd>
-<dt><strong><code>mesh</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The mesh configuration data.</dd>
-</dl>
-<p>Initialize the FrequencyDomainMesh class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting frequency.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping frequency.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of steps in the frequency range.</dd>
-<dt><strong><code>space</code></strong> :&ensp;<code>str</code></dt>
-<dd>The type of frequency spacing ('lin', 'log', 'geo').</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.FrequencyDomainMesh.geometric"><code class="name flex">
-<span>def <span class="ident">geometric</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">geometric</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def geometric(self) -&gt; None:
-    &#34;&#34;&#34;
-    Generate a geometric frequency mesh.
-    &#34;&#34;&#34;
+<pre><code class="python">def geometric(self):
     frequecies = np.geomspace(self.start, self.stop, self.steps)
     for idx, freq in enumerate(frequecies):
         self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
     return</code></pre>
 </details>
-<div class="desc"><p>Generate a geometric frequency mesh.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainMesh.linear"><code class="name flex">
-<span>def <span class="ident">linear</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">linear</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def linear(self) -&gt; None:
-    &#34;&#34;&#34;
-    Generate a linear frequency mesh.
-    &#34;&#34;&#34;
+<pre><code class="python">def linear(self):
     frequecies = np.linspace(self.start, self.stop, self.steps)
     for idx, freq in enumerate(frequecies):
         self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
     return</code></pre>
 </details>
-<div class="desc"><p>Generate a linear frequency mesh.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainMesh.logarithmic"><code class="name flex">
-<span>def <span class="ident">logarithmic</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">logarithmic</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def logarithmic(self) -&gt; None:
-    &#34;&#34;&#34;
-    Generate a logarithmic frequency mesh.
-    &#34;&#34;&#34;
+<pre><code class="python">def logarithmic(self):
     frequecies = np.logspace(self.start, self.stop, self.steps)
     for idx, freq in enumerate(frequecies):
         self.mesh[&#34;mesh&#34;].update({&#34;segment&#34; + str(idx): FrequencyDomainSegment(freq).segment})
     return</code></pre>
 </details>
-<div class="desc"><p>Generate a logarithmic frequency mesh.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainSegment"><code class="flex name class">
 <span>class <span class="ident">FrequencyDomainSegment</span></span>
-<span>(</span><span>frequency: float)</span>
+<span>(</span><span>frequency)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -573,153 +347,78 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FrequencyDomainSegment:
-    &#34;&#34;&#34;
-    Class to handle individual frequency domain segment configurations.
-    Attributes:
-        segment (dict): The segment configuration data.
-    &#34;&#34;&#34;
-    def __init__(self, frequency: float) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the FrequencyDomainSegment class.
-        Args:
-            frequency (float): The frequency for the segment.
-        &#34;&#34;&#34;
+    def __init__(self, frequency):
         self.load_segment(&#39;segment&#39;)
         self.set_frequency(frequency)
 
-    def set_frequency(self, frequency: float) -&gt; None:
-        &#34;&#34;&#34;
-        Set the frequency properties for the segment.
-        Args:
-            frequency (float): The frequency for the segment.
-        &#34;&#34;&#34;
+    def set_frequency(self, frequency):
         self.segment[&#39;start&#39;] = frequency
         self.segment[&#39;stop&#39;] = frequency
         self.segment[&#39;points&#39;] = 1.0
         self.segment[&#39;mul&#39;] = 1.0
         return
 
-    def load_segment(self, file: str) -&gt; None:
-        &#34;&#34;&#34;
-        Load the segment configuration from a file.
-        Args:
-            file (str): The name of the configuration file.
-        &#34;&#34;&#34;
+    def load_segment(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             self.segment = json.loads(j.read())
         return
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = resources.as_file(
             resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.fx_domain&#34;).joinpath(file)).args[0]
         return str(config_dir)</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual frequency domain segment configurations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>segment</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The segment configuration data.</dd>
-</dl>
-<p>Initialize the FrequencyDomainSegment class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>frequency</code></strong> :&ensp;<code>float</code></dt>
-<dd>The frequency for the segment.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.FrequencyDomainSegment.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = resources.as_file(
         resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.fx_domain&#34;).joinpath(file)).args[0]
     return str(config_dir)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainSegment.load_segment"><code class="name flex">
-<span>def <span class="ident">load_segment</span></span>(<span>self, file: str) ‑> None</span>
+<span>def <span class="ident">load_segment</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_segment(self, file: str) -&gt; None:
-    &#34;&#34;&#34;
-    Load the segment configuration from a file.
-    Args:
-        file (str): The name of the configuration file.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_segment(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         self.segment = json.loads(j.read())
     return</code></pre>
 </details>
-<div class="desc"><p>Load the segment configuration from a file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.FrequencyDomainSegment.set_frequency"><code class="name flex">
-<span>def <span class="ident">set_frequency</span></span>(<span>self, frequency: float) ‑> None</span>
+<span>def <span class="ident">set_frequency</span></span>(<span>self, frequency)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_frequency(self, frequency: float) -&gt; None:
-    &#34;&#34;&#34;
-    Set the frequency properties for the segment.
-    Args:
-        frequency (float): The frequency for the segment.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_frequency(self, frequency):
     self.segment[&#39;start&#39;] = frequency
     self.segment[&#39;stop&#39;] = frequency
     self.segment[&#39;points&#39;] = 1.0
     self.segment[&#39;mul&#39;] = 1.0
     return</code></pre>
 </details>
-<div class="desc"><p>Set the frequency properties for the segment.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>frequency</code></strong> :&ensp;<code>float</code></dt>
-<dd>The frequency for the segment.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -732,15 +431,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class IMPS(Sims):
-    &#34;&#34;&#34;
-    Class to handle IMPS simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the IMPS class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;IMPS&#34;
         self.icon = &#34;spectrum&#34;
@@ -755,20 +446,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IMPS&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the IMPS simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle IMPS simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the IMPS class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -776,43 +459,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.IMPS.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.IMPS" href="#PyOghma.Sims.IMPS">IMPS</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IMPS&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the IMPS simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the IMPS simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.IMVS"><code class="flex name class">
 <span>class <span class="ident">IMVS</span></span>
@@ -823,15 +484,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class IMVS(Sims):
-    &#34;&#34;&#34;
-    Class to handle IMVS simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the IMVS class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;IMVS&#34;
         self.icon = &#34;spectrum&#34;
@@ -846,20 +499,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IMVS&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the IMVS simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle IMVS simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the IMVS class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -867,43 +512,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.IMVS.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.IMVS" href="#PyOghma.Sims.IMVS">IMVS</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IMVS&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the IMVS simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the IMVS simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.IS"><code class="flex name class">
 <span>class <span class="ident">IS</span></span>
@@ -914,15 +537,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class IS(Sims):
-    &#34;&#34;&#34;
-    Class to handle IS simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the IS class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;imvs&#34;
         self.icon = &#34;spectrum&#34;
@@ -937,20 +552,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IS&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the IS simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle IS simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the IS class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -958,43 +565,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.IS.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.IS" href="#PyOghma.Sims.IS">IS</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;IS&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the IS simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the IS simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.JV"><code class="flex name class">
 <span>class <span class="ident">JV</span></span>
@@ -1005,15 +590,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class JV(Sims):
-    &#34;&#34;&#34;
-    Class to handle JV curve simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the JV class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;JV\ncurve&#34;
         self.icon = &#34;jv&#34;
@@ -1025,43 +602,23 @@ Sims</p>
         self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02) -&gt; &#39;JV&#39;:
-        &#34;&#34;&#34;
-        Set the voltage range for the JV simulation.
-        Args:
-            start (float): The starting voltage.
-            stop (float): The stopping voltage.
-            step (float): The voltage step size.
-        &#34;&#34;&#34;
+    def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02):
         self.config[&#39;config&#39;][&#39;Vstart&#39;] = start
         self.config[&#39;config&#39;][&#39;Vstop&#39;] = stop
         self.config[&#39;config&#39;][&#39;Vstep&#39;] = step
         return self
 
-    def set_jv_properties(self, **kwargs: dict) -&gt; &#39;JV&#39;:
-        &#34;&#34;&#34;
-        Set additional JV properties.
-        Args:
-            **kwargs: Key-value pairs of JV properties.
-        &#34;&#34;&#34;
+    def set_jv_properties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;jv_&#39; + str(key)] = value
         return self
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;JV&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the JV simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle JV curve simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the JV class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -1069,100 +626,52 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.JV.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.JV" href="#PyOghma.Sims.JV">JV</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;JV&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the JV simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the JV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.JV.set_jv_properties"><code class="name flex">
-<span>def <span class="ident">set_jv_properties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.JV" href="#PyOghma.Sims.JV">JV</a></span>
+<span>def <span class="ident">set_jv_properties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_jv_properties(self, **kwargs: dict) -&gt; &#39;JV&#39;:
-    &#34;&#34;&#34;
-    Set additional JV properties.
-    Args:
-        **kwargs: Key-value pairs of JV properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_jv_properties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;jv_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set additional JV properties.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of JV properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.JV.set_voltage_range"><code class="name flex">
-<span>def <span class="ident">set_voltage_range</span></span>(<span>self, start: float = 0, stop: float = 1, step: float = 0.02) ‑> <a title="PyOghma.Sims.JV" href="#PyOghma.Sims.JV">JV</a></span>
+<span>def <span class="ident">set_voltage_range</span></span>(<span>self, start: float = 0, stop: float = 1, step: float = 0.02)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02) -&gt; &#39;JV&#39;:
-    &#34;&#34;&#34;
-    Set the voltage range for the JV simulation.
-    Args:
-        start (float): The starting voltage.
-        stop (float): The stopping voltage.
-        step (float): The voltage step size.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_voltage_range(self, start: float = 0, stop: float = 1, step: float = 0.02):
     self.config[&#39;config&#39;][&#39;Vstart&#39;] = start
     self.config[&#39;config&#39;][&#39;Vstop&#39;] = stop
     self.config[&#39;config&#39;][&#39;Vstep&#39;] = step
     return self</code></pre>
 </details>
-<div class="desc"><p>Set the voltage range for the JV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting voltage.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping voltage.</dd>
-<dt><strong><code>step</code></strong> :&ensp;<code>float</code></dt>
-<dd>The voltage step size.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.PL_SS"><code class="flex name class">
 <span>class <span class="ident">PL_SS</span></span>
@@ -1173,15 +682,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PL_SS(Sims):
-    &#34;&#34;&#34;
-    Class to handle PL_SS simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the PL_SS class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;PL&#34;
         self.icon = &#34;pl&#34;
@@ -1193,25 +694,10 @@ Sims</p>
         self.load_config(&#39;default&#39;)
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle PL_SS simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the PL_SS class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
-</ul>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
 </ul>
 </dd>
 <dt id="PyOghma.Sims.PhotoCELIV"><code class="flex name class">
@@ -1223,15 +709,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class PhotoCELIV(Sims):
-    &#34;&#34;&#34;
-    Class to handle PhotoCELIV simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the PhotoCELIV class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;PHOTO\nceliv&#34;
         self.icon = &#34;photo_celiv&#34;
@@ -1251,20 +729,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;PhotoCELIV&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the PhotoCELIV simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle PhotoCELIV simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the PhotoCELIV class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -1272,43 +742,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.PhotoCELIV.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.PhotoCELIV" href="#PyOghma.Sims.PhotoCELIV">PhotoCELIV</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;PhotoCELIV&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the PhotoCELIV simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the PhotoCELIV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.Sims"><code class="flex name class">
 <span>class <span class="ident">Sims</span></span>
@@ -1319,35 +767,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Sims:
-    &#34;&#34;&#34;
-    Main class to handle simulation configurations and operations.
-    Attributes:
-        name (str): The name of the simulation.
-        icon (str): The icon representing the simulation.
-        json_name (str): The name of the JSON configuration.
-        id (str): Unique identifier for the simulation.
-        segment_number (int): The current segment number.
-        segments_number (int): Total number of segments.
-        dest_dir (str): The destination directory for saving or loading data.
-        JV (JV): Instance of the JV class.
-        SunsVoc (SunsVoc): Instance of the SunsVoc class.
-        SunsJsc (SunsJsc): Instance of the SunsJsc class.
-        CELIV (CELIV): Instance of the CELIV class.
-        PhotoCELIV (PhotoCELIV): Instance of the PhotoCELIV class.
-        TPC (TPC): Instance of the TPC class.
-        TPV (TPV): Instance of the TPV class.
-        IMPS (IMPS): Instance of the IMPS class.
-        IMVS (IMVS): Instance of the IMVS class.
-        IS (IS): Instance of the IS class.
-        CV (CV): Instance of the CV class.
-        CE (CE): Instance of the CE class.
-        PL_SS (PL_SS): Instance of the PL_SS class.
-        EQE (EQE): Instance of the EQE class.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Sims class and its subcomponents.
-        &#34;&#34;&#34;
+    def __init__(self):
         self.name = &#34;&#34;
         self.icon = &#34;&#34;
         self.json_name = &#34;&#34;
@@ -1378,10 +798,9 @@ Sims</p>
         self.PL_SS = PL_SS()
         self.EQE = EQE
 
-    def set_format(self) -&gt; None:
-        &#34;&#34;&#34;
-        Set the format of the JSON data based on the json_name.
-        &#34;&#34;&#34;
+        #self.load_config(&#39;default&#39;)
+
+    def set_format(self):
         match self.json_name:
             case &#39;time_domain&#39;:
                 self.json_format = {self.json_name: {&#34;segments&#34;: int(self.segments_number),
@@ -1410,36 +829,23 @@ Sims</p>
                                                                                             &#34;id&#34;: self.id}}}
         return
 
-    def load_config(self, file: str) -&gt; None:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             self.config = json.loads(j.read())
         return
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+
+    def find_file(self, file):
         if self.json_name == self.icon.replace(&#34;_&#34;, &#34;&#34;) or self.json_name.replace(&#34;_&#34;, &#34;&#34;) == self.icon:
             config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.&#34;+self.json_name).joinpath(file)).args[0]
         else:
             config_dir = resources.as_file(
                 resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.&#34; + self.json_name + &#34;.&#34;+ self.name.lower().replace(&#34;\n&#34;, &#34;_&#34;)).joinpath(file)).args[0]
+        #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
         return config_dir
 
-    def update(self) -&gt; None:
-        &#34;&#34;&#34;
-        Update the JSON file with the current data.
-        &#34;&#34;&#34;
+    def update(self):
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
             data = json.load(j)
 
@@ -1450,12 +856,7 @@ Sims</p>
 
         return
 
-    def change_experiment(self, exp_name: str) -&gt; None:
-        &#34;&#34;&#34;
-        Change the experiment mode in the simulation configuration.
-        Args:
-            exp_name (str): The name of the experiment mode.
-        &#34;&#34;&#34;
+    def change_experiment(self, exp_name):
         exp_name = str(exp_name).lower()
         file = &#39;default.json&#39;
         exp = {&#39;simmode&#39;: &#39;segment0@&#39;+exp_name}
@@ -1467,53 +868,7 @@ Sims</p>
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;w&#39;) as j:
             j.write(json.dumps(data, indent=4))</code></pre>
 </details>
-<div class="desc"><p>Main class to handle simulation configurations and operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the simulation.</dd>
-<dt><strong><code>icon</code></strong> :&ensp;<code>str</code></dt>
-<dd>The icon representing the simulation.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>id</code></strong> :&ensp;<code>str</code></dt>
-<dd>Unique identifier for the simulation.</dd>
-<dt><strong><code>segment_number</code></strong> :&ensp;<code>int</code></dt>
-<dd>The current segment number.</dd>
-<dt><strong><code>segments_number</code></strong> :&ensp;<code>int</code></dt>
-<dd>Total number of segments.</dd>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory for saving or loading data.</dd>
-<dt><strong><code>JV</code></strong> :&ensp;<code><a title="PyOghma.Sims.JV" href="#PyOghma.Sims.JV">JV</a></code></dt>
-<dd>Instance of the JV class.</dd>
-<dt><strong><code>SunsVoc</code></strong> :&ensp;<code><a title="PyOghma.Sims.SunsVoc" href="#PyOghma.Sims.SunsVoc">SunsVoc</a></code></dt>
-<dd>Instance of the SunsVoc class.</dd>
-<dt><strong><code>SunsJsc</code></strong> :&ensp;<code><a title="PyOghma.Sims.SunsJsc" href="#PyOghma.Sims.SunsJsc">SunsJsc</a></code></dt>
-<dd>Instance of the SunsJsc class.</dd>
-<dt><strong><code>CELIV</code></strong> :&ensp;<code><a title="PyOghma.Sims.CELIV" href="#PyOghma.Sims.CELIV">CELIV</a></code></dt>
-<dd>Instance of the CELIV class.</dd>
-<dt><strong><code>PhotoCELIV</code></strong> :&ensp;<code><a title="PyOghma.Sims.PhotoCELIV" href="#PyOghma.Sims.PhotoCELIV">PhotoCELIV</a></code></dt>
-<dd>Instance of the PhotoCELIV class.</dd>
-<dt><strong><code>TPC</code></strong> :&ensp;<code><a title="PyOghma.Sims.TPC" href="#PyOghma.Sims.TPC">TPC</a></code></dt>
-<dd>Instance of the TPC class.</dd>
-<dt><strong><code>TPV</code></strong> :&ensp;<code><a title="PyOghma.Sims.TPV" href="#PyOghma.Sims.TPV">TPV</a></code></dt>
-<dd>Instance of the TPV class.</dd>
-<dt><strong><code>IMPS</code></strong> :&ensp;<code><a title="PyOghma.Sims.IMPS" href="#PyOghma.Sims.IMPS">IMPS</a></code></dt>
-<dd>Instance of the IMPS class.</dd>
-<dt><strong><code>IMVS</code></strong> :&ensp;<code><a title="PyOghma.Sims.IMVS" href="#PyOghma.Sims.IMVS">IMVS</a></code></dt>
-<dd>Instance of the IMVS class.</dd>
-<dt><strong><code>IS</code></strong> :&ensp;<code><a title="PyOghma.Sims.IS" href="#PyOghma.Sims.IS">IS</a></code></dt>
-<dd>Instance of the IS class.</dd>
-<dt><strong><code>CV</code></strong> :&ensp;<code><a title="PyOghma.Sims.CV" href="#PyOghma.Sims.CV">CV</a></code></dt>
-<dd>Instance of the CV class.</dd>
-<dt><strong><code>CE</code></strong> :&ensp;<code><a title="PyOghma.Sims.CE" href="#PyOghma.Sims.CE">CE</a></code></dt>
-<dd>Instance of the CE class.</dd>
-<dt><strong><code>PL_SS</code></strong> :&ensp;<code><a title="PyOghma.Sims.PL_SS" href="#PyOghma.Sims.PL_SS">PL_SS</a></code></dt>
-<dd>Instance of the PL_SS class.</dd>
-<dt><strong><code>EQE</code></strong> :&ensp;<code><a title="PyOghma.Sims.EQE" href="#PyOghma.Sims.EQE">EQE</a></code></dt>
-<dd>Instance of the EQE class.</dd>
-</dl>
-<p>Initialize the Sims class and its subcomponents.</p></div>
+<div class="desc"></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.CE" href="#PyOghma.Sims.CE">CE</a></li>
@@ -1534,19 +889,14 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.Sims.change_experiment"><code class="name flex">
-<span>def <span class="ident">change_experiment</span></span>(<span>self, exp_name: str) ‑> None</span>
+<span>def <span class="ident">change_experiment</span></span>(<span>self, exp_name)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def change_experiment(self, exp_name: str) -&gt; None:
-    &#34;&#34;&#34;
-    Change the experiment mode in the simulation configuration.
-    Args:
-        exp_name (str): The name of the experiment mode.
-    &#34;&#34;&#34;
+<pre><code class="python">def change_experiment(self, exp_name):
     exp_name = str(exp_name).lower()
     file = &#39;default.json&#39;
     exp = {&#39;simmode&#39;: &#39;segment0@&#39;+exp_name}
@@ -1558,86 +908,52 @@ Sims</p>
     with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;w&#39;) as j:
         j.write(json.dumps(data, indent=4))</code></pre>
 </details>
-<div class="desc"><p>Change the experiment mode in the simulation configuration.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>exp_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the experiment mode.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.Sims.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     if self.json_name == self.icon.replace(&#34;_&#34;, &#34;&#34;) or self.json_name.replace(&#34;_&#34;, &#34;&#34;) == self.icon:
         config_dir = resources.as_file(resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.&#34;+self.json_name).joinpath(file)).args[0]
     else:
         config_dir = resources.as_file(
             resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.&#34; + self.json_name + &#34;.&#34;+ self.name.lower().replace(&#34;\n&#34;, &#34;_&#34;)).joinpath(file)).args[0]
+    #config_dir = os.path.join(&#39;PyOghma&#39;,&#39;Sim_Defaults&#39;, &#39;Optical&#39;, &#39;configs&#39;, self.json_name, file)
     return config_dir</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.Sims.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> None</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; None:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         self.config = json.loads(j.read())
     return</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.Sims.set_format"><code class="name flex">
-<span>def <span class="ident">set_format</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">set_format</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_format(self) -&gt; None:
-    &#34;&#34;&#34;
-    Set the format of the JSON data based on the json_name.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_format(self):
     match self.json_name:
         case &#39;time_domain&#39;:
             self.json_format = {self.json_name: {&#34;segments&#34;: int(self.segments_number),
@@ -1666,20 +982,17 @@ Sims</p>
                                                                                         &#34;id&#34;: self.id}}}
     return</code></pre>
 </details>
-<div class="desc"><p>Set the format of the JSON data based on the json_name.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.Sims.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">update</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self) -&gt; None:
-    &#34;&#34;&#34;
-    Update the JSON file with the current data.
-    &#34;&#34;&#34;
+<pre><code class="python">def update(self):
     with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#39;r&#39;) as j:
         data = json.load(j)
 
@@ -1690,7 +1003,7 @@ Sims</p>
 
     return</code></pre>
 </details>
-<div class="desc"><p>Update the JSON file with the current data.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -1703,15 +1016,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class SunsJsc(Sims):
-    &#34;&#34;&#34;
-    Class to handle SunsJsc simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the SunsJsc class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;Suns\nJsc&#34;
         self.icon = &#34;sunsjsc&#34;
@@ -1723,25 +1028,14 @@ Sims</p>
         self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_sun_range(self, start: float, stop: float, dp: float, dpmul: float) -&gt; &#39;SunsJsc&#39;:
-        &#34;&#34;&#34;
-        Set the sun intensity range for the simulation.
-        Args:
-            start (float): The starting sun intensity.
-            stop (float): The stopping sun intensity.
-            dp (float): The intensity step size.
-            dpmul (float): The multiplication factor for the intensity.
-        &#34;&#34;&#34;
+    def set_sun_range(self, start, stop, dp, dpmul):
         self.config[&#39;config&#39;][&#39;sunstart&#39;] = start
         self.config[&#39;config&#39;][&#39;sunstop&#39;] = stop
         self.config[&#39;config&#39;][&#39;sundp&#39;] = dp
         self.config[&#39;config&#39;][&#39;sundpmul&#39;] = dpmul
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle SunsJsc simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the SunsJsc class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -1749,54 +1043,23 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.SunsJsc.set_sun_range"><code class="name flex">
-<span>def <span class="ident">set_sun_range</span></span>(<span>self, start: float, stop: float, dp: float, dpmul: float) ‑> <a title="PyOghma.Sims.SunsJsc" href="#PyOghma.Sims.SunsJsc">SunsJsc</a></span>
+<span>def <span class="ident">set_sun_range</span></span>(<span>self, start, stop, dp, dpmul)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_sun_range(self, start: float, stop: float, dp: float, dpmul: float) -&gt; &#39;SunsJsc&#39;:
-    &#34;&#34;&#34;
-    Set the sun intensity range for the simulation.
-    Args:
-        start (float): The starting sun intensity.
-        stop (float): The stopping sun intensity.
-        dp (float): The intensity step size.
-        dpmul (float): The multiplication factor for the intensity.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_sun_range(self, start, stop, dp, dpmul):
     self.config[&#39;config&#39;][&#39;sunstart&#39;] = start
     self.config[&#39;config&#39;][&#39;sunstop&#39;] = stop
     self.config[&#39;config&#39;][&#39;sundp&#39;] = dp
     self.config[&#39;config&#39;][&#39;sundpmul&#39;] = dpmul
     return self</code></pre>
 </details>
-<div class="desc"><p>Set the sun intensity range for the simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting sun intensity.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping sun intensity.</dd>
-<dt><strong><code>dp</code></strong> :&ensp;<code>float</code></dt>
-<dd>The intensity step size.</dd>
-<dt><strong><code>dpmul</code></strong> :&ensp;<code>float</code></dt>
-<dd>The multiplication factor for the intensity.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.SunsVoc"><code class="flex name class">
 <span>class <span class="ident">SunsVoc</span></span>
@@ -1807,15 +1070,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class SunsVoc(Sims):
-    &#34;&#34;&#34;
-    Class to handle SunsVoc simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the SunsVoc class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;Suns\ncurve&#34;
         self.json_name = &#34;suns_voc&#34;
@@ -1827,43 +1082,22 @@ Sims</p>
         self.load_config(&#39;default&#39;)
         self.set_format()
 
-    def set_sun_range(self, start: float, stop: float, mul: float) -&gt; &#39;SunsVoc&#39;:
-        &#34;&#34;&#34;
-        Set the sun intensity range for the simulation.
-        Args:
-            start (float): The starting sun intensity.
-            stop (float): The stopping sun intensity.
-            mul (float): The multiplication factor for the intensity.
-        &#34;&#34;&#34;
+    def set_sun_range(self, start, stop, mul):
         self.config[&#39;config&#39;][&#39;sun_voc_single_point&#39;] = &#34;False&#34;
         self.config[&#39;config&#39;][&#39;sun_voc_Psun_start&#39;] = start
         self.config[&#39;config&#39;][&#39;sun_voc_Psun_stop&#39;] = stop
         self.config[&#39;config&#39;][&#39;sun_voc_mul&#39;] = mul
         return self
 
-    def set_single_point(self, set: bool = True) -&gt; &#39;SunsVoc&#39;:
-        &#34;&#34;&#34;
-        Enable or disable single-point simulation.
-        Args:
-            set (bool): Whether to enable single-point simulation.
-        &#34;&#34;&#34;
+    def set_single_point(self, set=True):
         self.config[&#39;config&#39;][&#39;sun_voc_single_point&#39;] = str(set)
         return self
-
-    def set_dump_properties(self, **kwargs: dict) -&gt; &#39;SunsVoc&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the SunsVoc simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_properties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle SunsVoc simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the SunsVoc class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -1871,100 +1105,52 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.SunsVoc.set_dump_properties"><code class="name flex">
-<span>def <span class="ident">set_dump_properties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.SunsVoc" href="#PyOghma.Sims.SunsVoc">SunsVoc</a></span>
+<span>def <span class="ident">set_dump_properties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_properties(self, **kwargs: dict) -&gt; &#39;SunsVoc&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the SunsVoc simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_properties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the SunsVoc simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.SunsVoc.set_single_point"><code class="name flex">
-<span>def <span class="ident">set_single_point</span></span>(<span>self, set: bool = True) ‑> <a title="PyOghma.Sims.SunsVoc" href="#PyOghma.Sims.SunsVoc">SunsVoc</a></span>
+<span>def <span class="ident">set_single_point</span></span>(<span>self, set=True)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_single_point(self, set: bool = True) -&gt; &#39;SunsVoc&#39;:
-    &#34;&#34;&#34;
-    Enable or disable single-point simulation.
-    Args:
-        set (bool): Whether to enable single-point simulation.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_single_point(self, set=True):
     self.config[&#39;config&#39;][&#39;sun_voc_single_point&#39;] = str(set)
     return self</code></pre>
 </details>
-<div class="desc"><p>Enable or disable single-point simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>set</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to enable single-point simulation.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.SunsVoc.set_sun_range"><code class="name flex">
-<span>def <span class="ident">set_sun_range</span></span>(<span>self, start: float, stop: float, mul: float) ‑> <a title="PyOghma.Sims.SunsVoc" href="#PyOghma.Sims.SunsVoc">SunsVoc</a></span>
+<span>def <span class="ident">set_sun_range</span></span>(<span>self, start, stop, mul)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_sun_range(self, start: float, stop: float, mul: float) -&gt; &#39;SunsVoc&#39;:
-    &#34;&#34;&#34;
-    Set the sun intensity range for the simulation.
-    Args:
-        start (float): The starting sun intensity.
-        stop (float): The stopping sun intensity.
-        mul (float): The multiplication factor for the intensity.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_sun_range(self, start, stop, mul):
     self.config[&#39;config&#39;][&#39;sun_voc_single_point&#39;] = &#34;False&#34;
     self.config[&#39;config&#39;][&#39;sun_voc_Psun_start&#39;] = start
     self.config[&#39;config&#39;][&#39;sun_voc_Psun_stop&#39;] = stop
     self.config[&#39;config&#39;][&#39;sun_voc_mul&#39;] = mul
     return self</code></pre>
 </details>
-<div class="desc"><p>Set the sun intensity range for the simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting sun intensity.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping sun intensity.</dd>
-<dt><strong><code>mul</code></strong> :&ensp;<code>float</code></dt>
-<dd>The multiplication factor for the intensity.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.TPC"><code class="flex name class">
 <span>class <span class="ident">TPC</span></span>
@@ -1975,15 +1161,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TPC(Sims):
-    &#34;&#34;&#34;
-    Class to handle TPC simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the TPC class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;TPC&#34;
         self.icon = &#34;tpc&#34;
@@ -2001,20 +1179,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;TPC&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the TPC simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle TPC simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the TPC class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -2022,43 +1192,21 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.TPC.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.TPC" href="#PyOghma.Sims.TPC">TPC</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;TPC&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the TPC simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the TPC simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.TPV"><code class="flex name class">
 <span>class <span class="ident">TPV</span></span>
@@ -2069,15 +1217,7 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TPV(Sims):
-    &#34;&#34;&#34;
-    Class to handle TPV simulations.
-    Inherits from:
-        Sims
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the TPV class.
-        &#34;&#34;&#34;
+    def __init__(self):
         super(Sims, self).__init__()
         self.name = &#34;TPV&#34;
         self.icon = &#34;tpv&#34;
@@ -2094,20 +1234,12 @@ Sims</p>
 
         self.set_format()
 
-    def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;TPV&#39;:
-        &#34;&#34;&#34;
-        Set dump properties for the TPV simulation.
-        Args:
-            **kwargs: Key-value pairs of dump properties.
-        &#34;&#34;&#34;
+    def set_dump_proprperties(self, **kwargs):
         for key, value in kwargs.items():
             self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
         return self</code></pre>
 </details>
-<div class="desc"><p>Class to handle TPV simulations.
-Inherits from:
-Sims</p>
-<p>Initialize the TPV class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></li>
@@ -2115,47 +1247,25 @@ Sims</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.TPV.set_dump_proprperties"><code class="name flex">
-<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs: dict) ‑> <a title="PyOghma.Sims.TPV" href="#PyOghma.Sims.TPV">TPV</a></span>
+<span>def <span class="ident">set_dump_proprperties</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_dump_proprperties(self, **kwargs: dict) -&gt; &#39;TPV&#39;:
-    &#34;&#34;&#34;
-    Set dump properties for the TPV simulation.
-    Args:
-        **kwargs: Key-value pairs of dump properties.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_dump_proprperties(self, **kwargs):
     for key, value in kwargs.items():
         self.config[&#39;config&#39;][&#39;dump_&#39; + str(key)] = value
     return self</code></pre>
 </details>
-<div class="desc"><p>Set dump properties for the TPV simulation.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Key-value pairs of dump properties.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Sims.Sims" href="#PyOghma.Sims.Sims">Sims</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Sims.Sims.change_experiment" href="#PyOghma.Sims.Sims.change_experiment">change_experiment</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.find_file" href="#PyOghma.Sims.Sims.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.load_config" href="#PyOghma.Sims.Sims.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.set_format" href="#PyOghma.Sims.Sims.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Sims.Sims.update" href="#PyOghma.Sims.Sims.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainMesh"><code class="flex name class">
 <span>class <span class="ident">TimeDomainMesh</span></span>
-<span>(</span><span>*segments: object)</span>
+<span>(</span><span>*segments)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -2163,166 +1273,80 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TimeDomainMesh:
-    &#34;&#34;&#34;
-    Class to handle time domain mesh configurations.
-    Attributes:
-        segments_number (int): The number of segments in the mesh.
-        mesh (dict): The mesh configuration data.
-    &#34;&#34;&#34;
-    def __init__(self, *segments: object) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the TimeDomainMesh class.
-        Args:
-            *segments: Variable-length list of time domain segments.
-        &#34;&#34;&#34;
+    def __init__(self, *segments):
         self.segments_number = len(segments)
         self.load_mesh(&#39;mesh&#39;)
         for idx, segment in enumerate(segments):
             self.mesh[&#39;mesh&#39;].update({&#34;segment&#34; + str(idx): segment.segment})
 
-    def load_mesh(self, file: str) -&gt; None:
-        &#34;&#34;&#34;
-        Load the mesh configuration from a file.
-        Args:
-            file (str): The name of the configuration file.
-        &#34;&#34;&#34;
+    def load_mesh(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             self.mesh = json.loads(j.read())
         return
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = resources.as_file(
             resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.time_domain&#34;).joinpath(file)).args[0]
 
         return config_dir
 
-    def set_loop(self, loop: bool = False, loop_times: int = 0, loop_reset_time: bool = False) -&gt; &#39;TimeDomainMesh&#39;:
-        &#34;&#34;&#34;
-        Set loop properties for the time domain mesh.
-        Args:
-            loop (bool): Whether to enable looping.
-            loop_times (int): The number of loop iterations.
-            loop_reset_time (bool): Whether to reset time after each loop.
-        &#34;&#34;&#34;
+    def set_loop(self, loop=False, loop_times=0, loop_reset_time=False):
         self.mesh[&#39;time_loop&#39;] = loop
         self.mesh[&#39;time_loop_times&#39;] = loop_times
         self.mesh[&#39;time_loop_reset_time&#39;] = loop_reset_time
         return</code></pre>
 </details>
-<div class="desc"><p>Class to handle time domain mesh configurations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>segments_number</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of segments in the mesh.</dd>
-<dt><strong><code>mesh</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The mesh configuration data.</dd>
-</dl>
-<p>Initialize the TimeDomainMesh class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>*segments</code></strong></dt>
-<dd>Variable-length list of time domain segments.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.TimeDomainMesh.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = resources.as_file(
         resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.time_domain&#34;).joinpath(file)).args[0]
 
     return config_dir</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainMesh.load_mesh"><code class="name flex">
-<span>def <span class="ident">load_mesh</span></span>(<span>self, file: str) ‑> None</span>
+<span>def <span class="ident">load_mesh</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_mesh(self, file: str) -&gt; None:
-    &#34;&#34;&#34;
-    Load the mesh configuration from a file.
-    Args:
-        file (str): The name of the configuration file.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_mesh(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         self.mesh = json.loads(j.read())
     return</code></pre>
 </details>
-<div class="desc"><p>Load the mesh configuration from a file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainMesh.set_loop"><code class="name flex">
-<span>def <span class="ident">set_loop</span></span>(<span>self, loop: bool = False, loop_times: int = 0, loop_reset_time: bool = False) ‑> <a title="PyOghma.Sims.TimeDomainMesh" href="#PyOghma.Sims.TimeDomainMesh">TimeDomainMesh</a></span>
+<span>def <span class="ident">set_loop</span></span>(<span>self, loop=False, loop_times=0, loop_reset_time=False)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_loop(self, loop: bool = False, loop_times: int = 0, loop_reset_time: bool = False) -&gt; &#39;TimeDomainMesh&#39;:
-    &#34;&#34;&#34;
-    Set loop properties for the time domain mesh.
-    Args:
-        loop (bool): Whether to enable looping.
-        loop_times (int): The number of loop iterations.
-        loop_reset_time (bool): Whether to reset time after each loop.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_loop(self, loop=False, loop_times=0, loop_reset_time=False):
     self.mesh[&#39;time_loop&#39;] = loop
     self.mesh[&#39;time_loop_times&#39;] = loop_times
     self.mesh[&#39;time_loop_reset_time&#39;] = loop_reset_time
     return</code></pre>
 </details>
-<div class="desc"><p>Set loop properties for the time domain mesh.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>loop</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to enable looping.</dd>
-<dt><strong><code>loop_times</code></strong> :&ensp;<code>int</code></dt>
-<dd>The number of loop iterations.</dd>
-<dt><strong><code>loop_reset_time</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to reset time after each loop.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -2335,268 +1359,135 @@ Sims</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class TimeDomainSegment:
-    &#34;&#34;&#34;
-    Class to handle individual time domain segment configurations.
-    Attributes:
-        segment (dict): The segment configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the TimeDomainSegment class.
-        &#34;&#34;&#34;
+    def __init__(self):
         self.load_segment(&#39;segment&#39;)
 
-    def load_segment(self, file: str) -&gt; None:
-        &#34;&#34;&#34;
-        Load the segment configuration from a file.
-        Args:
-            file (str): The name of the configuration file.
-        &#34;&#34;&#34;
+    def load_segment(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             self.segment = json.loads(j.read())
         return
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):#
         config_dir = resources.as_file(
             resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.time_domain&#34;).joinpath(file)).args[0]
         return config_dir
 
-    def set_time(self, length: float, dt: float) -&gt; &#39;TimeDomainSegment&#39;:
-        &#34;&#34;&#34;
-        Set the time properties for the segment.
-        Args:
-            length (float): The length of the time segment.
-            dt (float): The time step size.
-        &#34;&#34;&#34;
+    def set_time(self, length, dt):
         self.segment[&#39;len&#39;] = length
         self.segment[&#39;dt&#39;] = dt
         return
 
-    def set_volgate(self, start: float, stop: float, mul: float) -&gt; &#39;TimeDomainSegment&#39;:
-        &#34;&#34;&#34;
-        Set the voltage properties for the segment.
-        Args:
-            start (float): The starting voltage.
-            stop (float): The stopping voltage.
-            mul (float): The multiplication factor for the voltage.
-        &#34;&#34;&#34;
+    def set_volgate(self, start, stop, mul):
         self.segment[&#39;voltage_start&#39;] = start
         self.segment[&#39;voltage_stop&#39;] = stop
         self.segment[&#39;mul&#39;] = mul
         return
 
-    def set_sun(self, start: float, stop: float) -&gt; &#39;TimeDomainSegment&#39;:
-        &#34;&#34;&#34;
-        Set the sun properties for the segment.
-        Args:
-            start (float): The starting sun intensity.
-            stop (float): The stopping sun intensity.
-        &#34;&#34;&#34;
+    def set_sun(self, start, stop):
         self.segment[&#39;sun_start&#39;] = start
         self.segment[&#39;sun_stop&#39;] = stop
         return
 
-    def set_laser(self, start: float, stop: float) -&gt; &#39;TimeDomainSegment&#39;:
-        &#34;&#34;&#34;
-        Set the laser properties for the segment.
-        Args:
-            start (float): The starting laser intensity.
-            stop (float): The stopping laser intensity.
-        &#34;&#34;&#34;
+    def set_laser(self, start, stop):
         self.segment[&#39;laser_start&#39;] = start
         self.segment[&#39;laser_stop&#39;] = stop
         return</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual time domain segment configurations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>segment</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The segment configuration data.</dd>
-</dl>
-<p>Initialize the TimeDomainSegment class.</p></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Sims.TimeDomainSegment.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):#
     config_dir = resources.as_file(
         resources.files(&#34;PyOghma.Sim_Defaults.Sims.configs.time_domain&#34;).joinpath(file)).args[0]
     return config_dir</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainSegment.load_segment"><code class="name flex">
-<span>def <span class="ident">load_segment</span></span>(<span>self, file: str) ‑> None</span>
+<span>def <span class="ident">load_segment</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_segment(self, file: str) -&gt; None:
-    &#34;&#34;&#34;
-    Load the segment configuration from a file.
-    Args:
-        file (str): The name of the configuration file.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_segment(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         self.segment = json.loads(j.read())
     return</code></pre>
 </details>
-<div class="desc"><p>Load the segment configuration from a file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainSegment.set_laser"><code class="name flex">
-<span>def <span class="ident">set_laser</span></span>(<span>self, start: float, stop: float) ‑> <a title="PyOghma.Sims.TimeDomainSegment" href="#PyOghma.Sims.TimeDomainSegment">TimeDomainSegment</a></span>
+<span>def <span class="ident">set_laser</span></span>(<span>self, start, stop)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_laser(self, start: float, stop: float) -&gt; &#39;TimeDomainSegment&#39;:
-    &#34;&#34;&#34;
-    Set the laser properties for the segment.
-    Args:
-        start (float): The starting laser intensity.
-        stop (float): The stopping laser intensity.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_laser(self, start, stop):
     self.segment[&#39;laser_start&#39;] = start
     self.segment[&#39;laser_stop&#39;] = stop
     return</code></pre>
 </details>
-<div class="desc"><p>Set the laser properties for the segment.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting laser intensity.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping laser intensity.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainSegment.set_sun"><code class="name flex">
-<span>def <span class="ident">set_sun</span></span>(<span>self, start: float, stop: float) ‑> <a title="PyOghma.Sims.TimeDomainSegment" href="#PyOghma.Sims.TimeDomainSegment">TimeDomainSegment</a></span>
+<span>def <span class="ident">set_sun</span></span>(<span>self, start, stop)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_sun(self, start: float, stop: float) -&gt; &#39;TimeDomainSegment&#39;:
-    &#34;&#34;&#34;
-    Set the sun properties for the segment.
-    Args:
-        start (float): The starting sun intensity.
-        stop (float): The stopping sun intensity.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_sun(self, start, stop):
     self.segment[&#39;sun_start&#39;] = start
     self.segment[&#39;sun_stop&#39;] = stop
     return</code></pre>
 </details>
-<div class="desc"><p>Set the sun properties for the segment.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting sun intensity.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping sun intensity.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainSegment.set_time"><code class="name flex">
-<span>def <span class="ident">set_time</span></span>(<span>self, length: float, dt: float) ‑> <a title="PyOghma.Sims.TimeDomainSegment" href="#PyOghma.Sims.TimeDomainSegment">TimeDomainSegment</a></span>
+<span>def <span class="ident">set_time</span></span>(<span>self, length, dt)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_time(self, length: float, dt: float) -&gt; &#39;TimeDomainSegment&#39;:
-    &#34;&#34;&#34;
-    Set the time properties for the segment.
-    Args:
-        length (float): The length of the time segment.
-        dt (float): The time step size.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_time(self, length, dt):
     self.segment[&#39;len&#39;] = length
     self.segment[&#39;dt&#39;] = dt
     return</code></pre>
 </details>
-<div class="desc"><p>Set the time properties for the segment.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>length</code></strong> :&ensp;<code>float</code></dt>
-<dd>The length of the time segment.</dd>
-<dt><strong><code>dt</code></strong> :&ensp;<code>float</code></dt>
-<dd>The time step size.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Sims.TimeDomainSegment.set_volgate"><code class="name flex">
-<span>def <span class="ident">set_volgate</span></span>(<span>self, start: float, stop: float, mul: float) ‑> <a title="PyOghma.Sims.TimeDomainSegment" href="#PyOghma.Sims.TimeDomainSegment">TimeDomainSegment</a></span>
+<span>def <span class="ident">set_volgate</span></span>(<span>self, start, stop, mul)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_volgate(self, start: float, stop: float, mul: float) -&gt; &#39;TimeDomainSegment&#39;:
-    &#34;&#34;&#34;
-    Set the voltage properties for the segment.
-    Args:
-        start (float): The starting voltage.
-        stop (float): The stopping voltage.
-        mul (float): The multiplication factor for the voltage.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_volgate(self, start, stop, mul):
     self.segment[&#39;voltage_start&#39;] = start
     self.segment[&#39;voltage_stop&#39;] = stop
     self.segment[&#39;mul&#39;] = mul
     return</code></pre>
 </details>
-<div class="desc"><p>Set the voltage properties for the segment.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>start</code></strong> :&ensp;<code>float</code></dt>
-<dd>The starting voltage.</dd>
-<dt><strong><code>stop</code></strong> :&ensp;<code>float</code></dt>
-<dd>The stopping voltage.</dd>
-<dt><strong><code>mul</code></strong> :&ensp;<code>float</code></dt>
-<dd>The multiplication factor for the voltage.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>

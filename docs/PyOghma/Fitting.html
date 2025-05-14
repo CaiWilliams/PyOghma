@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
 <meta name="generator" content="pdoc3 0.11.6">
 <title>PyOghma.Fitting API documentation</title>
-<meta name="description" content="This module provides functionality for managing fitting operations, including configurations,
-variables, rules, and datasets. It supports creating, …">
+<meta name="description" content="">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
@@ -37,9 +36,6 @@ el.replaceWith(d);
 <h1 class="title">Module <code>PyOghma.Fitting</code></h1>
 </header>
 <section id="section-intro">
-<p>This module provides functionality for managing fitting operations, including configurations,
-variables, rules, and datasets. It supports creating, modifying, and saving fitting parameters
-and settings, as well as handling data import and export for simulations.</p>
 </section>
 <section>
 </section>
@@ -52,7 +48,7 @@ and settings, as well as handling data import and export for simulations.</p>
 <dl>
 <dt id="PyOghma.Fitting.Config"><code class="flex name class">
 <span>class <span class="ident">Config</span></span>
-<span>(</span><span>dest_dir: str, fit_against: str = 'jv.dat')</span>
+<span>(</span><span>dest_dir, fit_against='jv.dat')</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -60,175 +56,83 @@ and settings, as well as handling data import and export for simulations.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Config:
-    &#34;&#34;&#34;
-    Class to handle configuration operations.
-    Attributes:
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The configuration data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str, fit_against: str = &#39;jv.dat&#39;) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Config class.
-        Args:
-            dest_dir (str): The destination directory.
-            fit_against (str): The file to fit against.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir, fit_against=&#39;jv.dat&#39;):
         self.dest_dir = dest_dir
         self.json_name = &#39;config&#39;
         self.data = self.load_config(&#39;default&#39;)
         self.data[&#39;sim_data&#39;] = fit_against
     
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
-    def set_fit_params(self, **kwargs: dict) -&gt; None:
-        &#34;&#34;&#34;
-        Set the fit parameters.
-        Args:
-            **kwargs: Keyword arguments for fit parameters.
-        &#34;&#34;&#34;
+    def set_fit_params(self, **kwargs):
         for kwarg in kwargs:
             if kwarg in self.data:
                 self.data[kwarg.key()] = kwarg.value()</code></pre>
 </details>
-<div class="desc"><p>Class to handle configuration operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The configuration data.</dd>
-</dl>
-<p>Initialize the Config class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>fit_against</code></strong> :&ensp;<code>str</code></dt>
-<dd>The file to fit against.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Config.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Config.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Config.set_fit_params"><code class="name flex">
-<span>def <span class="ident">set_fit_params</span></span>(<span>self, **kwargs: dict) ‑> None</span>
+<span>def <span class="ident">set_fit_params</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_fit_params(self, **kwargs: dict) -&gt; None:
-    &#34;&#34;&#34;
-    Set the fit parameters.
-    Args:
-        **kwargs: Keyword arguments for fit parameters.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_fit_params(self, **kwargs):
     for kwarg in kwargs:
         if kwarg in self.data:
             self.data[kwarg.key()] = kwarg.value()</code></pre>
 </details>
-<div class="desc"><p>Set the fit parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Keyword arguments for fit parameters.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
 <dt id="PyOghma.Fitting.Dataset"><code class="flex name class">
 <span>class <span class="ident">Dataset</span></span>
-<span>(</span><span>dest_dir: str,<br>config: object = '',<br>import_config: object = '',<br>*fitpathces: object)</span>
+<span>(</span><span>dest_dir, config='', import_config='', *fitpathces)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -236,22 +140,8 @@ and settings, as well as handling data import and export for simulations.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Dataset:
-    &#34;&#34;&#34;
-    Class to handle individual dataset operations.
-    Attributes:
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The dataset data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str, config: object = &#39;&#39;, import_config: object = &#39;&#39;, *fitpathces: object) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Dataset class.
-        Args:
-            dest_dir (str): The destination directory.
-            config (str): The configuration data.
-            import_config (str): The import configuration data.
-            *fitpathces: Variable-length list of fit patches.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir, config=&#39;&#39;, import_config=&#39;&#39;, *fitpathces):
         self.dest_dir = dest_dir
         self.json_name = &#39;fits&#39;
         self.data = {}
@@ -267,149 +157,74 @@ and settings, as well as handling data import and export for simulations.</p>
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
             self.ob = json.load(j)
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
-    def set_local_duplicate(self) -&gt; None:
-        &#34;&#34;&#34;
-        Set the local duplicate parameters.
-        &#34;&#34;&#34;
+    def set_local_duplicate(self):
         self.data[&#39;duplicate&#39;][&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
         self.data[&#39;duplicate&#39;][&#39;segments&#39;] = 0</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual dataset operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The dataset data.</dd>
-</dl>
-<p>Initialize the Dataset class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>config</code></strong> :&ensp;<code>str</code></dt>
-<dd>The configuration data.</dd>
-<dt><strong><code>import_config</code></strong> :&ensp;<code>str</code></dt>
-<dd>The import configuration data.</dd>
-<dt><strong><code>*fitpathces</code></strong></dt>
-<dd>Variable-length list of fit patches.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Dataset.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Dataset.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Dataset.set_local_duplicate"><code class="name flex">
-<span>def <span class="ident">set_local_duplicate</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">set_local_duplicate</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_local_duplicate(self) -&gt; None:
-    &#34;&#34;&#34;
-    Set the local duplicate parameters.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_local_duplicate(self):
     self.data[&#39;duplicate&#39;][&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
     self.data[&#39;duplicate&#39;][&#39;segments&#39;] = 0</code></pre>
 </details>
-<div class="desc"><p>Set the local duplicate parameters.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
 <dt id="PyOghma.Fitting.Dupe"><code class="flex name class">
 <span>class <span class="ident">Dupe</span></span>
-<span>(</span><span>dest_dir: str, layer: str)</span>
+<span>(</span><span>dest_dir, layer)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -417,21 +232,8 @@ and settings, as well as handling data import and export for simulations.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Dupe:
-    &#34;&#34;&#34;
-    Class to handle individual duplication operations.
-    Attributes:
-        layer (str): The layer to duplicate.
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The duplication data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str, layer: str) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Dupe class.
-        Args:
-            dest_dir (str): The destination directory.
-            layer (str): The layer to duplicate.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir, layer):
         self.layer = layer
         self.dest_dir = dest_dir
         self.json_name = &#39;duplicate&#39;
@@ -440,169 +242,83 @@ and settings, as well as handling data import and export for simulations.</p>
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
             self.ob = json.load(j)
     
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):#pyOghma/Sim_Defaults/Fits/dulicate/default.json
         config_dir = os.path.join(&#39;*&#39;,&#39;Sim_Defaults&#39;,&#39;Fits&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
         
-    def set_duplication(self, src: str, dest: str, multiplier: str = &#39;x&#39;) -&gt; None:
-        &#34;&#34;&#34;
-        Set the duplication parameters.
-        Args:
-            src (str): The source path.
-            dest (str): The destination path.
-            multiplier (str): The duplication multiplier.
-        &#34;&#34;&#34;
+    def set_duplication(self, src, dest, multiplier=&#39;x&#39;):
         json_src = src
         json_dest = dest
+        #json_src = self.get_path_from_dict(self.ob, base_name=src)
+        #json_dest = self.get_path_from_dict(self.ob, base_name=dest)
         self.data[&#39;human_src&#39;] = json_src
         self.data[&#39;human_dest&#39;] = json_dest
         self.data[&#39;multiplier&#39;] = multiplier
         self.data[&#39;json_src&#39;] = json_src
         self.data[&#39;json_dest&#39;] = json_dest</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual duplication operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>layer</code></strong> :&ensp;<code>str</code></dt>
-<dd>The layer to duplicate.</dd>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The duplication data.</dd>
-</dl>
-<p>Initialize the Dupe class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>layer</code></strong> :&ensp;<code>str</code></dt>
-<dd>The layer to duplicate.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Dupe.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):#pyOghma/Sim_Defaults/Fits/dulicate/default.json
     config_dir = os.path.join(&#39;*&#39;,&#39;Sim_Defaults&#39;,&#39;Fits&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Dupe.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Dupe.set_duplication"><code class="name flex">
-<span>def <span class="ident">set_duplication</span></span>(<span>self, src: str, dest: str, multiplier: str = 'x') ‑> None</span>
+<span>def <span class="ident">set_duplication</span></span>(<span>self, src, dest, multiplier='x')</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_duplication(self, src: str, dest: str, multiplier: str = &#39;x&#39;) -&gt; None:
-    &#34;&#34;&#34;
-    Set the duplication parameters.
-    Args:
-        src (str): The source path.
-        dest (str): The destination path.
-        multiplier (str): The duplication multiplier.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_duplication(self, src, dest, multiplier=&#39;x&#39;):
     json_src = src
     json_dest = dest
+    #json_src = self.get_path_from_dict(self.ob, base_name=src)
+    #json_dest = self.get_path_from_dict(self.ob, base_name=dest)
     self.data[&#39;human_src&#39;] = json_src
     self.data[&#39;human_dest&#39;] = json_dest
     self.data[&#39;multiplier&#39;] = multiplier
     self.data[&#39;json_src&#39;] = json_src
     self.data[&#39;json_dest&#39;] = json_dest</code></pre>
 </details>
-<div class="desc"><p>Set the duplication parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>src</code></strong> :&ensp;<code>str</code></dt>
-<dd>The source path.</dd>
-<dt><strong><code>dest</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination path.</dd>
-<dt><strong><code>multiplier</code></strong> :&ensp;<code>str</code></dt>
-<dd>The duplication multiplier.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -615,18 +331,8 @@ and settings, as well as handling data import and export for simulations.</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Duplicate(Fitting):
-    &#34;&#34;&#34;
-    Class to handle duplication configurations.
-    Inherits from:
-        Fitting
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The duplication configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Duplicate class.
-        &#34;&#34;&#34;
+    
+    def __init__(self):
         super(Fitting, self).__init__()
         self.json_name = &#39;duplicate&#39;
         self.data = {}
@@ -634,12 +340,7 @@ and settings, as well as handling data import and export for simulations.</p>
         self.data[&#39;segments&#39;] = 0
         self.set_format()
     
-    def set_duplications(self, *duplications: object) -&gt; None:
-        &#34;&#34;&#34;
-        Set the duplications for the configuration.
-        Args:
-            *duplications: Variable-length list of duplication objects.
-        &#34;&#34;&#34;
+    def set_duplications(self, *duplications):
         self.segments = len(duplications)
         self.data[&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
         self.data = {&#39;segments&#39;: self.segments}
@@ -647,17 +348,7 @@ and settings, as well as handling data import and export for simulations.</p>
             self.data.update({&#39;segment&#39; + str(idx): duplication.data})
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle duplication configurations.
-Inherits from:
-Fitting</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The duplication configuration data.</dd>
-</dl>
-<p>Initialize the Duplicate class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></li>
@@ -665,19 +356,14 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Duplicate.set_duplications"><code class="name flex">
-<span>def <span class="ident">set_duplications</span></span>(<span>self, *duplications: object) ‑> None</span>
+<span>def <span class="ident">set_duplications</span></span>(<span>self, *duplications)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_duplications(self, *duplications: object) -&gt; None:
-    &#34;&#34;&#34;
-    Set the duplications for the configuration.
-    Args:
-        *duplications: Variable-length list of duplication objects.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_duplications(self, *duplications):
     self.segments = len(duplications)
     self.data[&#39;id&#39;] = &#39;id&#39; + str(secrets.token_hex(8))
     self.data = {&#39;segments&#39;: self.segments}
@@ -685,26 +371,9 @@ Fitting</p>
         self.data.update({&#39;segment&#39; + str(idx): duplication.data})
     self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Set the duplications for the configuration.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>*duplications</code></strong></dt>
-<dd>Variable-length list of duplication objects.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Fitting.Fitting.find_file" href="#PyOghma.Fitting.Fitting.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.load_config" href="#PyOghma.Fitting.Fitting.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.propegate_dest_dir" href="#PyOghma.Fitting.Fitting.propegate_dest_dir">propegate_dest_dir</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.set_format" href="#PyOghma.Fitting.Fitting.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.update" href="#PyOghma.Fitting.Fitting.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Fitting.FitPatch"><code class="flex name class">
 <span>class <span class="ident">FitPatch</span></span>
@@ -715,158 +384,77 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class FitPatch:
-    &#34;&#34;&#34;
-    Class to handle individual fit patch operations.
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The fit patch data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the FitPatch class.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         self.json_name = &#39;fit_patch&#39;
         self.data = self.load_config(&#39;default&#39;)
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;fits&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
     
-    def set_patch(self, param: str, val: str) -&gt; None:
-        &#34;&#34;&#34;
-        Set the patch parameters.
-        Args:
-            param (str): The parameter name.
-            val (str): The value to set.
-        &#34;&#34;&#34;
+    def set_patch(self, param, val):
+        #param = self.get_path_from_dict(base_name=param)
         self.data[&#39;json_path&#39;] = param
         self.data[&#39;human_path&#39;] = param
         self.data[&#39;val&#39;] = val</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual fit patch operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The fit patch data.</dd>
-</dl>
-<p>Initialize the FitPatch class.</p></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.FitPatch.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;fits&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.FitPatch.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.FitPatch.set_patch"><code class="name flex">
-<span>def <span class="ident">set_patch</span></span>(<span>self, param: str, val: str) ‑> None</span>
+<span>def <span class="ident">set_patch</span></span>(<span>self, param, val)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_patch(self, param: str, val: str) -&gt; None:
-    &#34;&#34;&#34;
-    Set the patch parameters.
-    Args:
-        param (str): The parameter name.
-        val (str): The value to set.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_patch(self, param, val):
+    #param = self.get_path_from_dict(base_name=param)
     self.data[&#39;json_path&#39;] = param
     self.data[&#39;human_path&#39;] = param
     self.data[&#39;val&#39;] = val</code></pre>
 </details>
-<div class="desc"><p>Set the patch parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter name.</dd>
-<dt><strong><code>val</code></strong> :&ensp;<code>str</code></dt>
-<dd>The value to set.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -879,50 +467,20 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Fit_Config(Fitting):
-    &#34;&#34;&#34;
-    Class to handle the fit configuration.
-    Inherits from:
-        Fitting
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The fit configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Fit_Config class.
-        &#34;&#34;&#34;
+    
+    def __init__(self):
         super(Fitting, self).__init__()
         self.json_name = &#39;fit_config&#39;
         self.data = self.load_config(&#39;default&#39;)
         self.set_format()
     
-    def set_simplexmul(self, multiplier: float) -&gt; None:
-        &#34;&#34;&#34;
-        Set the simplex multiplier.
-        Args:
-            multiplier (float): The simplex multiplier value.
-        &#34;&#34;&#34;
+    def set_simplexmul(self, multiplier):
         self.data[&#39;fit_simplexmul&#39;] = multiplier
     
-    def set_simplex_reset(self, reset: bool) -&gt; None:
-        &#34;&#34;&#34;
-        Set the simplex reset value.
-        Args:
-            reset (bool): Whether to reset the simplex.
-        &#34;&#34;&#34;
+    def set_simplex_reset(self, reset):
         self.data[&#39;fit_simplex_reset&#39;] = reset</code></pre>
 </details>
-<div class="desc"><p>Class to handle the fit configuration.
-Inherits from:
-Fitting</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The fit configuration data.</dd>
-</dl>
-<p>Initialize the Fit_Config class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></li>
@@ -930,64 +488,32 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Fit_Config.set_simplex_reset"><code class="name flex">
-<span>def <span class="ident">set_simplex_reset</span></span>(<span>self, reset: bool) ‑> None</span>
+<span>def <span class="ident">set_simplex_reset</span></span>(<span>self, reset)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_simplex_reset(self, reset: bool) -&gt; None:
-    &#34;&#34;&#34;
-    Set the simplex reset value.
-    Args:
-        reset (bool): Whether to reset the simplex.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_simplex_reset(self, reset):
     self.data[&#39;fit_simplex_reset&#39;] = reset</code></pre>
 </details>
-<div class="desc"><p>Set the simplex reset value.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>reset</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to reset the simplex.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Fit_Config.set_simplexmul"><code class="name flex">
-<span>def <span class="ident">set_simplexmul</span></span>(<span>self, multiplier: float) ‑> None</span>
+<span>def <span class="ident">set_simplexmul</span></span>(<span>self, multiplier)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_simplexmul(self, multiplier: float) -&gt; None:
-    &#34;&#34;&#34;
-    Set the simplex multiplier.
-    Args:
-        multiplier (float): The simplex multiplier value.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_simplexmul(self, multiplier):
     self.data[&#39;fit_simplexmul&#39;] = multiplier</code></pre>
 </details>
-<div class="desc"><p>Set the simplex multiplier.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>multiplier</code></strong> :&ensp;<code>float</code></dt>
-<dd>The simplex multiplier value.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Fitting.Fitting.find_file" href="#PyOghma.Fitting.Fitting.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.load_config" href="#PyOghma.Fitting.Fitting.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.propegate_dest_dir" href="#PyOghma.Fitting.Fitting.propegate_dest_dir">propegate_dest_dir</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.set_format" href="#PyOghma.Fitting.Fitting.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.update" href="#PyOghma.Fitting.Fitting.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Fitting.Fits"><code class="flex name class">
 <span>class <span class="ident">Fits</span></span>
@@ -998,47 +524,22 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Fits(Fitting):
-    &#34;&#34;&#34;
-    Class to handle fit configurations.
-    Inherits from:
-        Fitting
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The fit configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Fits class.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         super(Fitting, self).__init__()
         self.json_name = &#39;fits&#39;
         self.data = {}
         self.data[&#39;data_sets&#39;] = 0
         self.set_format()
     
-    def set_datasets(self, *datasets: object) -&gt; None:
-        &#34;&#34;&#34;
-        Set the datasets for the configuration.
-        Args:
-            *datasets: Variable-length list of dataset objects.
-        &#34;&#34;&#34;
+    def set_datasets(self, *datasets):
         self.segments = len(datasets)
         self.data = {&#39;data_sets&#39;: self.segments}
         for idx, dataset in enumerate(datasets): 
             self.data.update({&#39;data_set&#39; + str(idx): dataset.data})
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle fit configurations.
-Inherits from:
-Fitting</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The fit configuration data.</dd>
-</dl>
-<p>Initialize the Fits class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></li>
@@ -1046,45 +547,23 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Fits.set_datasets"><code class="name flex">
-<span>def <span class="ident">set_datasets</span></span>(<span>self, *datasets: object) ‑> None</span>
+<span>def <span class="ident">set_datasets</span></span>(<span>self, *datasets)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_datasets(self, *datasets: object) -&gt; None:
-    &#34;&#34;&#34;
-    Set the datasets for the configuration.
-    Args:
-        *datasets: Variable-length list of dataset objects.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_datasets(self, *datasets):
     self.segments = len(datasets)
     self.data = {&#39;data_sets&#39;: self.segments}
     for idx, dataset in enumerate(datasets): 
         self.data.update({&#39;data_set&#39; + str(idx): dataset.data})
     self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Set the datasets for the configuration.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>*datasets</code></strong></dt>
-<dd>Variable-length list of dataset objects.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Fitting.Fitting.find_file" href="#PyOghma.Fitting.Fitting.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.load_config" href="#PyOghma.Fitting.Fitting.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.propegate_dest_dir" href="#PyOghma.Fitting.Fitting.propegate_dest_dir">propegate_dest_dir</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.set_format" href="#PyOghma.Fitting.Fitting.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.update" href="#PyOghma.Fitting.Fitting.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Fitting.Fitting"><code class="flex name class">
 <span>class <span class="ident">Fitting</span></span>
@@ -1095,22 +574,8 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Fitting:
-    &#34;&#34;&#34;
-    Main class to handle fitting configurations and operations.
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        name (str): The name of the fitting instance.
-        dest_dir (str): The destination directory for saving or loading data.
-        Fit_Config (Fit_Config): Instance of the Fit_Config class.
-        Duplitate (Duplicate): Instance of the Duplicate class.
-        Vars (Vars): Instance of the Vars class.
-        Rules (Rules): Instance of the Rules class.
-        Fits (Fits): Instance of the Fits class.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Fitting class and its subcomponents.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         self.json_name = &#39;&#39;
         self.name = &#39;&#39;
         self.dest_dir = &#39;&#39;
@@ -1120,12 +585,7 @@ Fitting</p>
         self.Rules = Rules()
         self.Fits = Fits()
     
-    def propegate_dest_dir(self, dest_dir: str) -&gt; None:
-        &#34;&#34;&#34;
-        Propagate the destination directory to all subcomponents.
-        Args:
-            dest_dir (str): The destination directory.
-        &#34;&#34;&#34;
+    def propegate_dest_dir(self, dest_dir):
         self.dest_dir = dest_dir
         self.Fit_Config.dest_dir = dest_dir
         self.Duplitate.dest_dir = dest_dir
@@ -1133,35 +593,18 @@ Fitting</p>
         self.Rules.dest_dir = dest_dir
         self.Fits.dest_dir = dest_dir
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def set_format(self) -&gt; None:
-        &#34;&#34;&#34;
-        Set the format of the JSON data based on the json_name.
-        &#34;&#34;&#34;
+    def set_format(self):
         match self.json_name:
             case &#39;fit_config&#39;:
                 self.json_format = {self.json_name: self.data}
@@ -1174,10 +617,7 @@ Fitting</p>
             case _:
                 self.json_format = {self.json_name: self.data}
 
-    def update(self) -&gt; None:
-        &#34;&#34;&#34;
-        Update the JSON file with the current data.
-        &#34;&#34;&#34;
+    def update(self):
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
             data = json.load(j)
 
@@ -1189,27 +629,7 @@ Fitting</p>
 
         return</code></pre>
 </details>
-<div class="desc"><p>Main class to handle fitting configurations and operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the fitting instance.</dd>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory for saving or loading data.</dd>
-<dt><strong><code>Fit_Config</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Fit_Config" href="#PyOghma.Fitting.Fit_Config">Fit_Config</a></code></dt>
-<dd>Instance of the Fit_Config class.</dd>
-<dt><strong><code>Duplitate</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Duplicate" href="#PyOghma.Fitting.Duplicate">Duplicate</a></code></dt>
-<dd>Instance of the Duplicate class.</dd>
-<dt><strong><code>Vars</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Vars" href="#PyOghma.Fitting.Vars">Vars</a></code></dt>
-<dd>Instance of the Vars class.</dd>
-<dt><strong><code>Rules</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Rules" href="#PyOghma.Fitting.Rules">Rules</a></code></dt>
-<dd>Instance of the Rules class.</dd>
-<dt><strong><code>Fits</code></strong> :&ensp;<code><a title="PyOghma.Fitting.Fits" href="#PyOghma.Fitting.Fits">Fits</a></code></dt>
-<dd>Instance of the Fits class.</dd>
-</dl>
-<p>Initialize the Fitting class and its subcomponents.</p></div>
+<div class="desc"></div>
 <h3>Subclasses</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Duplicate" href="#PyOghma.Fitting.Duplicate">Duplicate</a></li>
@@ -1221,84 +641,45 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Fitting.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Fitting.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Fitting.propegate_dest_dir"><code class="name flex">
-<span>def <span class="ident">propegate_dest_dir</span></span>(<span>self, dest_dir: str) ‑> None</span>
+<span>def <span class="ident">propegate_dest_dir</span></span>(<span>self, dest_dir)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def propegate_dest_dir(self, dest_dir: str) -&gt; None:
-    &#34;&#34;&#34;
-    Propagate the destination directory to all subcomponents.
-    Args:
-        dest_dir (str): The destination directory.
-    &#34;&#34;&#34;
+<pre><code class="python">def propegate_dest_dir(self, dest_dir):
     self.dest_dir = dest_dir
     self.Fit_Config.dest_dir = dest_dir
     self.Duplitate.dest_dir = dest_dir
@@ -1306,25 +687,17 @@ Fitting</p>
     self.Rules.dest_dir = dest_dir
     self.Fits.dest_dir = dest_dir</code></pre>
 </details>
-<div class="desc"><p>Propagate the destination directory to all subcomponents.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Fitting.set_format"><code class="name flex">
-<span>def <span class="ident">set_format</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">set_format</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_format(self) -&gt; None:
-    &#34;&#34;&#34;
-    Set the format of the JSON data based on the json_name.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_format(self):
     match self.json_name:
         case &#39;fit_config&#39;:
             self.json_format = {self.json_name: self.data}
@@ -1337,20 +710,17 @@ Fitting</p>
         case _:
             self.json_format = {self.json_name: self.data}</code></pre>
 </details>
-<div class="desc"><p>Set the format of the JSON data based on the json_name.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Fitting.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">update</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def update(self) -&gt; None:
-    &#34;&#34;&#34;
-    Update the JSON file with the current data.
-    &#34;&#34;&#34;
+<pre><code class="python">def update(self):
     with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
         data = json.load(j)
 
@@ -1362,13 +732,13 @@ Fitting</p>
 
     return</code></pre>
 </details>
-<div class="desc"><p>Update the JSON file with the current data.</p></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
 <dt id="PyOghma.Fitting.ImportConfig"><code class="flex name class">
 <span>class <span class="ident">ImportConfig</span></span>
-<span>(</span><span>dest_dir: str,<br>import_dir: str = 'jv.dat',<br>x_data: str = 'J (A/cm^2)',<br>y_data: str = 'V (Voltage)')</span>
+<span>(</span><span>dest_dir, import_dir='jv.dat', x_data='J (A/cm^2)', y_data='V (Voltage)')</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -1376,22 +746,8 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class ImportConfig:
-    &#34;&#34;&#34;
-    Class to handle import configuration operations.
-    Attributes:
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The import configuration data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str, import_dir: str = &#39;jv.dat&#39;, x_data: str = &#39;J (A/cm^2)&#39;, y_data: str = &#39;V (Voltage)&#39;) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the ImportConfig class.
-        Args:
-            dest_dir (str): The destination directory.
-            import_dir (str): The import directory.
-            x_data (str): The x data label.
-            y_data (str): The y data label.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir, import_dir=&#39;jv.dat&#39;, x_data=&#39;J (A/cm^2)&#39;, y_data = &#39;V (Voltage)&#39;):
         self.dest_dir = dest_dir
         self.json_name = &#39;import_config&#39;
         self.data = self.load_config(&#39;default&#39;)
@@ -1405,14 +761,7 @@ Fitting</p>
         self.data[&#39;data_file&#39;] = &#39;fit_data#&#39; + str(secrets.token_hex(8)) + &#39;.inp&#39;
         self.create_inp()
 
-    def get_combo_pos(self, x: str) -&gt; tuple:
-        &#34;&#34;&#34;
-        Get the combo position for a given label.
-        Args:
-            x (str): The label to search for.
-        Returns:
-            tuple: The index and label.
-        &#34;&#34;&#34;
+    def get_combo_pos(self, x):
         x = x.lower().strip().replace(&#39; &#39;,&#39;&#39;)
         list_o = [&#39;Wavelength (nm)&#39;, &#39;Wavelength (um)&#39;, &#39;Wavelength (cm)&#39;, &#39;Wavelenght (m)&#39;, &#39;Photonenergy (eV)&#39;, &#39;J (mA/cm2)&#39;, &#39;J (A/cm2)&#39;, &#39;J (A/m2)&#39;, &#39;IMPS Re(Z) (Am2/W)&#39;, 
                 &#39;IMPS Im(Z) (Am2/W)&#39;, &#39;IMVS Re(Z) (Vm2/W)&#39;, &#39;IMVS Im(Z) (Vm2/W)&#39;, &#39;Amps (A)&#39;, &#39;Amps - no convert (A)&#39;, &#39;Voltage (V)&#39;, &#39;-Voltage (V)&#39;, &#39;Voltage (mV)&#39;, &#39;Frequency (Hz)&#39;,
@@ -1423,10 +772,9 @@ Fitting</p>
         idx = list.index(match)
         return idx, list_o[idx]
     
-    def create_inp(self) -&gt; None:
-        &#34;&#34;&#34;
-        Create the input file for import.
-        &#34;&#34;&#34;
+    #oghma_csv {&#34;title&#34;:&#34;Voltage - J&#34;,&#34;type&#34;:&#34;xy&#34;,&#34;y_label&#34;:&#34;Voltage&#34;,&#34;data_label&#34;:&#34;J&#34;,&#34;y_units&#34;:&#34;V&#34;,&#34;data_units&#34;:&#34;A/m2&#34;,&#34;time &#34;:nan,&#34;Vexternal&#34;:nan,&#34;x_len&#34;:1,&#34;y_len&#34;:7,&#34;z_len&#34;:1,&#34;cols&#34;:&#34;yd&#34;}*
+    def create_inp(self):
+        #header = &#34;#oghma_csv{\&#34;title\&#34;:&#34; +&#34;\&#34;&#34;+ self.data[&#39;import_title&#39;] + &#34;\&#34;,\&#34;type\&#34;:\&#34;xy\&#34;&#34; + &#34;,\&#34;y_label\&#34;:&#34;  + &#34;\&#34;&#34; + self.data[&#39;import_xlabel&#39;] + &#34;\&#34;,\&#34;data_lable\&#34;:&#34; + &#34;\&#34;&#34;+self.data[&#39;import_ylable&#39;]
         oghma_csv = {}
         oghma_csv[&#34;title&#34;] = self.data[&#39;import_title&#39;]
         oghma_csv[&#34;type&#34;] = &#34;xy&#34;
@@ -1449,77 +797,35 @@ Fitting</p>
             f.write(head)
             data.to_csv(f, sep=&#39;\t&#39;, header=False, index=False)
     
-    def set_import_params(self, **kwargs: dict) -&gt; None:
-        &#34;&#34;&#34;
-        Set the import parameters.
-        Args:
-            **kwargs: Keyword arguments for import parameters.
-        &#34;&#34;&#34;
+    def set_import_params(self, **kwargs):
         for kwarg in kwargs:
             if kwarg in self.data:
                 self.data[kwarg.key()] = kwarg.value()
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Class to handle import configuration operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The import configuration data.</dd>
-</dl>
-<p>Initialize the ImportConfig class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>import_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The import directory.</dd>
-<dt><strong><code>x_data</code></strong> :&ensp;<code>str</code></dt>
-<dd>The x data label.</dd>
-<dt><strong><code>y_data</code></strong> :&ensp;<code>str</code></dt>
-<dd>The y data label.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.ImportConfig.create_inp"><code class="name flex">
-<span>def <span class="ident">create_inp</span></span>(<span>self) ‑> None</span>
+<span>def <span class="ident">create_inp</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def create_inp(self) -&gt; None:
-    &#34;&#34;&#34;
-    Create the input file for import.
-    &#34;&#34;&#34;
+<pre><code class="python">def create_inp(self):
+    #header = &#34;#oghma_csv{\&#34;title\&#34;:&#34; +&#34;\&#34;&#34;+ self.data[&#39;import_title&#39;] + &#34;\&#34;,\&#34;type\&#34;:\&#34;xy\&#34;&#34; + &#34;,\&#34;y_label\&#34;:&#34;  + &#34;\&#34;&#34; + self.data[&#39;import_xlabel&#39;] + &#34;\&#34;,\&#34;data_lable\&#34;:&#34; + &#34;\&#34;&#34;+self.data[&#39;import_ylable&#39;]
     oghma_csv = {}
     oghma_csv[&#34;title&#34;] = self.data[&#39;import_title&#39;]
     oghma_csv[&#34;type&#34;] = &#34;xy&#34;
@@ -1542,57 +848,33 @@ Fitting</p>
         f.write(head)
         data.to_csv(f, sep=&#39;\t&#39;, header=False, index=False)</code></pre>
 </details>
-<div class="desc"><p>Create the input file for import.</p></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.ImportConfig.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.ImportConfig.get_combo_pos"><code class="name flex">
-<span>def <span class="ident">get_combo_pos</span></span>(<span>self, x: str) ‑> tuple</span>
+<span>def <span class="ident">get_combo_pos</span></span>(<span>self, x)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_combo_pos(self, x: str) -&gt; tuple:
-    &#34;&#34;&#34;
-    Get the combo position for a given label.
-    Args:
-        x (str): The label to search for.
-    Returns:
-        tuple: The index and label.
-    &#34;&#34;&#34;
+<pre><code class="python">def get_combo_pos(self, x):
     x = x.lower().strip().replace(&#39; &#39;,&#39;&#39;)
     list_o = [&#39;Wavelength (nm)&#39;, &#39;Wavelength (um)&#39;, &#39;Wavelength (cm)&#39;, &#39;Wavelenght (m)&#39;, &#39;Photonenergy (eV)&#39;, &#39;J (mA/cm2)&#39;, &#39;J (A/cm2)&#39;, &#39;J (A/m2)&#39;, &#39;IMPS Re(Z) (Am2/W)&#39;, 
             &#39;IMPS Im(Z) (Am2/W)&#39;, &#39;IMVS Re(Z) (Vm2/W)&#39;, &#39;IMVS Im(Z) (Vm2/W)&#39;, &#39;Amps (A)&#39;, &#39;Amps - no convert (A)&#39;, &#39;Voltage (V)&#39;, &#39;-Voltage (V)&#39;, &#39;Voltage (mV)&#39;, &#39;Frequency (Hz)&#39;,
@@ -1603,80 +885,43 @@ Fitting</p>
     idx = list.index(match)
     return idx, list_o[idx]</code></pre>
 </details>
-<div class="desc"><p>Get the combo position for a given label.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>x</code></strong> :&ensp;<code>str</code></dt>
-<dd>The label to search for.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>tuple</code></dt>
-<dd>The index and label.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.ImportConfig.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.ImportConfig.set_import_params"><code class="name flex">
-<span>def <span class="ident">set_import_params</span></span>(<span>self, **kwargs: dict) ‑> None</span>
+<span>def <span class="ident">set_import_params</span></span>(<span>self, **kwargs)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_import_params(self, **kwargs: dict) -&gt; None:
-    &#34;&#34;&#34;
-    Set the import parameters.
-    Args:
-        **kwargs: Keyword arguments for import parameters.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_import_params(self, **kwargs):
     for kwarg in kwargs:
         if kwarg in self.data:
             self.data[kwarg.key()] = kwarg.value()</code></pre>
 </details>
-<div class="desc"><p>Set the import parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>**kwargs</code></strong></dt>
-<dd>Keyword arguments for import parameters.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
 <dt id="PyOghma.Fitting.Rule"><code class="flex name class">
 <span>class <span class="ident">Rule</span></span>
-<span>(</span><span>dest_dir: str)</span>
+<span>(</span><span>dest_dir)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -1684,19 +929,8 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Rule:
-    &#34;&#34;&#34;
-    Class to handle individual rule operations.
-    Attributes:
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The rule data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Rule class.
-        Args:
-            dest_dir (str): The destination directory.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir):
         self.dest_dir = dest_dir
         self.json_name = &#39;rules&#39;
         self.data = self.load_config(&#39;default&#39;)
@@ -1704,42 +938,18 @@ Fitting</p>
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
             self.ob = json.load(j)
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
         
-    def get_path_from_dict(self, ob: dict, base_path: str = &#39;&#39;, base_name: str = &#39;&#39;, path: str = &#39;&#39;) -&gt; str:
-        &#34;&#34;&#34;
-        Get the path from a dictionary based on the base name.
-        Args:
-            ob (dict): The dictionary object.
-            base_path (str): The base path.
-            base_name (str): The base name to search for.
-            path (str): The current path.
-        Returns:
-            str: The constructed path.
-        &#34;&#34;&#34;
+    def get_path_from_dict(self, ob, base_path=&#39;&#39;, base_name=&#39;&#39;, path=&#39;&#39;):
         if ob and base_name in list(ob.keys()):
             path = f&#34;{base_path}{path}/{base_name}&#34;
             return path
@@ -1749,15 +959,8 @@ Fitting</p>
             for key, value in sorted(ob.items()):
                 return self.get_path_from_dict(base_path, base_name, value, f&#39;{path}/{key}&#39;)
     
-    def set_rule(self, state: bool = True, param_x: str = &#39;&#39;, param_y: str = &#39;&#39;, funciton: str = &#39;&#39;) -&gt; None:
-        &#34;&#34;&#34;
-        Set the rule parameters.
-        Args:
-            state (bool): Whether the rule is enabled.
-            param_x (str): The x parameter name.
-            param_y (str): The y parameter name.
-            funciton (str): The function to apply.
-        &#34;&#34;&#34;
+    def set_rule(self, state=True, param_x = &#39;&#39;, param_y = &#39;&#39;, funciton = &#39;&#39;):
+
         if state:
             self.data[&#39;fit_rule_enabled&#39;] = &#39;True&#39;
         else:
@@ -1775,76 +978,34 @@ Fitting</p>
 
         self.data[&#39;function&#39;] = funciton</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual rule operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The rule data.</dd>
-</dl>
-<p>Initialize the Rule class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Rule.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;*&#39;,&#39;*&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Rule.get_path_from_dict"><code class="name flex">
-<span>def <span class="ident">get_path_from_dict</span></span>(<span>self, ob: dict, base_path: str = '', base_name: str = '', path: str = '') ‑> str</span>
+<span>def <span class="ident">get_path_from_dict</span></span>(<span>self, ob, base_path='', base_name='', path='')</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_path_from_dict(self, ob: dict, base_path: str = &#39;&#39;, base_name: str = &#39;&#39;, path: str = &#39;&#39;) -&gt; str:
-    &#34;&#34;&#34;
-    Get the path from a dictionary based on the base name.
-    Args:
-        ob (dict): The dictionary object.
-        base_path (str): The base path.
-        base_name (str): The base name to search for.
-        path (str): The current path.
-    Returns:
-        str: The constructed path.
-    &#34;&#34;&#34;
+<pre><code class="python">def get_path_from_dict(self, ob, base_path=&#39;&#39;, base_name=&#39;&#39;, path=&#39;&#39;):
     if ob and base_name in list(ob.keys()):
         path = f&#34;{base_path}{path}/{base_name}&#34;
         return path
@@ -1854,73 +1015,33 @@ Fitting</p>
         for key, value in sorted(ob.items()):
             return self.get_path_from_dict(base_path, base_name, value, f&#39;{path}/{key}&#39;)</code></pre>
 </details>
-<div class="desc"><p>Get the path from a dictionary based on the base name.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>ob</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The dictionary object.</dd>
-<dt><strong><code>base_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The base path.</dd>
-<dt><strong><code>base_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The base name to search for.</dd>
-<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The current path.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The constructed path.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Rule.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Rule.set_rule"><code class="name flex">
-<span>def <span class="ident">set_rule</span></span>(<span>self, state: bool = True, param_x: str = '', param_y: str = '', funciton: str = '') ‑> None</span>
+<span>def <span class="ident">set_rule</span></span>(<span>self, state=True, param_x='', param_y='', funciton='')</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_rule(self, state: bool = True, param_x: str = &#39;&#39;, param_y: str = &#39;&#39;, funciton: str = &#39;&#39;) -&gt; None:
-    &#34;&#34;&#34;
-    Set the rule parameters.
-    Args:
-        state (bool): Whether the rule is enabled.
-        param_x (str): The x parameter name.
-        param_y (str): The y parameter name.
-        funciton (str): The function to apply.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_rule(self, state=True, param_x = &#39;&#39;, param_y = &#39;&#39;, funciton = &#39;&#39;):
+
     if state:
         self.data[&#39;fit_rule_enabled&#39;] = &#39;True&#39;
     else:
@@ -1938,18 +1059,7 @@ Fitting</p>
 
     self.data[&#39;function&#39;] = funciton</code></pre>
 </details>
-<div class="desc"><p>Set the rule parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>state</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether the rule is enabled.</dd>
-<dt><strong><code>param_x</code></strong> :&ensp;<code>str</code></dt>
-<dd>The x parameter name.</dd>
-<dt><strong><code>param_y</code></strong> :&ensp;<code>str</code></dt>
-<dd>The y parameter name.</dd>
-<dt><strong><code>funciton</code></strong> :&ensp;<code>str</code></dt>
-<dd>The function to apply.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -1962,47 +1072,22 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Rules(Fitting):
-    &#34;&#34;&#34;
-    Class to handle rule configurations.
-    Inherits from:
-        Fitting
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The rule configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Rules class.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         super(Fitting, self).__init__()
         self.json_name = &#39;rules&#39;
         self.data = {}
         self.data[&#39;segments&#39;] = 0
         self.set_format()
     
-    def set_Rules(self, *fitrules: object) -&gt; None:
-        &#34;&#34;&#34;
-        Set the rules for the configuration.
-        Args:
-            *fitrules: Variable-length list of rule objects.
-        &#34;&#34;&#34;
+    def set_Rules(self, *fitrules):
         self.segments = len(fitrules)
         self.data = {&#39;segments&#39;: self.segments}
         for idx, fitrule in enumerate(fitrules): 
             self.data.update({&#39;segment&#39; + str(idx): fitrule.data})
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle rule configurations.
-Inherits from:
-Fitting</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The rule configuration data.</dd>
-</dl>
-<p>Initialize the Rules class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></li>
@@ -2010,49 +1095,27 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Rules.set_Rules"><code class="name flex">
-<span>def <span class="ident">set_Rules</span></span>(<span>self, *fitrules: object) ‑> None</span>
+<span>def <span class="ident">set_Rules</span></span>(<span>self, *fitrules)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_Rules(self, *fitrules: object) -&gt; None:
-    &#34;&#34;&#34;
-    Set the rules for the configuration.
-    Args:
-        *fitrules: Variable-length list of rule objects.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_Rules(self, *fitrules):
     self.segments = len(fitrules)
     self.data = {&#39;segments&#39;: self.segments}
     for idx, fitrule in enumerate(fitrules): 
         self.data.update({&#39;segment&#39; + str(idx): fitrule.data})
     self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Set the rules for the configuration.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>*fitrules</code></strong></dt>
-<dd>Variable-length list of rule objects.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Fitting.Fitting.find_file" href="#PyOghma.Fitting.Fitting.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.load_config" href="#PyOghma.Fitting.Fitting.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.propegate_dest_dir" href="#PyOghma.Fitting.Fitting.propegate_dest_dir">propegate_dest_dir</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.set_format" href="#PyOghma.Fitting.Fitting.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.update" href="#PyOghma.Fitting.Fitting.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 <dt id="PyOghma.Fitting.Variable"><code class="flex name class">
 <span>class <span class="ident">Variable</span></span>
-<span>(</span><span>dest_dir: str)</span>
+<span>(</span><span>dest_dir)</span>
 </code></dt>
 <dd>
 <details class="source">
@@ -2060,19 +1123,8 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Variable:
-    &#34;&#34;&#34;
-    Class to handle individual variable operations.
-    Attributes:
-        dest_dir (str): The destination directory.
-        json_name (str): The name of the JSON configuration.
-        data (dict): The variable data.
-    &#34;&#34;&#34;
-    def __init__(self, dest_dir: str) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Variable class.
-        Args:
-            dest_dir (str): The destination directory.
-        &#34;&#34;&#34;
+
+    def __init__(self, dest_dir):
         self.dest_dir = dest_dir
         self.json_name = &#39;vars&#39;
         self.data = self.load_config(&#39;default&#39;)
@@ -2080,42 +1132,18 @@ Fitting</p>
         with open(os.path.join(self.dest_dir,&#39;sim.json&#39;), &#34;r&#34;) as j:
             self.ob = json.load(j)
 
-    def find_file(self, file: str) -&gt; str:
-        &#34;&#34;&#34;
-        Find a file in the directory structure.
-        Args:
-            file (str): The name of the file to find.
-        Returns:
-            str: The path to the found file.
-        &#34;&#34;&#34;
+    def find_file(self, file):
         config_dir = os.path.join(&#39;*&#39;,&#39;Sim_Defaults&#39;,&#39;Fits&#39;, self.json_name, file)
         filename = glob.glob(config_dir)[0]
         self.loaded_filename = str(filename)
         return str(filename)
 
-    def load_config(self, file: str) -&gt; dict:
-        &#34;&#34;&#34;
-        Load a configuration file.
-        Args:
-            file (str): The name of the configuration file.
-        Returns:
-            dict: The loaded JSON data.
-        &#34;&#34;&#34;
+    def load_config(self, file):
         file = file + &#39;.json&#39;
         with open(self.find_file(file)) as j:
             return json.loads(j.read())
         
-    def get_path_from_dict(self, ob: dict, base_path: str = &#39;&#39;, base_name: str = &#39;&#39;, path: str = &#39;&#39;) -&gt; str:
-        &#34;&#34;&#34;
-        Get the path from a dictionary based on the base name.
-        Args:
-            ob (dict): The dictionary object.
-            base_path (str): The base path.
-            base_name (str): The base name to search for.
-            path (str): The current path.
-        Returns:
-            str: The constructed path.
-        &#34;&#34;&#34;
+    def get_path_from_dict(self, ob, base_path=&#39;&#39;, base_name=&#39;&#39;, path=&#39;&#39;):
         if ob and base_name in list(ob.keys()):
             path = f&#34;{base_path}{path}/{base_name}&#34;
             return path
@@ -2125,16 +1153,8 @@ Fitting</p>
             for key, value in sorted(ob.items()):
                 return self.get_path_from_dict(base_path, base_name, value, f&#39;{path}/{key}&#39;)
     
-    def set_variable(self, state: bool = True, param: str = &#39;&#39;, min: float = 0, max: float = 100, log_fit: bool = False) -&gt; None:
-        &#34;&#34;&#34;
-        Set the variable parameters.
-        Args:
-            state (bool): Whether the variable is enabled.
-            param (str): The parameter name.
-            min (float): The minimum value.
-            max (float): The maximum value.
-            log_fit (bool): Whether to use logarithmic fitting.
-        &#34;&#34;&#34;
+    def set_variable(self, state=True, param=&#39;&#39;, min=0, max=100, log_fit=False):
+
         if state:
             self.data[&#39;fit_var_enabled&#39;] = &#39;True&#39;
         else:
@@ -2154,76 +1174,34 @@ Fitting</p>
         else:
             self.data[&#39;log_fit&#39;] = &#39;False&#39;</code></pre>
 </details>
-<div class="desc"><p>Class to handle individual variable operations.</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The variable data.</dd>
-</dl>
-<p>Initialize the Variable class.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>dest_dir</code></strong> :&ensp;<code>str</code></dt>
-<dd>The destination directory.</dd>
-</dl></div>
+<div class="desc"></div>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Variable.find_file"><code class="name flex">
-<span>def <span class="ident">find_file</span></span>(<span>self, file: str) ‑> str</span>
+<span>def <span class="ident">find_file</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def find_file(self, file: str) -&gt; str:
-    &#34;&#34;&#34;
-    Find a file in the directory structure.
-    Args:
-        file (str): The name of the file to find.
-    Returns:
-        str: The path to the found file.
-    &#34;&#34;&#34;
+<pre><code class="python">def find_file(self, file):
     config_dir = os.path.join(&#39;*&#39;,&#39;Sim_Defaults&#39;,&#39;Fits&#39;, self.json_name, file)
     filename = glob.glob(config_dir)[0]
     self.loaded_filename = str(filename)
     return str(filename)</code></pre>
 </details>
-<div class="desc"><p>Find a file in the directory structure.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the file to find.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The path to the found file.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Variable.get_path_from_dict"><code class="name flex">
-<span>def <span class="ident">get_path_from_dict</span></span>(<span>self, ob: dict, base_path: str = '', base_name: str = '', path: str = '') ‑> str</span>
+<span>def <span class="ident">get_path_from_dict</span></span>(<span>self, ob, base_path='', base_name='', path='')</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_path_from_dict(self, ob: dict, base_path: str = &#39;&#39;, base_name: str = &#39;&#39;, path: str = &#39;&#39;) -&gt; str:
-    &#34;&#34;&#34;
-    Get the path from a dictionary based on the base name.
-    Args:
-        ob (dict): The dictionary object.
-        base_path (str): The base path.
-        base_name (str): The base name to search for.
-        path (str): The current path.
-    Returns:
-        str: The constructed path.
-    &#34;&#34;&#34;
+<pre><code class="python">def get_path_from_dict(self, ob, base_path=&#39;&#39;, base_name=&#39;&#39;, path=&#39;&#39;):
     if ob and base_name in list(ob.keys()):
         path = f&#34;{base_path}{path}/{base_name}&#34;
         return path
@@ -2233,74 +1211,33 @@ Fitting</p>
         for key, value in sorted(ob.items()):
             return self.get_path_from_dict(base_path, base_name, value, f&#39;{path}/{key}&#39;)</code></pre>
 </details>
-<div class="desc"><p>Get the path from a dictionary based on the base name.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>ob</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The dictionary object.</dd>
-<dt><strong><code>base_path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The base path.</dd>
-<dt><strong><code>base_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The base name to search for.</dd>
-<dt><strong><code>path</code></strong> :&ensp;<code>str</code></dt>
-<dd>The current path.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>str</code></dt>
-<dd>The constructed path.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Variable.load_config"><code class="name flex">
-<span>def <span class="ident">load_config</span></span>(<span>self, file: str) ‑> dict</span>
+<span>def <span class="ident">load_config</span></span>(<span>self, file)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def load_config(self, file: str) -&gt; dict:
-    &#34;&#34;&#34;
-    Load a configuration file.
-    Args:
-        file (str): The name of the configuration file.
-    Returns:
-        dict: The loaded JSON data.
-    &#34;&#34;&#34;
+<pre><code class="python">def load_config(self, file):
     file = file + &#39;.json&#39;
     with open(self.find_file(file)) as j:
         return json.loads(j.read())</code></pre>
 </details>
-<div class="desc"><p>Load a configuration file.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>file</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the configuration file.</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>dict</code></dt>
-<dd>The loaded JSON data.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 <dt id="PyOghma.Fitting.Variable.set_variable"><code class="name flex">
-<span>def <span class="ident">set_variable</span></span>(<span>self,<br>state: bool = True,<br>param: str = '',<br>min: float = 0,<br>max: float = 100,<br>log_fit: bool = False) ‑> None</span>
+<span>def <span class="ident">set_variable</span></span>(<span>self, state=True, param='', min=0, max=100, log_fit=False)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_variable(self, state: bool = True, param: str = &#39;&#39;, min: float = 0, max: float = 100, log_fit: bool = False) -&gt; None:
-    &#34;&#34;&#34;
-    Set the variable parameters.
-    Args:
-        state (bool): Whether the variable is enabled.
-        param (str): The parameter name.
-        min (float): The minimum value.
-        max (float): The maximum value.
-        log_fit (bool): Whether to use logarithmic fitting.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_variable(self, state=True, param=&#39;&#39;, min=0, max=100, log_fit=False):
+
     if state:
         self.data[&#39;fit_var_enabled&#39;] = &#39;True&#39;
     else:
@@ -2320,20 +1257,7 @@ Fitting</p>
     else:
         self.data[&#39;log_fit&#39;] = &#39;False&#39;</code></pre>
 </details>
-<div class="desc"><p>Set the variable parameters.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>state</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether the variable is enabled.</dd>
-<dt><strong><code>param</code></strong> :&ensp;<code>str</code></dt>
-<dd>The parameter name.</dd>
-<dt><strong><code>min</code></strong> :&ensp;<code>float</code></dt>
-<dd>The minimum value.</dd>
-<dt><strong><code>max</code></strong> :&ensp;<code>float</code></dt>
-<dd>The maximum value.</dd>
-<dt><strong><code>log_fit</code></strong> :&ensp;<code>bool</code></dt>
-<dd>Whether to use logarithmic fitting.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
 </dd>
@@ -2346,47 +1270,22 @@ Fitting</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Vars(Fitting):
-    &#34;&#34;&#34;
-    Class to handle variable configurations.
-    Inherits from:
-        Fitting
-    Attributes:
-        json_name (str): The name of the JSON configuration.
-        data (dict): The variable configuration data.
-    &#34;&#34;&#34;
-    def __init__(self) -&gt; None:
-        &#34;&#34;&#34;
-        Initialize the Vars class.
-        &#34;&#34;&#34;
+
+    def __init__(self):
         super(Fitting, self).__init__()
         self.json_name = &#39;vars&#39;
         self.data = {}
         self.data[&#39;segments&#39;] = 0
         self.set_format()
     
-    def set_variables(self, *variables: object) -&gt; None:
-        &#34;&#34;&#34;
-        Set the variables for the configuration.
-        Args:
-            *variables: Variable-length list of variable objects.
-        &#34;&#34;&#34;
+    def set_variables(self, *variables):
         self.segments = len(variables)
         self.data = {&#39;segments&#39;: self.segments}
         for idx, var in enumerate(variables): 
             self.data.update({&#39;segment&#39; + str(idx): var.data})
         self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Class to handle variable configurations.
-Inherits from:
-Fitting</p>
-<h2 id="attributes">Attributes</h2>
-<dl>
-<dt><strong><code>json_name</code></strong> :&ensp;<code>str</code></dt>
-<dd>The name of the JSON configuration.</dd>
-<dt><strong><code>data</code></strong> :&ensp;<code>dict</code></dt>
-<dd>The variable configuration data.</dd>
-</dl>
-<p>Initialize the Vars class.</p></div>
+<div class="desc"></div>
 <h3>Ancestors</h3>
 <ul class="hlist">
 <li><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></li>
@@ -2394,45 +1293,23 @@ Fitting</p>
 <h3>Methods</h3>
 <dl>
 <dt id="PyOghma.Fitting.Vars.set_variables"><code class="name flex">
-<span>def <span class="ident">set_variables</span></span>(<span>self, *variables: object) ‑> None</span>
+<span>def <span class="ident">set_variables</span></span>(<span>self, *variables)</span>
 </code></dt>
 <dd>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_variables(self, *variables: object) -&gt; None:
-    &#34;&#34;&#34;
-    Set the variables for the configuration.
-    Args:
-        *variables: Variable-length list of variable objects.
-    &#34;&#34;&#34;
+<pre><code class="python">def set_variables(self, *variables):
     self.segments = len(variables)
     self.data = {&#39;segments&#39;: self.segments}
     for idx, var in enumerate(variables): 
         self.data.update({&#39;segment&#39; + str(idx): var.data})
     self.set_format()</code></pre>
 </details>
-<div class="desc"><p>Set the variables for the configuration.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>*variables</code></strong></dt>
-<dd>Variable-length list of variable objects.</dd>
-</dl></div>
+<div class="desc"></div>
 </dd>
 </dl>
-<h3>Inherited members</h3>
-<ul class="hlist">
-<li><code><b><a title="PyOghma.Fitting.Fitting" href="#PyOghma.Fitting.Fitting">Fitting</a></b></code>:
-<ul class="hlist">
-<li><code><a title="PyOghma.Fitting.Fitting.find_file" href="#PyOghma.Fitting.Fitting.find_file">find_file</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.load_config" href="#PyOghma.Fitting.Fitting.load_config">load_config</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.propegate_dest_dir" href="#PyOghma.Fitting.Fitting.propegate_dest_dir">propegate_dest_dir</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.set_format" href="#PyOghma.Fitting.Fitting.set_format">set_format</a></code></li>
-<li><code><a title="PyOghma.Fitting.Fitting.update" href="#PyOghma.Fitting.Fitting.update">update</a></code></li>
-</ul>
-</li>
-</ul>
 </dd>
 </dl>
 </section>
