@@ -1,3 +1,9 @@
+"""
+This module provides functionality for managing simulation configurations and operations. 
+It supports various simulation types, including steady-state, time-domain, and frequency-domain 
+simulations. The module allows for configuring simulation parameters, updating JSON configurations, 
+and handling specific simulation modes such as JV curves, SunsVoc, CELIV, and more.
+"""
 import os
 import secrets
 from glob import glob

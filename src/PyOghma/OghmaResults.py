@@ -1,3 +1,10 @@
+"""
+This module provides functionality for managing and processing simulation and experiment results. 
+It includes methods for loading experiments, finding and saving results, handling job data, and 
+converting results into various formats such as IGOR files. The module also supports creating 
+experiment dictionaries and extracting specific parameters from simulation data.
+"""
+
 import os
 import glob
 import secrets

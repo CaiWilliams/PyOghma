@@ -1,3 +1,9 @@
+"""
+This module provides functionality for managing thermal configurations and simulations. 
+It allows setting temperature, configuring thermal boundaries, defining mesh properties, 
+and updating simulation data in JSON format for thermal analysis.
+"""
+
 import ujson as json
 import os
 from glob import glob

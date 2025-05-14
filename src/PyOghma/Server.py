@@ -1,3 +1,10 @@
+"""
+This module provides functionality for managing and executing simulation jobs on a server. 
+It includes methods for adding jobs, running them in parallel using multiple CPUs, generating 
+commands for execution, and cleaning up simulation directories. The module also defines a 
+job class to represent individual simulation tasks.
+"""
+
 import os
 import glob
 import time

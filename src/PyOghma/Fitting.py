@@ -1,31 +1,7 @@
 """
-This module provides classes for managing fitting configurations, variables, rules, and datasets.
-
-Classes:
-    - Fitting: Main class to handle fitting configurations and operations, including managing subcomponents.
-    - Fit_Config: Handles the configuration for fitting operations.
-    - Duplicate: Manages duplication configurations for fitting.
-    - Dupe: Handles individual duplication operations.
-    - Vars: Manages variable configurations for fitting.
-    - Variable: Handles individual variable operations.
-    - Rules: Manages rule configurations for fitting.
-    - Rule: Handles individual rule operations.
-    - Fits: Manages fit configurations and datasets.
-    - Dataset: Handles individual dataset operations.
-    - FitPatch: Manages individual fit patch operations.
-    - Config: Handles configuration operations for fitting against specific data.
-    - ImportConfig: Manages import configurations for data used in fitting.
-
-Dependencies:
-    - os: For file and directory operations.
-    - glob: For file pattern matching.
-    - secrets: For generating unique identifiers.
-    - json: For JSON file handling.
-    - numpy: For numerical computations.
-    - pandas: For data manipulation and file I/O.
-
-Usage:
-    The module can be used to configure and manage fitting operations, including setting variables, rules, and datasets, as well as importing and exporting configurations.
+This module provides functionality for managing fitting operations, including configurations, 
+variables, rules, and datasets. It supports creating, modifying, and saving fitting parameters 
+and settings, as well as handling data import and export for simulations.
 """
 import os
 import glob

@@ -1,21 +1,7 @@
 """
-This module provides classes for analyzing solar cell experimental data.
-
-Classes:
-    - Ideality_Factor: Calculates the ideality factor of a solar cell based on the relationship 
-      between the logarithm of the generation rate and the open-circuit voltage (Voc).
-    - Transport_Resistance: Computes the transport resistance at open-circuit voltage using 
-      JV and pseudo-JV data.
-    - Psudo_JV: Processes experimental data to calculate pseudo JV current density and voltage 
-      values for a diode.
-
-Dependencies:
-    - platform: For determining the operating system.
-    - numpy: For numerical computations.
-    - ujson: For fast JSON parsing.
-    - scipy.constants: For physical constants.
-    - scipy.interpolate: For data interpolation.
-    - matplotlib.pyplot: For plotting data (if needed).
+This module provides functionality for analyzing solar cell experimental data, including calculations 
+of ideality factors, transport resistance, and pseudo JV characteristics. It processes experimental 
+data and performs numerical computations to derive key parameters for solar cell performance analysis.
 """
 import platform
 import numpy as np

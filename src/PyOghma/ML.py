@@ -1,35 +1,10 @@
 """
-This module provides classes for managing machine learning configurations, simulations, and networks.
-
-Classes:
-    - ml: Main class to handle machine learning configurations and operations.
-    - ml_random: Manages random input configurations for machine learning.
-    - ml_input: Handles individual random input configurations.
-    - ml_patch: Manages patch configurations for machine learning.
-    - duplicate: Handles duplication configurations for machine learning.
-    - ml_sim: Manages simulation configurations for machine learning.
-    - ml_sim_patch: Handles individual simulation patch configurations.
-    - ml_sim_output_vector: Manages output vector configurations for simulations.
-    - ml_sim_output_vector_import_cofig: Handles import configurations for simulation output vectors.
-    - ml_config: Manages configuration settings for machine learning.
-    - ml_networks: Handles network configurations for machine learning.
-    - ml_network: Manages individual network configurations.
-    - ml_network_input: Handles input configurations for machine learning networks.
-    - ml_network_output: Manages output configurations for machine learning networks.
-
-Dependencies:
-    - glob: For file pattern matching.
-    - ujson: For fast JSON parsing.
-    - numpy: For numerical computations.
-    - difflib: For string matching.
-    - secrets: For generating unique identifiers.
-    - copy: For deep copying objects.
-    - os: For file and directory operations.
-    - importlib.resources: For accessing resource files.
-
-Usage:
-    The module can be used to configure and manage machine learning operations, including setting up simulations, random inputs, patches, and neural networks.
+This module provides functionality for managing machine learning workflows, including configurations, 
+simulations, and neural networks. It supports operations such as setting up random inputs, patches, 
+simulation parameters, and network configurations for machine learning tasks.
 """
+
+
 
 from glob import glob
 import ujson as json

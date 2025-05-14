@@ -1,3 +1,9 @@
+"""
+This module provides functionality for managing optical configurations and operations, including 
+handling light sources, lasers, and light intensity settings. It supports loading, modifying, 
+and saving configurations for simulations involving optical components.
+"""
+
 import ujson as json
 import os
 import secrets
