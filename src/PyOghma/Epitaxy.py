@@ -1,3 +1,19 @@
+"""
+This module provides classes for managing epitaxy configurations, layers, and density of states (DOS) data.
+
+Classes:
+    - Epitaxy: Handles the configuration and data for epitaxy, including loading and updating JSON files.
+    - Layer: Represents a specific layer in the epitaxy, allowing for manipulation of its properties.
+    - DOS: Manages the density of states (DOS) data, including enabling/disabling, setting shapes, and configuring carrier properties.
+
+Dependencies:
+    - os: For file and directory operations.
+    - secrets: For generating unique identifiers.
+    - ujson: For fast JSON parsing.
+
+Usage:
+    The module can be used to load, modify, and save epitaxy configurations and layer properties, as well as to configure DOS settings for simulations.
+"""
 import os
 import secrets
 import ujson as json

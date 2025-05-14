@@ -1,26 +1,26 @@
+"""
+This module provides the OghmaNano class for managing simulations and configurations in the OghmaNano framework.
+
+Classes:
+    - OghmaNano: Main class to manage simulations, configurations, and subcomponents such as Optical, Sims, Thermal, Server, Epitaxy, and ML.
+
+Dependencies:
+    - os: For file and directory operations.
+    - shutil: For file and directory copying/removal.
+    - secrets: For generating unique identifiers.
+    - itertools: For creating iterators for variable combinations.
+    - numpy: For numerical computations.
+    - platform: For determining the operating system.
+    - Optical, Sims, Thermal, Server, Epitaxy, ML: Subcomponents of the OghmaNano framework.
+
+Usage:
+    The OghmaNano class allows users to configure and manage simulations, set variables, clone or load simulations, and execute jobs on a server. It also integrates with various subcomponents for specific functionalities such as optical and thermal simulations.
+"""
+
 import os
 import shutil
 import secrets
 import itertools
-
-import numpy as np
-import platform
-
-from .Optical import Optical
-from .Sims import Sims
-from .Thermal import Thermal
-from .Server import Server
-from .Epitaxy import Epitaxy
-from .ML import ml
-
-
-class OghmaNano:
-    """
-    Main class to manage simulations and configurations for OghmaNano.
-    Attributes:
-        results_dir (str): Directory to store simulation results.
-        Optical (Optical): Instance of the Optical class.
-        Sims (Sims): Instance of the Sims class.
         Thermal (Thermal): Instance of the Thermal class.
         Server (Server): Instance of the Server class.
         Epitaxy (Epitaxy): Instance of the Epitaxy class.
