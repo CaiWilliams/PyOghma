@@ -21,7 +21,7 @@ python -m pip install PyOghma
 
 ## Documentation
 
-For detailed documentation, visit the [PyOghma Documentation](https://caiwilliams.github.io/PyOghma/PyOghma).
+For detailed documentation, visit the [PyOghma Documentation](https://caiwilliams.github.io/PyOghma/index.html).
 
 ## Usage/Examples
 
